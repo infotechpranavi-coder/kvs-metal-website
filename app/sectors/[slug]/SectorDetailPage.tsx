@@ -4,6 +4,7 @@ import Link from 'next/link'
 import type { Sector } from '@/lib/sectors'
 import { sectors } from '@/lib/sectors'
 import { UniNavbar } from '@/components/UniNavbar'
+import { UniFooter } from '@/components/UniFooter'
 import { UniWidgets } from '@/components/UniWidgets'
 
 export default function SectorDetailPage({ sector }: { sector: Sector }) {
@@ -79,6 +80,7 @@ export default function SectorDetailPage({ sector }: { sector: Sector }) {
           </div>
         </section>
       </main>
+      <UniFooter />
       <UniWidgets />
     </div>
   )
