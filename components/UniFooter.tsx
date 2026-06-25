@@ -43,7 +43,7 @@ export function UniFooter() {
 
       <div className="uniFooterPattern" aria-hidden />
 
-      <div className="uniFooterMain">
+      <div className="uniContainer uniFooterMain">
         <div className="uniFooterGrid">
           <div className="uniFooterBrand">
             <Link href="/" className="uniFooterLogo">
@@ -133,19 +133,12 @@ export function UniFooter() {
         </div>
 
         <div className="uniFooterStandardsBand">
-          <div className="uniFooterStandardsPanel">
-            <div className="uniFooterStandardsHead">
-              <h4>{footerContent.standardsTitle}</h4>
-              <p>Certified supply aligned with global steel specifications.</p>
-            </div>
-            <div className="uniFooterStandardsChips">
-              {footerContent.standards.map((standard) => (
-                <span key={standard} className="uniFooterStandardChip">
-                  {standard}
-                </span>
-              ))}
-            </div>
-          </div>
+          <h4>{footerContent.standardsTitle}</h4>
+          <ul className="uniFooterStandardsList">
+            {footerContent.standards.map((standard) => (
+              <li key={standard}>{standard}</li>
+            ))}
+          </ul>
         </div>
 
         <div className="uniFooterBottom">

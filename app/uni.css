@@ -686,17 +686,6 @@
   -webkit-backdrop-filter: blur(8px);
 }
 
-.uniHeroHighlights li::before {
-  content: '';
-  flex-shrink: 0;
-  width: 7px;
-  height: 7px;
-  margin-top: 5px;
-  border-radius: 50%;
-  background: var(--uni-orange);
-  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.22);
-}
-
 .uniHeroMediaBevel,
 .uniHeroStatsBar {
   position: absolute;
@@ -4490,24 +4479,26 @@
 .uniFooterMain {
   position: relative;
   z-index: 1;
-  max-width: min(1320px, 100%);
-  margin: 0 auto;
-  padding: clamp(48px, 6vw, 72px) clamp(16px, 2.5vw, 28px) 0;
+  padding: clamp(48px, 6vw, 72px) 0 0;
+}
+
+.uniFooter .uniContainer {
+  max-width: min(1280px, 100%);
+  padding-left: clamp(16px, 2.5vw, 28px);
+  padding-right: clamp(20px, 3vw, 32px);
 }
 
 .uniFooterGrid {
   display: grid;
-  grid-template-columns: minmax(220px, 280px) minmax(108px, 132px) minmax(260px, 1fr) minmax(240px, 280px);
+  grid-template-columns: minmax(200px, 1.15fr) minmax(100px, 0.62fr) minmax(220px, 1.05fr) minmax(210px, 1fr);
   gap: clamp(20px, 3vw, 36px);
   padding-bottom: clamp(28px, 3.5vw, 40px);
   align-items: start;
-  justify-items: start;
-  width: 100%;
 }
 
 .uniFooterBrand {
-  max-width: 280px;
-  justify-self: start;
+  max-width: 300px;
+  padding-right: 8px;
 }
 
 .uniFooterLogo {
@@ -4531,7 +4522,7 @@
   line-height: 1.7;
   color: rgba(255, 255, 255, 0.52);
   margin: 0 0 22px;
-  max-width: 280px;
+  max-width: 100%;
 }
 
 .uniFooterSocials {
@@ -4586,31 +4577,23 @@
 .uniFooterColList--grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: 18px;
-  row-gap: 5px;
-  width: 100%;
+  column-gap: 16px;
+  row-gap: 4px;
 }
 
 .uniFooterColList--grid li {
   margin-bottom: 0;
-  line-height: 1.2;
 }
 
 .uniFooterColList--grid a {
   display: block;
-  font-size: 12.5px;
+  font-size: 12px;
   line-height: 1.35;
   color: rgba(255, 255, 255, 0.55);
 }
 
-.uniFooterCol--products {
-  min-width: 0;
-  width: 100%;
-  max-width: 420px;
-}
-
 .uniFooterCol li {
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
 .uniFooterCol li:last-child {
@@ -4632,6 +4615,10 @@
 
 .uniFooterCol--contact h4 {
   margin-bottom: 14px;
+}
+
+.uniFooterCol--products {
+  min-width: 0;
 }
 
 .uniFooterContactCards {
@@ -4691,114 +4678,47 @@
   word-break: break-word;
 }
 
-.uniFooterContactCta {
-  display: inline-flex;
+.uniFooterCol--contact .uniFooterContactCta {
+  display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 14px;
-  padding: 11px 18px;
-  border-radius: 6px;
+  gap: 8px;
+  width: 100%;
+  margin-top: 12px;
+  padding: 12px 16px;
+  border-radius: 8px;
   font-size: 13px;
   font-weight: 600;
-  color: #ffffff;
+  letter-spacing: 0.02em;
+  color: #fff;
   text-decoration: none;
-  background: var(--uni-orange);
-  border: 1px solid transparent;
-  transition:
-    background 0.2s ease,
-    color 0.2s ease,
-    border-color 0.2s ease,
-    transform 0.15s ease;
+  background: linear-gradient(135deg, var(--uni-orange) 0%, #e85a2c 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 22px rgba(255, 107, 53, 0.22);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
-.uniFooterCol .uniFooterContactCta {
-  color: #ffffff;
-}
-
-.uniFooterCol .uniFooterContactCta:hover {
-  color: #ffffff;
-  background: var(--uni-orange-hover);
-  border-color: rgba(255, 255, 255, 0.2);
-}
-
-.uniFooterCol .uniFooterContactCta:active {
-  color: #ffffff;
-  background: #d9521f;
-  border-color: rgba(255, 255, 255, 0.14);
-  transform: translateY(1px);
-}
-
-.uniFooterCol .uniFooterContactCta:focus-visible {
-  color: #ffffff;
-  outline: 2px solid rgba(255, 255, 255, 0.85);
-  outline-offset: 2px;
+.uniFooterCol--contact .uniFooterContactCta:hover,
+.uniFooterCol--contact .uniFooterContactCta:focus-visible {
+  color: #fff;
+  background: linear-gradient(135deg, var(--uni-orange-hover) 0%, #d94f22 100%);
+  box-shadow: 0 10px 26px rgba(255, 107, 53, 0.3);
+  transform: translateY(-1px);
 }
 
 .uniFooterStandardsBand {
-  padding: 0 0 clamp(24px, 3vw, 32px);
-}
-
-.uniFooterStandardsPanel {
-  padding: clamp(18px, 2.5vw, 24px) clamp(20px, 3vw, 28px);
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.035);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.uniFooterStandardsHead {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 8px 20px;
-  margin-bottom: 14px;
-  padding-bottom: 12px;
+  padding: clamp(20px, 2.5vw, 28px) 0 clamp(24px, 3vw, 32px);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.uniFooterStandardsHead h4 {
-  margin: 0;
+.uniFooterStandardsBand h4 {
+  margin: 0 0 12px;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.9);
-}
-
-.uniFooterStandardsHead p {
-  margin: 0;
-  font-size: 12px;
-  line-height: 1.45;
-  color: rgba(255, 255, 255, 0.45);
-}
-
-.uniFooterStandardsChips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.uniFooterStandardChip {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 7px 12px;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 1.3;
-  color: rgba(255, 255, 255, 0.78);
-  background: rgba(0, 0, 0, 0.28);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.uniFooterStandardChip::before {
-  content: '';
-  flex-shrink: 0;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--uni-orange);
+  color: rgba(255, 255, 255, 0.72);
 }
 
 .uniFooterContactList address {
@@ -4814,9 +4734,8 @@
   justify-content: space-between;
   gap: 20px;
   flex-wrap: wrap;
-  padding: 18px 0 24px;
+  padding: 20px 0 28px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
-  margin-top: 4px;
 }
 
 .uniFooterBottom p {
@@ -5341,6 +5260,27 @@
 }
 
 .uniFooterStandardsList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.uniFooterStandardsList li {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.uniFooterStandardsList li::before {
   display: none;
 }
 

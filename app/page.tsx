@@ -149,11 +149,6 @@ function HeroSection() {
         <div className="uniHeroInner">
           <div className="uniHeroLayout">
             <div className="uniHeroMediaZone">
-              <ul className="uniHeroHighlights">
-                {heroContent.highlights.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
               <div className="uniHeroStatsBar">
                 <div className="uniHeroStats">
                   {heroStats.map((stat) => (
