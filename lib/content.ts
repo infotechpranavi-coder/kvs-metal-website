@@ -7,6 +7,7 @@ export const EMAIL = 'info@kvsmetals.com'
 
 export const heroContent = {
   eyebrow: '25+ Years of Excellence in Steel Trading',
+  ghostTitle: 'STEEL',
   title: 'Build Smart. Build Strong. Build with KVS.',
   description:
     'From commercial developments to industrial expansion, KVS Metals simplifies steel sourcing through speed, availability, precision, and seamless execution.',
@@ -28,7 +29,8 @@ export const heroContent = {
 
 export const aboutUsHome = {
   eyebrow: 'About Us',
-  title: 'Trusted steel supplier in Dubai, UAE',
+  tagline: 'Trusted',
+  title: 'steel supplier in Dubai, UAE',
   paragraphs: [
     'KVS Metals is a trusted steel supplier and steel trading company in Dubai, UAE. We are committed to delivering steel solutions backed by quality, consistency, industry expertise and professionalism. Our structural and industrial steel products support applications requiring performance, durability, and precision.',
     'From construction and infrastructure to fabrication, marine, and industrial sectors, we supply an extensive range of steel materials in different grades meeting international standards. We understand that every project depends on materials arriving on time. That is why contractors, fabricators, EPC companies, stockists, and industrial buyers trust KVS Metals for consistent quality, fast product availability, and prompt coordination.',
@@ -59,6 +61,8 @@ export const procurementCta = {
   phoneLabel: 'Call Us',
   ctaLabel: 'Request A Call',
   ctaHref: '/contact',
+  image: '/market/conturction.jpg',
+  imageAlt: 'Construction site steel supply',
 }
 
 export const productsCta = {
@@ -66,6 +70,8 @@ export const productsCta = {
   text: 'Count on KVS Metals.',
   ctaLabel: 'Request A Call',
   ctaHref: '/contact',
+  image: '/market/oil andgas.jpg',
+  imageAlt: 'Industrial steel products',
 }
 
 export const productsHome = {

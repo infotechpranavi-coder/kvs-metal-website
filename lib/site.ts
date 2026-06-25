@@ -1,5 +1,5 @@
-export const BROCHURE_URL = '/brochure/kvs-metal-brochure.pdf'
-export const BROCHURE_FILENAME = 'KVS-Metal-Brochure.pdf'
+export const BROCHURE_URL = '/brochure/KVS%20Metals%20Brochure%20.pdf'
+export const BROCHURE_FILENAME = 'KVS Metals Brochure.pdf'
 
 export {
   COMPANY_NAME,

@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap');
-
 :root {
   --color-primary: #e8a020;
   --color-primary-dark: #d4911a;
@@ -11,8 +9,8 @@
   --color-border: #e4e8ec;
   --color-surface: #f7f8fa;
   --color-white: #ffffff;
-  --font-sans: 'DM Sans', system-ui, sans-serif;
-  --font-serif: 'Instrument Serif', Georgia, serif;
+  --font-sans: var(--font-dm-sans), system-ui, sans-serif;
+  --font-serif: Georgia, 'Times New Roman', serif;
   --container: 1200px;
   --radius-sm: 8px;
   --radius-md: 12px;

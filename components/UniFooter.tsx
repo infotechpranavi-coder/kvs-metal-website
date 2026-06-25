@@ -41,8 +41,6 @@ export function UniFooter() {
         </p>
       </div>
 
-      <div className="uniFooterPattern" aria-hidden />
-
       <div className="uniContainer uniFooterMain">
         <div className="uniFooterGrid">
           <div className="uniFooterBrand">

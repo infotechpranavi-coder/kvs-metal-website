@@ -57,6 +57,10 @@ const partners = [
 const heroSlides = [
   {
     poster: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1600&q=85',
+    video: '/hero/steel%203.mp4',
+  },
+  {
+    poster: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1600&q=85',
     video: '/hero/steel_2.mp4',
   },
   {
@@ -161,17 +165,13 @@ function HeroSection() {
               </div>
             </div>
 
-            <div className="uniHeroGeoStack" aria-hidden>
-              <span className="uniHeroGeoHex" />
-            </div>
-
             <div className="uniHeroPanelWrap">
               <div className="uniHeroPanelShape">
                 <div className="uniHeroPanelContent">
                   <p className="uniHeroEyebrow">{heroContent.eyebrow}</p>
                   <div className="uniHeroTitleBlock">
                     <span className="uniHeroGhostTitle" aria-hidden>
-                      {heroContent.title}
+                      {heroContent.ghostTitle}
                     </span>
                     <h1>{heroContent.title}</h1>
                   </div>
@@ -230,7 +230,7 @@ function SkillsSection() {
         <ScrollReveal className="uniSkillsTop">
           <div className="uniSkillsHeadingCol">
             <p className="uniSkillsEyebrow">{aboutUsHome.eyebrow}</p>
-            <h2 className="uniSkillsTitle">{aboutUsHome.title}</h2>
+            <h2 className="uniSkillsTitle">{`${aboutUsHome.tagline} ${aboutUsHome.title}`}</h2>
           </div>
           <div className="uniSkillsText">
             {aboutUsHome.paragraphs.map((paragraph) => (
@@ -409,8 +409,9 @@ function AboutTextSection() {
         <div className="uniAboutInner">
           <div className="uniAboutGrid">
             <div className="uniAboutIntro">
-              <div className="uniEyebrow uniAboutRevealItem">{aboutUsHome.eyebrow}</div>
-              <h2 className="uniAboutRevealItem">{aboutUsHome.title}</h2>
+              <h2 className="uniAboutIntroLabel uniAboutRevealItem">{aboutUsHome.eyebrow}</h2>
+              <p className="uniAboutIntroTagline uniAboutRevealItem">{aboutUsHome.tagline}</p>
+              <h3 className="uniAboutIntroTitle uniAboutRevealItem">{aboutUsHome.title}</h3>
               <p className="uniAboutIntroLead uniAboutRevealItem">
                 {aboutUsHome.paragraphs[0]}
               </p>
@@ -604,31 +605,41 @@ function HomeCtaSection({
   text,
   ctaLabel,
   ctaHref,
+  image,
+  imageAlt,
   showPhone = false,
 }: {
   title: string
   text: string
   ctaLabel: string
   ctaHref: string
+  image: string
+  imageAlt: string
   showPhone?: boolean
 }) {
   return (
     <ScrollReveal as="section" className="uniHomeCta">
       <div className="uniContainer">
         <div className="uniHomeCtaInner">
-          <div>
+          <div className="uniHomeCtaContent">
             <h2>{title}</h2>
-            <p className="uniSectionText">{text}</p>
+            <p className="uniHomeCtaText">{text}</p>
             {showPhone && (
               <p className="uniHomeCtaPhone">
                 {procurementCta.phoneLabel}:{' '}
                 <a href={`tel:${PHONE_E164}`}>{PHONE_DISPLAY}</a>
               </p>
             )}
+            <div className="uniHomeCtaActions">
+              <Link href={ctaHref} className="uniHeroBtn">
+                {ctaLabel}
+              </Link>
+            </div>
           </div>
-          <Link href={ctaHref} className="uniHeroBtn">
-            {ctaLabel}
-          </Link>
+          <div className="uniHomeCtaMedia">
+            <img src={image} alt={imageAlt} loading="lazy" />
+            <span className="uniHomeCtaMediaOverlay" aria-hidden />
+          </div>
         </div>
       </div>
     </ScrollReveal>
@@ -674,7 +685,7 @@ function ProductsSection() {
 export default function KvsMetalPage() {
   return (
     <div className="uniPage">
-      <UniNavbar />
+      <UniNavbar glass />
       <main>
         <HeroSection />
         <SkillsSection />
@@ -683,6 +694,8 @@ export default function KvsMetalPage() {
           text={procurementCta.text}
           ctaLabel={procurementCta.ctaLabel}
           ctaHref={procurementCta.ctaHref}
+          image={procurementCta.image}
+          imageAlt={procurementCta.imageAlt}
           showPhone
         />
         <MarketSectorsSection />
@@ -695,6 +708,8 @@ export default function KvsMetalPage() {
           text={productsCta.text}
           ctaLabel={productsCta.ctaLabel}
           ctaHref={productsCta.ctaHref}
+          image={productsCta.image}
+          imageAlt={productsCta.imageAlt}
         />
         <TestimonialsSection />
       </main>
