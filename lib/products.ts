@@ -41,23 +41,9 @@ export type LimitedProduct = {
   description: string
 }
 
-const homepageProductSlugs = [
-  'gi-corrugated-roofing-sheets',
-  'ms-angle-channels',
-  'stainless-steel-pipes',
-  'ms-hr-sheets',
-  'gi-plain-sheets',
-  'ms-h-beams',
-  'ms-seamless-pipes',
-  'gi-pipes-tubes',
-  'carbon-steel-flanges',
-  'forged-pipe-fittings',
-  'ppgi-profile-sheets',
-  'ms-hr-plates',
-  'fe-500d-tmt-bars',
-  'structural-steel-fabrication',
-  'custom-sheet-fabrication',
-] as const
+import { kvsDemoProducts, kvsProductCategories } from './kvs-catalog'
+
+const homepageProductSlugs = kvsProductCategories.flatMap((category) => category.productSlugs)
 
 const catalog: Product[] = [
   {
@@ -71,7 +57,7 @@ const catalog: Product[] = [
       'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=900&q=80',
       'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=900&q=80',
     ],
-    category: 'Roofing',
+    category: 'GI/PPGI Coils & Sheets',
     badge: 'Popular',
     shortDescription: 'DURABLE GI CORRUGATED SHEETS FOR INDUSTRIAL, COMMERCIAL, AND RESIDENTIAL ROOFING PROJECTS.',
     description:
@@ -99,7 +85,7 @@ const catalog: Product[] = [
       'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=900&q=80',
       'https://images.unsplash.com/photo-1581094271901-ef2a9a7a8729?w=900&q=80',
     ],
-    category: 'Longs',
+    category: 'Angles',
     badge: 'IS Certified',
     shortDescription: 'HIGH-STRENGTH MS ANGLES AND CHANNELS FOR STRUCTURAL FRAMING AND FABRICATION WORK.',
     description:
@@ -152,7 +138,7 @@ const catalog: Product[] = [
     rating: '4.8',
     img: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=600&q=80',
     images: ['https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=900&q=80'],
-    category: 'Flats',
+    category: 'HR/CR Coils, Sheets & Plates',
     shortDescription: 'HOT-ROLLED MILD STEEL SHEETS FOR FABRICATION, FLOORING, AND GENERAL ENGINEERING.',
     description:
       'Our MS hot-rolled sheets offer consistent thickness, clean edges, and dependable formability for fabrication shops, structural cladding, and industrial applications. Supplied in standard widths with cut-to-size options.',
@@ -171,7 +157,7 @@ const catalog: Product[] = [
     rating: '4.7',
     img: 'https://images.unsplash.com/photo-1581094271901-ef2a9a7a8729?w=600&q=80',
     images: ['https://images.unsplash.com/photo-1581094271901-ef2a9a7a8729?w=900&q=80'],
-    category: 'Flats',
+    category: 'HR/CR Coils, Sheets & Plates',
     shortDescription: 'GALVANIZED PLAIN SHEETS WITH CORROSION-RESISTANT COATING FOR DURABLE APPLICATIONS.',
     description:
       'GI plain sheets deliver excellent corrosion protection for enclosures, ducting, panels, and light structural work. Available in multiple coating weights and thicknesses for indoor and outdoor use.',
@@ -190,7 +176,7 @@ const catalog: Product[] = [
     rating: '4.8',
     img: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=600&q=80',
     images: ['https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=900&q=80'],
-    category: 'Longs',
+    category: 'Structural Sections & Beams',
     shortDescription: 'HEAVY-SECTION H-BEAMS FOR PRIMARY STRUCTURAL FRAMES AND INDUSTRIAL BUILDINGS.',
     description:
       'Engineered for high load-bearing performance, our MS H-beams support warehouses, bridges, and multi-storey structures. Supplied in standard lengths with project-based cutting and documentation.',
@@ -283,7 +269,7 @@ const catalog: Product[] = [
     rating: '4.8',
     img: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80',
     images: ['https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=900&q=80'],
-    category: 'Roofing',
+    category: 'GI/PPGI Coils & Sheets',
     shortDescription: 'PRE-PAINTED GALVANIZED PROFILE SHEETS FOR MODERN ROOFING AND CLADDING.',
     description:
       'PPGI profile sheets combine color-coated aesthetics with galvanized protection for factories, warehouses, and commercial buildings. Available in multiple profiles and color options.',
@@ -302,7 +288,7 @@ const catalog: Product[] = [
     rating: '4.8',
     img: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&q=80',
     images: ['https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=900&q=80'],
-    category: 'Plates',
+    category: 'HR/CR Coils, Sheets & Plates',
     shortDescription: 'HEAVY-DUTY HOT-ROLLED PLATES FOR STRUCTURAL, MACHINING, AND FABRICATION WORK.',
     description:
       'MS HR plates provide the strength and thickness range needed for base plates, machinery beds, tanks, and heavy fabrication. Supplied with mill certificates and cut-to-size service.',
@@ -321,7 +307,7 @@ const catalog: Product[] = [
     rating: '4.9',
     img: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=600&q=80',
     images: ['https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=900&q=80'],
-    category: 'TMT Bars',
+    category: 'Bars',
     badge: 'IS 1786',
     shortDescription: 'HIGH-DUCTILITY TMT BARS FOR EARTHQUAKE-RESISTANT RCC CONSTRUCTION.',
     description:
@@ -341,7 +327,7 @@ const catalog: Product[] = [
     rating: '4.8',
     img: 'https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=600&q=80',
     images: ['https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=900&q=80'],
-    category: 'Fabrication',
+    category: 'Structural Sections & Beams',
     shortDescription: 'CUSTOM FABRICATED STEEL STRUCTURES, FRAMES, AND ASSEMBLIES BUILT TO DRAWING.',
     description:
       'From trusses and platforms to skids and support frames, our fabrication team delivers precision-welded assemblies with quality checks at every stage. Ideal for industrial and construction projects.',
@@ -359,7 +345,7 @@ const catalog: Product[] = [
     rating: '4.7',
     img: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=600&q=80',
     images: ['https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=900&q=80'],
-    category: 'Fabrication',
+    category: 'Structural Sections & Beams',
     shortDescription: 'LASER-CUT, BENT, AND WELDED SHEET METAL COMPONENTS TO YOUR SPECIFICATIONS.',
     description:
       'We produce brackets, panels, enclosures, and custom sheet parts with accurate cutting and forming. Suitable for OEM, MEP, and industrial equipment manufacturers.',
@@ -369,6 +355,7 @@ const catalog: Product[] = [
     reviewCount: 52,
     inStock: true,
   },
+  ...kvsDemoProducts,
   {
     id: 'rx-001',
     slug: 'noir-ceramic-ritual-set',
@@ -1238,137 +1225,26 @@ export type HomepageProductCategory = {
   description: string
   headline: string
   paragraphs: string[]
-  icon: 'flats' | 'longs' | 'tubulars' | 'fittings' | 'roofing' | 'plates' | 'tmt' | 'fabrication'
   productSlugs: string[]
 }
 
-export const homepageProductCategories: HomepageProductCategory[] = [
-  {
-    slug: 'flats',
-    title: 'Flats',
-    img: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=700&q=80',
-    heroImg: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=1400&q=85',
-    description: 'MS, GI & SS sheets',
-    headline: 'SUPPLY FLAT STEEL SHEETS FOR FABRICATION, CLADDING, AND INDUSTRIAL APPLICATIONS.',
-    paragraphs: [
-      'Flat products form the backbone of metal fabrication — from MS hot-rolled sheets to galvanized and stainless options for corrosion-prone environments.',
-      'KVS Metal stocks a wide thickness range with cut-to-size service, mill certificates, and dependable logistics for contractors, fabricators, and OEM clients.',
-      'Whether you need plain sheets for ducting or heavy plate for machining, we help you select the right grade and finish for your project.',
-    ],
-    icon: 'flats',
-    productSlugs: ['ms-hr-sheets', 'gi-plain-sheets'],
-  },
-  {
-    slug: 'longs',
-    title: 'Longs',
-    img: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=700&q=80',
-    heroImg: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1400&q=85',
-    description: 'Angles, channels & beams',
-    headline: 'DELIVER STRUCTURAL LONG PRODUCTS FOR FRAMES, SUPPORTS, AND HEAVY CONSTRUCTION.',
-    paragraphs: [
-      'Long steel sections — angles, channels, beams, and columns — provide the skeletal strength for buildings, bridges, and industrial structures.',
-      'Our long products are sourced from certified mills and supplied in standard lengths with project-based cutting, helping engineers meet load and compliance requirements.',
-      'From light angles to heavy H-beams, KVS Metal supports structural contractors with consistent quality and responsive supply.',
-    ],
-    icon: 'longs',
-    productSlugs: ['ms-angle-channels', 'ms-h-beams'],
-  },
-  {
-    slug: 'tubulars',
-    title: 'Tubulars',
-    img: 'https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?w=700&q=80',
-    heroImg: 'https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?w=1400&q=85',
-    description: 'MS, GI & SS pipes',
-    headline: 'PROVIDE PIPES AND TUBES FOR FLUID, PROCESS, AND STRUCTURAL APPLICATIONS.',
-    paragraphs: [
-      'Tubular products serve plumbing, process piping, fencing, and precision engineering needs across MS, GI, and stainless grades.',
-      'We supply seamless and welded options in multiple diameters and schedules, with documentation for industrial and infrastructure projects.',
-      'Partner with KVS Metal for corrosion-resistant stainless lines, utility GI pipes, and dependable MS tubular supply.',
-    ],
-    icon: 'tubulars',
-    productSlugs: ['stainless-steel-pipes', 'ms-seamless-pipes', 'gi-pipes-tubes'],
-  },
-  {
-    slug: 'fittings',
-    title: 'Fittings',
-    img: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=700&q=80',
-    heroImg: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1400&q=85',
-    description: 'Flanges, elbows & joints',
-    headline: 'CONNECT PIPELINE SYSTEMS WITH RELIABLE FLANGES, ELBOWS, AND FORGED FITTINGS.',
-    paragraphs: [
-      'Pipe fittings and flanges are critical for safe, leak-free connections in process plants, utilities, and industrial piping networks.',
-      'KVS Metal supplies forged fittings, weld neck and slip-on flanges, and common joint configurations with grade matching and project documentation.',
-      'Our team helps you source the right pressure class and bore size to keep installations compliant and on schedule.',
-    ],
-    icon: 'fittings',
-    productSlugs: ['carbon-steel-flanges', 'forged-pipe-fittings'],
-  },
-  {
-    slug: 'roofing',
-    title: 'Roofing',
-    img: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=700&q=80',
-    heroImg: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=1400&q=85',
-    description: 'GI corrugated sheets',
-    headline: 'PROTECT BUILDINGS WITH DURABLE GI AND PRE-PAINTED ROOFING SOLUTIONS.',
-    paragraphs: [
-      'Roofing sheets shield warehouses, factories, and commercial structures from weather while keeping installation efficient and cost-effective.',
-      'We offer galvanized corrugated profiles and pre-painted options with consistent coating quality, cut lengths, and bulk dispatch for site teams.',
-      'From industrial sheds to modern cladding, KVS Metal delivers roofing materials built for long service life.',
-    ],
-    icon: 'roofing',
-    productSlugs: ['gi-corrugated-roofing-sheets', 'ppgi-profile-sheets'],
-  },
-  {
-    slug: 'plates',
-    title: 'Plates',
-    img: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=700&q=80',
-    heroImg: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1400&q=85',
-    description: 'Heavy-duty steel plates',
-    headline: 'SUPPLY HEAVY PLATES FOR STRUCTURAL BASES, TANKS, AND FABRICATION PROJECTS.',
-    paragraphs: [
-      'Steel plates provide the thickness and strength required for machinery beds, base plates, storage tanks, and heavy welded assemblies.',
-      'Our HR plates are available in a wide thickness range with cut-to-size service and mill test certificates for quality assurance.',
-      'KVS Metal supports fabricators and EPC contractors with dependable plate supply and technical coordination.',
-    ],
-    icon: 'plates',
-    productSlugs: ['ms-hr-plates'],
-  },
-  {
-    slug: 'tmt-bars',
-    title: 'TMT Bars',
-    img: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=700&q=80',
-    heroImg: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1400&q=85',
-    description: 'Construction reinforcement',
-    headline: 'REINFORCE CONCRETE STRUCTURES WITH CERTIFIED TMT BAR SUPPLY.',
-    paragraphs: [
-      'TMT bars are essential for RCC foundations, columns, and slabs in residential, commercial, and infrastructure construction.',
-      'We supply FE 500D and higher grades with superior ductility, test certificates, and site delivery for contractors and builders.',
-      'Count on KVS Metal for consistent bar quality, accurate bundling, and responsive logistics to keep projects moving.',
-    ],
-    icon: 'tmt',
-    productSlugs: ['fe-500d-tmt-bars'],
-  },
-  {
-    slug: 'fabrication',
-    title: 'Fabrication',
-    img: 'https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=700&q=80',
-    heroImg: 'https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=1400&q=85',
-    description: 'Custom metal works',
-    headline: 'BUILD CUSTOM STEEL ASSEMBLIES WITH PRECISION FABRICATION SERVICES.',
-    paragraphs: [
-      'When standard catalog items are not enough, our fabrication team delivers cut, bent, welded, and assembled metal components to your drawings.',
-      'From structural frames to sheet metal parts, we combine material supply with shop-floor capability for faster project turnaround.',
-      'KVS Metal is your partner for prototypes, batch production, and site-ready fabricated deliverables.',
-    ],
-    icon: 'fabrication',
-    productSlugs: ['structural-steel-fabrication', 'custom-sheet-fabrication'],
-  },
-]
+export const homepageProductCategories: HomepageProductCategory[] = kvsProductCategories.map(
+  (category) => ({
+    slug: category.slug,
+    title: category.title,
+    img: category.img,
+    heroImg: category.heroImg,
+    description: category.description,
+    headline: category.headline,
+    paragraphs: category.paragraphs,
+    productSlugs: category.productSlugs,
+  }),
+)
 
 export const homepageProductRows = [
   homepageProductCategories.slice(0, 3),
   homepageProductCategories.slice(3, 6),
-  homepageProductCategories.slice(6, 8),
+  homepageProductCategories.slice(6, 9),
 ] as const
 
 export function getCategoryHref(category: HomepageProductCategory): string {
@@ -1392,6 +1268,36 @@ export function getCategoryProducts(category: HomepageProductCategory): Product[
   return category.productSlugs
     .map((slug) => getProductBySlug(slug))
     .filter((product): product is Product => Boolean(product))
+}
+
+export function searchCatalog(query: string, limit = 8): Product[] {
+  const q = query.trim().toLowerCase()
+  if (!q) return []
+
+  return catalog
+    .filter(
+      (product) =>
+        product.title.toLowerCase().includes(q) ||
+        product.category.toLowerCase().includes(q) ||
+        product.sku.toLowerCase().includes(q) ||
+        product.shortDescription.toLowerCase().includes(q) ||
+        product.description.toLowerCase().includes(q),
+    )
+    .slice(0, limit)
+}
+
+export function filterProductsByQuery(products: Product[], query: string): Product[] {
+  const q = query.trim().toLowerCase()
+  if (!q) return products
+
+  return products.filter(
+    (product) =>
+      product.title.toLowerCase().includes(q) ||
+      product.category.toLowerCase().includes(q) ||
+      product.sku.toLowerCase().includes(q) ||
+      product.shortDescription.toLowerCase().includes(q) ||
+      product.description.toLowerCase().includes(q),
+  )
 }
 
 export function getProductCategoryForProduct(slug: string): HomepageProductCategory | undefined {

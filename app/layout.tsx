@@ -3,8 +3,9 @@ import './globals.css'
 import './uni.css'
 
 export const metadata: Metadata = {
-  title: 'KVS Metal - Premium Metal Products & Steel Solutions',
-  description: 'KVS Metal supplies high-quality steel sheets, pipes, structural metal, and custom fabrication for construction and industrial projects.',
+  title: 'KVS Metals - Premium Steel Supplier in Dubai, UAE',
+  description:
+    'KVS Metals supplies structural and industrial steel materials in Dubai, UAE — coils, sheets, pipes, structural sections, bars, and foundation materials.',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

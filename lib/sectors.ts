@@ -2,53 +2,75 @@ export type Sector = {
   slug: string
   name: string
   img: string
+  tagline: string
   headline: string
   paragraphs: string[]
+  bullets: string[]
 }
 
 export const sectors: Sector[] = [
   {
     slug: 'construction',
     name: 'Construction',
-    img: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1400&q=85',
-    headline: 'ESTABLISH A ROBUST STEEL FOUNDATION FOR YOUR CONSTRUCTION OR CIVIL PROJECTS.',
+    img: '/market/conturction.jpg',
+    tagline: 'Steel Solutions for Modern Construction & Infrastructure',
+    headline: 'Steel Solutions for Modern Construction & Infrastructure',
     paragraphs: [
-      'Steel produced in sophisticated mills is crafted into various forms including bars, beams, and durable plates. These materials are essential for constructing buildings, bridges, and other infrastructure projects.',
-      'Our extensive range of products adheres to international standards, ensuring superior quality and performance. We offer a comprehensive selection of steel products tailored to meet the diverse needs of the construction industry.',
-      'Through collaborative efforts, we deliver comprehensive steel solutions that cater to the specific requirements of construction projects, ensuring structural integrity and longevity.',
+      'As a leading steel supplier in Dubai, UAE, KVS Metals supplies structural and industrial steel materials for commercial buildings, civil engineering, warehouses, fabrication units, and infrastructure developments. From steel sections and pipes to coils, sheets, and reinforcement materials, we help businesses maintain continuity with timely material flow and practical procurement coordination.',
     ],
-  },
-  {
-    slug: 'marine',
-    name: 'Marine',
-    img: 'https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?w=1400&q=85',
-    headline: 'DELIVER CORROSION-RESISTANT METAL SOLUTIONS FOR MARINE AND SHIPBUILDING PROJECTS.',
-    paragraphs: [
-      'Marine environments demand metals that withstand saltwater, humidity, and extreme weather. We supply stainless steel, coated plates, and specialty alloys engineered for docks, vessels, and offshore structures.',
-      'Our marine-grade products meet rigorous industry standards for durability and corrosion resistance. From hull plating to deck fittings, KVS Metal provides materials built to perform in demanding sea conditions.',
-      'Partner with us for reliable supply, technical guidance, and metal products that keep marine infrastructure safe, strong, and long-lasting.',
+    bullets: [
+      'Structural & industrial steel materials',
+      'Suitable for civil & commercial projects',
+      'International specifications & grades',
+      'Smooth material flow for continuity',
     ],
   },
   {
     slug: 'oil-gas',
     name: 'Oil & Gas',
-    img: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1400&q=85',
-    headline: 'POWER CRITICAL ENERGY INFRASTRUCTURE WITH HIGH-PERFORMANCE STEEL AND PIPE SYSTEMS.',
+    img: '/market/oil%20andgas.jpg',
+    tagline: 'Steel Materials for Critical Oil & Gas Applications',
+    headline: 'Steel Materials for Critical Oil & Gas Applications',
     paragraphs: [
-      'The oil and gas sector requires precision-engineered pipes, pressure vessels, and structural steel that meet strict safety and performance standards across refineries, pipelines, and processing plants.',
-      'KVS Metal supplies certified pipes, flanges, plates, and fabricated components designed for high-pressure and high-temperature applications in energy production and distribution.',
-      'We support energy projects with dependable logistics, quality-assured materials, and a product range tailored to upstream, midstream, and downstream operations.',
+      'KVS Metals supplies industrial steel materials for demanding oil and gas environments across Dubai and the UAE. Our corrosion-resistant and high-tensile steel products are suitable for pipelines, storage systems, processing facilities, and offshore or onshore applications where precision, compliance, and operational performance are essential.',
+    ],
+    bullets: [
+      'Corrosion-resistant steel options',
+      'Suitable for onshore & offshore use',
+      'Materials aligned with recognised standards',
+      'Timely coordination for operations',
     ],
   },
   {
     slug: 'foundation',
     name: 'Foundation',
-    img: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1400&q=85',
-    headline: 'BUILD STRONGER FOUNDATIONS WITH STRUCTURAL STEEL FOR DEEP AND CIVIL ENGINEERING WORKS.',
+    img: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1400&q=85',
+    tagline: 'Engineered Materials for Foundation Systems',
+    headline: 'Engineered Materials for Foundation Systems',
     paragraphs: [
-      'Foundation and piling projects depend on high-strength steel sheet piles, H-beams, anchors, and reinforcement that provide stability in challenging soil and load conditions.',
-      'Our foundation-grade metals are sourced from trusted mills and tested for consistency, helping engineers and contractors deliver safe, durable substructures for buildings, bridges, and industrial sites.',
-      'From sheet piling to heavy structural sections, KVS Metal delivers the materials and support needed to anchor ambitious civil and infrastructure projects with confidence.',
+      'KVS Metals supplies steel materials for foundation engineering, precast concrete systems, and heavy construction projects across Dubai, UAE. From PC strand coils to structural steel products, we cater to applications requiring dimensional accuracy, tensile capability, and long-term structural stability in demanding construction environments.',
+    ],
+    bullets: [
+      'PC strand & foundation materials',
+      'Suitable for precast applications',
+      'High-tensile steel solutions',
+      'Built for heavy construction',
+    ],
+  },
+  {
+    slug: 'marine',
+    name: 'Marine',
+    img: '/market/marine.webp',
+    tagline: 'Built for Demanding Marine Environments',
+    headline: 'Built for Demanding Marine Environments',
+    paragraphs: [
+      'As a steel supplier in UAE serving marine and coastal industries, KVS Metals supplies steel and aluminium materials for shipbuilding, fabrication, coastal infrastructure, and marine engineering requirements. Our range is suited for challenging environments requiring corrosion resistance, durability, and consistent operational performance.',
+    ],
+    bullets: [
+      'Steel & aluminium for marine use',
+      'Suitable for coastal applications',
+      'Multiple grades & dimensions available',
+      'Marine & offshore material solutions',
     ],
   },
 ]
@@ -59,4 +81,20 @@ export function getSectorBySlug(slug: string): Sector | undefined {
 
 export function getAllSectorSlugs(): string[] {
   return sectors.map((s) => s.slug)
+}
+
+export function searchSectors(query: string, limit = 4): Sector[] {
+  const q = query.trim().toLowerCase()
+  if (!q) return []
+
+  return sectors
+    .filter(
+      (sector) =>
+        sector.name.toLowerCase().includes(q) ||
+        sector.tagline.toLowerCase().includes(q) ||
+        sector.headline.toLowerCase().includes(q) ||
+        sector.paragraphs.some((p) => p.toLowerCase().includes(q)) ||
+        sector.bullets.some((b) => b.toLowerCase().includes(q)),
+    )
+    .slice(0, limit)
 }

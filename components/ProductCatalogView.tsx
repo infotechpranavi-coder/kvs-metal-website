@@ -17,12 +17,14 @@ const CATALOG_HERO_IMG =
 type ProductCatalogViewProps = {
   category: HomepageProductCategory | null
   products: Product[]
+  searchQuery?: string
   onSelectCategory: (slug: string | null) => void
 }
 
 export function ProductCatalogView({
   category,
   products,
+  searchQuery = '',
   onSelectCategory,
 }: ProductCatalogViewProps) {
   const [expandedSlug, setExpandedSlug] = useState(category?.slug ?? '')
@@ -43,7 +45,11 @@ export function ProductCatalogView({
   const heroImg = category?.heroImg ?? category?.img ?? CATALOG_HERO_IMG
   const heroTitle = category?.title ?? 'Our Products'
   const heroEyebrow = category?.description ?? 'Full metal catalog'
-  const gridTitle = category ? `Products in ${category.title}` : 'All products'
+  const gridTitle = searchQuery.trim()
+    ? `Results for “${searchQuery.trim()}”`
+    : category
+      ? `Products in ${category.title}`
+      : 'All products'
 
   return (
     <div className="uniPage">

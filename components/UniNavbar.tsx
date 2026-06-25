@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { CloseIcon, MenuIcon } from './Icons'
 import { KvsLogo } from './KvsLogo'
+import { UniNavSearch } from './UniNavSearch'
+import { BROCHURE_FILENAME, BROCHURE_URL } from '@/lib/site'
 
 const navItems = [
   { label: 'Home', href: '/' },
@@ -39,59 +41,83 @@ export function UniNavbar({ lightMode = false }: { lightMode?: boolean }) {
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
+    return () => {
+      document.body.style.overflow = ''
+    }
   }, [menuOpen])
+
+  const closeMenu = () => setMenuOpen(false)
 
   return (
     <header className={`uniNav${isLight ? ' uniNav--scrolled' : ''}${menuOpen ? ' uniNav--open' : ''}`}>
       <div className="uniNavInner">
-        <Link href="/" className="uniLogo" onClick={() => setMenuOpen(false)}>
+        <Link href="/" className="uniLogo" onClick={closeMenu}>
           <KvsLogo size="nav" priority />
         </Link>
 
-        <nav className="uniNavLinks" aria-label="Main navigation">
-          {navItems.map((item) => (
-            <Link
-              key={item.label}
-              href={item.href}
-              className={`uniNavLink${isNavActive(pathname, item.href) ? ' uniNavLink--active' : ''}`}
-              onClick={() => setMenuOpen(false)}
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
+        <UniNavSearch light={isLight} onNavigate={closeMenu} />
 
-        <div className="uniNavEnd">
-          <Link href="/contact" className="uniNavCta" onClick={() => setMenuOpen(false)}>
-            Get in Touch
-          </Link>
-          <button
-            type="button"
-            className="uniMenuToggle"
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={menuOpen}
-          >
-            {menuOpen ? <CloseIcon /> : <MenuIcon />}
-          </button>
+        <div className="uniNavRight">
+          <nav className="uniNavLinks" aria-label="Main navigation">
+            {navItems.map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                className={`uniNavLink${isNavActive(pathname, item.href) ? ' uniNavLink--active' : ''}`}
+                onClick={closeMenu}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="uniNavEnd">
+            <a
+              href={BROCHURE_URL}
+              className="uniNavBrochure"
+              download={BROCHURE_FILENAME}
+            >
+              Download
+            </a>
+            <Link href="/contact" className="uniNavCta" onClick={closeMenu}>
+              Get in Touch
+            </Link>
+            <button
+              type="button"
+              className="uniMenuToggle"
+              onClick={() => setMenuOpen(!menuOpen)}
+              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={menuOpen}
+            >
+              {menuOpen ? <CloseIcon /> : <MenuIcon />}
+            </button>
+          </div>
         </div>
       </div>
 
       <nav className={`uniMobileNav${menuOpen ? ' uniMobileNav--open' : ''}`} aria-label="Mobile navigation">
+        <UniNavSearch light={isLight} onNavigate={closeMenu} className="uniNavSearchWrap--mobile" />
         {navItems.map((item) => (
           <Link
             key={item.label}
             href={item.href}
             className={`uniNavLink${isNavActive(pathname, item.href) ? ' uniNavLink--active' : ''}`}
-            onClick={() => setMenuOpen(false)}
+            onClick={closeMenu}
           >
             {item.label}
           </Link>
         ))}
-        <Link href="/contact" className="uniNavCta" onClick={() => setMenuOpen(false)}>
+        <Link href="/contact" className="uniNavCta" onClick={closeMenu}>
           Get in Touch
         </Link>
+        <a
+          href={BROCHURE_URL}
+          className="uniNavBrochure uniNavBrochure--mobile"
+          download={BROCHURE_FILENAME}
+          onClick={closeMenu}
+        >
+          Download
+        </a>
       </nav>
     </header>
   )

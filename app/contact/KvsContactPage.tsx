@@ -10,6 +10,7 @@ import {
   buildProductEnquiryMessage,
   buildProductEnquirySubject,
 } from '@/lib/contact'
+import { EMAIL, footerContent, PHONE_DISPLAY, PHONE_E164 } from '@/lib/content'
 
 export default function KvsContactPage() {
   const searchParams = useSearchParams()
@@ -53,9 +54,9 @@ export default function KvsContactPage() {
           <div className="uniContainer">
             <div className="kvsContactPanel">
               <aside className="kvsContactAside">
-                <h2>Reach KVS Metal</h2>
+                <h2>Reach KVS Metals</h2>
                 <p className="kvsContactAsideLead">
-                  Speak with our team for quotes, bulk supply, and custom fabrication.
+                  Speak with our team for quotes, bulk supply, and steel procurement coordination.
                 </p>
                 <ul className="kvsContactMethods">
                   <li className="kvsContactMethodCard">
@@ -64,7 +65,7 @@ export default function KvsContactPage() {
                     </span>
                     <div>
                       <span className="kvsContactMethodLabel">Phone</span>
-                      <a href="tel:+911234567890">+91 123 456 7890</a>
+                      <a href={`tel:${PHONE_E164}`}>{PHONE_DISPLAY}</a>
                     </div>
                   </li>
                   <li className="kvsContactMethodCard">
@@ -73,7 +74,7 @@ export default function KvsContactPage() {
                     </span>
                     <div>
                       <span className="kvsContactMethodLabel">Email</span>
-                      <a href="mailto:info@kvsmetal.com">info@kvsmetal.com</a>
+                      <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
                     </div>
                   </li>
                   <li className="kvsContactMethodCard">
@@ -82,11 +83,7 @@ export default function KvsContactPage() {
                     </span>
                     <div>
                       <span className="kvsContactMethodLabel">Location</span>
-                      <address>
-                        Industrial Estate, Mumbai,
-                        <br />
-                        Maharashtra, India
-                      </address>
+                      <address>{footerContent.address}</address>
                     </div>
                   </li>
                 </ul>
@@ -115,7 +112,7 @@ export default function KvsContactPage() {
                   <div className="kvsContactFormRow">
                     <div className="kvsContactField">
                       <label htmlFor="contactPhone">Phone</label>
-                      <input id="contactPhone" type="tel" placeholder="+91" />
+                      <input id="contactPhone" type="tel" placeholder="+971" />
                     </div>
                     <div className="kvsContactField">
                       <label htmlFor="contactSubject">Enquiry type</label>

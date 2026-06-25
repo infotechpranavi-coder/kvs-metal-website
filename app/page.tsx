@@ -1,48 +1,49 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { UniNavbar } from '@/components/UniNavbar'
 import { UniFooter } from '@/components/UniFooter'
 import { UniWidgets } from '@/components/UniWidgets'
+import { KvsSkillsBrandMark } from '@/components/KvsSkillsBrandMark'
 import { ScrollReveal } from '@/components/ScrollReveal'
 import {
-  getCategoryHref,
-  homepageProductCategories,
-} from '@/lib/products'
+  aboutHomeBlocks,
+  aboutUsHome,
+  heroContent,
+  PHONE_DISPLAY,
+  PHONE_E164,
+  procurementCta,
+  productHighlights,
+  productMarqueeTerms,
+  productsCta,
+  productsHome,
+  sectorsSection,
+} from '@/lib/content'
 import { sectors } from '@/lib/sectors'
-import { testimonials } from '@/lib/testimonials'
+import { testimonials, testimonialsSection } from '@/lib/testimonials'
 import {
-  EmpoweringIcon,
-  InnovativeIcon,
-  OnlineCoursesIcon,
+  MetalPipeIcon,
+  PrecisionFabricationIcon,
   StarIcon,
-  TailoredIcon,
+  SteelSheetIcon,
+  StructuralSteelIcon,
   YellowScribble,
 } from '@/components/UniIcons'
 
-const features = [
-  {
-    icon: <OnlineCoursesIcon />,
-    title: 'Steel sheets & plates',
-    desc: 'High-grade MS, GI, and SS sheets for construction and fabrication.',
-  },
-  {
-    icon: <EmpoweringIcon />,
-    title: 'Pipes & tubes',
-    desc: 'Durable metal pipes and tubes for industrial and commercial use.',
-  },
-  {
-    icon: <InnovativeIcon />,
-    title: 'Structural steel',
-    desc: 'Angles, channels, beams, and TMT bars for strong frameworks.',
-  },
-  {
-    icon: <TailoredIcon />,
-    title: 'Custom fabrication',
-    desc: 'Precision-cut and fabricated metal products built to your specs.',
-  },
-]
+const features = aboutUsHome.features.map((item, index) => {
+  const icons = [
+    <SteelSheetIcon key="steel" />,
+    <MetalPipeIcon key="pipe" />,
+    <StructuralSteelIcon key="structural" />,
+    <PrecisionFabricationIcon key="fab" />,
+  ]
+  return {
+    icon: icons[index] ?? icons[0],
+    title: item.title,
+    desc: item.desc,
+  }
+})
 
 const partners = [
   { name: 'TATA', className: 'uniPartnerLogo--sny' },
@@ -55,27 +56,16 @@ const partners = [
 
 const heroSlides = [
   {
-    img: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1600&q=85',
-    title: 'Quality metal products, built to last',
-    desc: 'Premium steel, pipes, sheets, and custom fabrication for construction, industry, and infrastructure projects across India.',
+    poster: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1600&q=85',
+    video: '/hero/steel_2.mp4',
   },
   {
-    img: 'https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?w=1600&q=85',
-    title: 'Marine-grade metals for demanding environments',
-    desc: 'Corrosion-resistant plates, pipes, and alloys engineered for shipbuilding, ports, and offshore structures.',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1600&q=85',
-    title: 'Powering energy and industrial projects',
-    desc: 'Certified pipes, structural steel, and fabricated components for refineries, plants, and heavy industry.',
+    poster: 'https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?w=1600&q=85',
+    video: '/hero/steel_video.mp4',
   },
 ]
 
-const heroStats = [
-  { value: '15+', label: 'Years' },
-  { value: '98%', label: 'On-time' },
-  { value: '2K+', label: 'Clients' },
-]
+const heroStats = heroContent.stats
 
 const SLIDE_MS = 6500
 
@@ -120,14 +110,13 @@ function HeroSection() {
     return () => window.clearInterval(timer)
   }, [activeSlide])
 
-  const slide = heroSlides[activeSlide]
   const heroStyle = {
     '--hero-inset': `${shrink * 56}px`,
     '--hero-radius': `${shrink * 28}px`,
     '--hero-height-offset': `${shrink * 140}px`,
     '--hero-inset-bottom': `${shrink * 36}px`,
     '--hero-shrink-progress': shrink,
-  } as React.CSSProperties
+  } as CSSProperties
 
   return (
     <div className="uniHeroShell">
@@ -140,51 +129,96 @@ function HeroSection() {
         <div className="uniHeroSlides" aria-hidden>
           {heroSlides.map((item, index) => (
             <div
-              key={item.img}
+              key={item.video}
               className={`uniHeroSlide${index === activeSlide ? ' uniHeroSlide--active' : ''}`}
-              style={{ backgroundImage: `url(${item.img})` }}
-            />
+            >
+              <video
+                className="uniHeroSlideVideo"
+                autoPlay
+                muted
+                loop
+                playsInline
+                poster={item.poster}
+              >
+                <source src={item.video} type="video/mp4" />
+              </video>
+            </div>
           ))}
         </div>
 
         <div className="uniHeroInner">
-          <div className="uniHeroContent">
-            <div className="uniHeroLeft">
-              <h1 key={slide.title}>{slide.title}</h1>
-              <div className="uniHeroActions">
-                <Link href="/products" className="uniHeroBtn">Explore Products</Link>
-                <Link href="/contact" className="uniHeroBtnGhost">Get a Quote</Link>
-              </div>
-            </div>
-            <div className="uniHeroRight">
-              <p key={slide.desc} className="uniHeroDesc">{slide.desc}</p>
-            </div>
-          </div>
-
-          <div className="uniHeroBottom">
-            <div className="uniHeroStats">
-              {heroStats.map((stat) => (
-                <div key={stat.label} className="uniHeroStat">
-                  <strong>{stat.value}</strong>
-                  <span>{stat.label}</span>
+          <div className="uniHeroLayout">
+            <div className="uniHeroMediaZone">
+              <ul className="uniHeroHighlights">
+                {heroContent.highlights.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+              <div className="uniHeroStatsBar">
+                <div className="uniHeroStats">
+                  {heroStats.map((stat) => (
+                    <div key={stat.label} className="uniHeroStat">
+                      <strong>{stat.value}</strong>
+                      <span>{stat.label}</span>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-
-            <div className="uniHeroSliderUi">
-              <span className="uniHeroSliderCount">
-                {String(activeSlide + 1).padStart(2, '0')}
-                {' / '}
-                {String(heroSlides.length).padStart(2, '0')}
-              </span>
-              <div className="uniHeroSliderProgress" aria-hidden>
-                <span style={{ width: `${slideProgress}%` }} />
               </div>
             </div>
-          </div>
 
-          <div className="uniHeroScribble">
-            <YellowScribble />
+            <div className="uniHeroGeoStack" aria-hidden>
+              <span className="uniHeroGeoHex" />
+            </div>
+
+            <div className="uniHeroPanelWrap">
+              <div className="uniHeroPanelShape">
+                <div className="uniHeroPanelContent">
+                  <p className="uniHeroEyebrow">{heroContent.eyebrow}</p>
+                  <div className="uniHeroTitleBlock">
+                    <span className="uniHeroGhostTitle" aria-hidden>
+                      {heroContent.title}
+                    </span>
+                    <h1>{heroContent.title}</h1>
+                  </div>
+                  <p className="uniHeroDesc">{heroContent.description}</p>
+
+                  <div className="uniHeroActions">
+                    <Link href={heroContent.ctaHref} className="uniHeroBtn">
+                      {heroContent.ctaLabel}
+                    </Link>
+                    <Link href={heroContent.secondaryCtaHref} className="uniHeroBtnGhost">
+                      {heroContent.secondaryCtaLabel}
+                    </Link>
+                  </div>
+
+                  <Link href="/about" className="uniHeroReadMore">
+                    <span className="uniHeroReadMoreDots" aria-hidden>
+                      <span />
+                      <span />
+                      <span />
+                    </span>
+                    Read more
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            <Link href="/products" className="uniHeroSideTab">
+              Product Catalog
+            </Link>
+
+            <div className="uniHeroLayoutFoot">
+              <div className="uniHeroSliderUi">
+                <span className="uniHeroSliderCount">
+                  {String(activeSlide + 1).padStart(2, '0')}
+                  {' / '}
+                  {String(heroSlides.length).padStart(2, '0')}
+                </span>
+                <div className="uniHeroSliderProgress" aria-hidden>
+                  <span style={{ width: `${slideProgress}%` }} />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -195,41 +229,18 @@ function HeroSection() {
 function SkillsSection() {
   return (
     <ScrollReveal as="section" className="uniSkills">
-      <svg className="uniSkillsBlob" viewBox="0 0 280 280" aria-hidden>
-        <defs>
-          <pattern id="blobPattern" width="8" height="8" patternUnits="userSpaceOnUse">
-            <circle cx="2" cy="2" r="1" fill="rgba(255,255,255,0.4)" />
-          </pattern>
-        </defs>
-        <path
-          d="M140 20 C200 10, 260 60, 250 140 C240 220, 160 270, 80 250 C0 230, 20 80, 60 40 C90 10, 100 25, 140 20Z"
-          fill="url(#blobPattern)"
-        />
-        <path
-          d="M140 20 C200 10, 260 60, 250 140 C240 220, 160 270, 80 250 C0 230, 20 80, 60 40 C90 10, 100 25, 140 20Z"
-          fill="#FF8FA0"
-          opacity="0.7"
-        />
-        <path
-          d="M160 40 C210 30, 250 80, 240 150 C230 200, 180 240, 120 230 C60 220, 50 100, 90 60 C110 40, 130 45, 160 40Z"
-          fill="#FF6B35"
-          opacity="0.5"
-        />
-      </svg>
+      <KvsSkillsBrandMark />
 
-      <div className="uniContainer">
+      <div className="uniContainer uniSkillsInner">
         <ScrollReveal className="uniSkillsTop">
-          <div>
-            <div className="uniEyebrow">Trusted metal supplier</div>
-            <h2>Strength and precision in every product</h2>
+          <div className="uniSkillsHeadingCol">
+            <p className="uniSkillsEyebrow">{aboutUsHome.eyebrow}</p>
+            <h2 className="uniSkillsTitle">{aboutUsHome.title}</h2>
           </div>
           <div className="uniSkillsText">
-            <p>
-              KVS Metal is a leading supplier of premium metal products for construction, manufacturing, and industrial projects. From steel sheets and roofing to pipes, angles, and custom fabrication, we deliver materials that meet the highest quality standards.
-            </p>
-            <p>
-              With years of industry experience, competitive pricing, and reliable delivery, we help builders, contractors, and businesses get the right metal solutions on time, every time.
-            </p>
+            {aboutUsHome.paragraphs.map((paragraph) => (
+              <p key={paragraph.slice(0, 48)}>{paragraph}</p>
+            ))}
           </div>
         </ScrollReveal>
 
@@ -250,94 +261,193 @@ function SkillsSection() {
 function MarketSectorsSection() {
   return (
     <ScrollReveal as="section" className="uniSectors" id="sectors">
-      <div className="uniSectorsDecor" aria-hidden>
-        <div className="uniSectorsDecorShape uniSectorsDecorShape--tl" />
-        <div className="uniSectorsDecorShape uniSectorsDecorShape--br" />
-      </div>
       <div className="uniContainer uniSectorsInner">
-        <ScrollReveal direction="left" className="uniSectorsTitleWrap">
-          <h2 className="uniSectorsTitle uniSectionTitle">
-            Key
-            <br />
-            Market
-            <br />
-            Sectors
-          </h2>
+        <ScrollReveal direction="up" className="uniSectorsTitleWrap">
+          <h2 className="uniSectorsTitle">{sectorsSection.title}</h2>
+          <p className="uniSectorsTagline">{sectorsSection.tagline}</p>
         </ScrollReveal>
-        <ScrollReveal direction="right" delay={0.12} className="uniSectorsGridWrap">
+        <div className="uniSectorsGridWrap">
           <div className="uniSectorsGrid">
-            {sectors.map((sector) => (
-              <Link
+            {sectors.map((sector, index) => (
+              <ScrollReveal
                 key={sector.slug}
-                href={`/sectors/${sector.slug}`}
-                className="sectorCard"
+                direction="up"
+                delay={0.06 + index * 0.11}
+                className={`uniSectorsCardReveal uniSectorsCard--${index + 1}`}
               >
-                <div className="sectorCardMedia">
-                  <img src={sector.img} alt={sector.name} />
-                  <div className="sectorCardOverlay" />
-                  <h3>{sector.name}</h3>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </ScrollReveal>
-      </div>
-    </ScrollReveal>
-  )
-}
-
-const aboutParagraphs = [
-  'KVS Metal is a trusted name in the metal products industry, supplying high-quality steel, pipes, sheets, and fabricated components to clients across the region. Our mission is to provide durable, certified metal products at competitive prices.',
-  'Founded with a commitment to quality and service, KVS Metal has grown into a reliable partner for contractors, builders, and industries. We source from leading mills and maintain strict quality checks on every batch we deliver.',
-]
-
-function AboutTextSection() {
-  const copyRef = useRef<HTMLDivElement>(null)
-  const [revealed, setRevealed] = useState(false)
-
-  useEffect(() => {
-    const copy = copyRef.current
-    if (!copy) return
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setRevealed(true)
-          observer.disconnect()
-        }
-      },
-      { threshold: 0.25, rootMargin: '0px 0px -5% 0px' },
-    )
-
-    observer.observe(copy)
-    return () => observer.disconnect()
-  }, [])
-
-  return (
-    <ScrollReveal as="section" className="uniAboutText" id="about">
-      <div className="uniContainer">
-        <div className="uniAboutSticky">
-          <ScrollReveal direction="left" className="uniAboutStickySide">
-            <div className="uniEyebrow">Built on trust</div>
-            <h2>About us</h2>
-            <Link href="/about" className="uniAboutMoreLink">Learn more about KVS</Link>
-          </ScrollReveal>
-          <div
-            ref={copyRef}
-            className={`uniAboutCopy${revealed ? ' uniAboutCopy--revealed' : ''}`}
-          >
-            {aboutParagraphs.map((paragraph, index) => (
-              <p
-                key={paragraph.slice(0, 40)}
-                style={{ '--reveal-delay': `${index * 0.18}s` } as React.CSSProperties}
-              >
-                {paragraph}
-              </p>
+                <Link href={`/sectors/${sector.slug}`} className="sectorCard uniSectorsCard">
+                  <div className="sectorCardMedia">
+                    <img src={sector.img} alt={sector.name} />
+                    <div className="sectorCardOverlay" />
+                    <h3>{sector.name}</h3>
+                  </div>
+                </Link>
+              </ScrollReveal>
             ))}
           </div>
         </div>
       </div>
     </ScrollReveal>
+  )
+}
+
+const steelMarqueeTerms = productMarqueeTerms
+
+function SteelMarqueeSection() {
+  const marqueeItems = [...steelMarqueeTerms, ...steelMarqueeTerms]
+
+  return (
+    <section className="uniSteelMarquee" aria-label="Steel product highlights">
+      <div className="uniSteelMarqueeViewport">
+        <div className="uniSteelMarqueeTrack">
+          {marqueeItems.map((term, index) => (
+            <span key={`${term}-${index}`} className="uniSteelMarqueeItem">
+              {term}
+            </span>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+const aboutBlocks = aboutHomeBlocks
+
+function AboutTextSection() {
+  const sectionRef = useRef<HTMLElement>(null)
+  const pinRef = useRef<HTMLDivElement>(null)
+  const viewportRef = useRef<HTMLDivElement>(null)
+  const trackRef = useRef<HTMLDivElement>(null)
+  const [revealed, setRevealed] = useState(false)
+  const [scrollLinked, setScrollLinked] = useState(false)
+
+  useEffect(() => {
+    const section = sectionRef.current
+    const pin = pinRef.current
+    const viewport = viewportRef.current
+    const track = trackRef.current
+    if (!section) return
+
+    const STICKY_TOP = 112
+    let raf = 0
+
+    const revealObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setRevealed(true)
+          revealObserver.disconnect()
+        }
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -6% 0px' },
+    )
+    revealObserver.observe(section)
+
+    const update = () => {
+      if (!pin || !viewport || !track) return
+
+      const enabled =
+        window.matchMedia('(min-width: 1025px)').matches &&
+        !window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
+        aboutBlocks.length > 1
+
+      setScrollLinked(enabled)
+      section.classList.toggle('uniAboutText--scroll', enabled)
+
+      if (!enabled) {
+        section.style.removeProperty('height')
+        track.style.removeProperty('transform')
+        viewport.style.removeProperty('--about-slide-width')
+        return
+      }
+
+      const slideWidth = viewport.clientWidth
+      viewport.style.setProperty('--about-slide-width', `${slideWidth}px`)
+
+      const scrollRange = Math.max(0, (aboutBlocks.length - 1) * slideWidth)
+      const pinHeight = window.innerHeight - STICKY_TOP
+
+      section.style.height = `${pinHeight + scrollRange}px`
+
+      const sectionTop = section.getBoundingClientRect().top
+      const progress =
+        scrollRange > 0
+          ? Math.min(1, Math.max(0, (-sectionTop + STICKY_TOP) / scrollRange))
+          : 0
+
+      track.style.transform = `translate3d(-${progress * scrollRange}px, 0, 0)`
+    }
+
+    const onScroll = () => {
+      cancelAnimationFrame(raf)
+      raf = requestAnimationFrame(update)
+    }
+
+    const resizeObserver = new ResizeObserver(onScroll)
+    ;[section, pin, viewport, track].forEach((node) => {
+      if (node) resizeObserver.observe(node)
+    })
+
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    update()
+
+    return () => {
+      cancelAnimationFrame(raf)
+      revealObserver.disconnect()
+      resizeObserver.disconnect()
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
+  }, [])
+
+  return (
+    <section
+      ref={sectionRef}
+      className={`uniAboutText${revealed ? ' uniAboutText--revealed' : ''}${scrollLinked ? ' uniAboutText--scroll' : ''}`}
+      id="about"
+    >
+      <div className="uniAboutDecor" aria-hidden>
+        <span className="uniAboutDecorRing" />
+        <span className="uniAboutDecorLine" />
+      </div>
+      <div ref={pinRef} className="uniAboutPin">
+        <div className="uniAboutInner">
+          <div className="uniAboutGrid">
+            <div className="uniAboutIntro">
+              <div className="uniEyebrow uniAboutRevealItem">{aboutUsHome.eyebrow}</div>
+              <h2 className="uniAboutRevealItem">{aboutUsHome.title}</h2>
+              <p className="uniAboutIntroLead uniAboutRevealItem">
+                {aboutUsHome.paragraphs[0]}
+              </p>
+              <Link href="/about" className="uniAboutMoreLink uniAboutRevealItem">
+                Learn more about KVS
+              </Link>
+            </div>
+
+            <div ref={viewportRef} className="uniAboutCardsViewport">
+              <div ref={trackRef} className="uniAboutCardsTrack">
+                {aboutBlocks.map((block, index) => (
+                  <article
+                    key={block.id}
+                    className="uniAboutCard uniAboutRevealItem"
+                    style={{ '--reveal-delay': `${0.15 + index * 0.12}s` } as CSSProperties}
+                  >
+                    <div className="uniAboutCardBody">
+                      <span className="uniAboutCardLabel">{block.label}</span>
+                      <div className="uniAboutCardRule" aria-hidden />
+                      <p className="uniAboutCardText">{block.text}</p>
+                    </div>
+                    <div className="uniAboutCardMedia">
+                      <img src={block.image} alt={block.alt} loading="lazy" />
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   )
 }
 
@@ -404,8 +514,8 @@ function TestimonialsSection() {
 
       <div className="uniContainer">
         <header className="uniTestimonialsHeader">
-          <div className="uniEyebrow">Client feedback</div>
-          <h2>Trusted by builders and industry professionals</h2>
+          <div className="uniEyebrow">{testimonialsSection.eyebrow}</div>
+          <h2>{testimonialsSection.title}</h2>
         </header>
 
         <div className="uniTestimonialsSlider">
@@ -423,24 +533,38 @@ function TestimonialsSection() {
               className="uniTestimonialsTrack"
               style={{ transform: `translateX(-${active * 100}%)` }}
             >
-              {testimonials.map((item) => (
+              {testimonials.map((item, index) => (
                 <article
                   key={item.id}
                   className="uniTestimonialsSlide"
                   aria-hidden={testimonials[active].id !== item.id}
                 >
                   <div className="uniTestimonialCard">
-                    <div className="uniTestimonialCardStars" aria-hidden>
-                      {[1, 2, 3, 4, 5].map((n) => (
-                        <StarIcon key={n} />
-                      ))}
+                    <div className="uniTestimonialCardAccent" aria-hidden />
+                    <div className="uniTestimonialCardBody">
+                      <div className="uniTestimonialCardHead">
+                        <div className="uniTestimonialCardRating" aria-label="5 out of 5 stars">
+                          <div className="uniTestimonialCardStars" aria-hidden>
+                            {[1, 2, 3, 4, 5].map((n) => (
+                              <StarIcon key={n} />
+                            ))}
+                          </div>
+                          <span className="uniTestimonialCardRatingLabel">5.0 rating</span>
+                        </div>
+                        <span className="uniTestimonialCardIndex" aria-hidden>
+                          {String(index + 1).padStart(2, '0')}
+                        </span>
+                      </div>
+                      <div className="uniTestimonialCardQuoteWrap">
+                        <span className="uniTestimonialCardMark" aria-hidden>&ldquo;</span>
+                        <blockquote className="uniTestimonialCardQuote">{item.quote}</blockquote>
+                      </div>
                     </div>
-                    <blockquote className="uniTestimonialCardQuote">
-                      &ldquo;{item.quote}&rdquo;
-                    </blockquote>
-                    <footer className="uniTestimonialCardAuthor">
-                      <img src={item.image} alt="" className="uniTestimonialCardAvatar" />
-                      <div>
+                    <footer className="uniTestimonialCardFooter">
+                      <div className="uniTestimonialCardPortrait">
+                        <img src={item.image} alt="" className="uniTestimonialCardAvatar" />
+                      </div>
+                      <div className="uniTestimonialCardAuthor">
                         <strong>{item.name}</strong>
                         <span>{item.role}</span>
                       </div>
@@ -480,70 +604,72 @@ function TestimonialsSection() {
   )
 }
 
-const productCategoryRows = [
-  homepageProductCategories.slice(0, 4),
-  homepageProductCategories.slice(4, 8),
-]
+function HomeCtaSection({
+  title,
+  text,
+  ctaLabel,
+  ctaHref,
+  showPhone = false,
+}: {
+  title: string
+  text: string
+  ctaLabel: string
+  ctaHref: string
+  showPhone?: boolean
+}) {
+  return (
+    <ScrollReveal as="section" className="uniHomeCta">
+      <div className="uniContainer">
+        <div className="uniHomeCtaInner">
+          <div>
+            <h2>{title}</h2>
+            <p className="uniSectionText">{text}</p>
+            {showPhone && (
+              <p className="uniHomeCtaPhone">
+                {procurementCta.phoneLabel}:{' '}
+                <a href={`tel:${PHONE_E164}`}>{PHONE_DISPLAY}</a>
+              </p>
+            )}
+          </div>
+          <Link href={ctaHref} className="uniHeroBtn">
+            {ctaLabel}
+          </Link>
+        </div>
+      </div>
+    </ScrollReveal>
+  )
+}
 
 function ProductsSection() {
-  const sectionRef = useRef<HTMLElement>(null)
-  const [revealed, setRevealed] = useState(false)
-
-  useEffect(() => {
-    const section = sectionRef.current
-    if (!section) return
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setRevealed(true)
-          observer.disconnect()
-        }
-      },
-      { threshold: 0.22, rootMargin: '0px 0px -6% 0px' },
-    )
-
-    observer.observe(section)
-    return () => observer.disconnect()
-  }, [])
-
   return (
-    <section
-      ref={sectionRef}
-      className={`uniProducts${revealed ? ' uniProducts--revealed' : ''}`}
-      id="products"
-    >
-      <div className="uniSectorsDecor" aria-hidden>
-        <div className="uniSectorsDecorShape uniSectorsDecorShape--tl" />
-        <div className="uniSectorsDecorShape uniSectorsDecorShape--br" />
-      </div>
+    <section className="uniProducts" id="products">
       <div className="uniContainer uniProductsInner">
-        <h2 className="uniProductsTitle uniSectionTitle">
-          Our
-          <br />
-          Products
-        </h2>
-        <div className="uniProductsCards">
-          {productCategoryRows.map((row, rowIndex) => (
-            <div
-              key={row.map((item) => item.slug).join('-')}
-              className={`uniProductsRow uniProductsRow--${rowIndex + 1}`}
-            >
-              {row.map((category) => (
-                <Link
-                  key={category.slug}
-                  href={getCategoryHref(category)}
-                  className="sectorCard"
-                >
-                  <div className="sectorCardMedia">
-                    <img src={category.img} alt={category.title} />
-                    <div className="sectorCardOverlay" />
-                    <h3>{category.title}</h3>
-                  </div>
-                </Link>
-              ))}
+        <div className="uniProductsSplit">
+          <div className="uniProductsStickyCol">
+            <div className="uniProductsSticky">
+              <p className="uniProductsEyebrow">{productsHome.eyebrow}</p>
+              <h2 className="uniProductsTitle">{productsHome.title}</h2>
+              <p className="uniProductsLead">{productsHome.lead}</p>
+              <div className="uniProductsScribble">
+                <YellowScribble />
+              </div>
             </div>
-          ))}
+          </div>
+          <div className="uniProductsCardsTrack">
+            {productHighlights.map((category) => (
+              <Link
+                key={category.slug}
+                href={category.href}
+                className="sectorCard uniProductsCard"
+              >
+                <div className="sectorCardMedia">
+                  <img src={category.img} alt={category.title} />
+                  <div className="sectorCardOverlay" />
+                  <h3>{category.title}</h3>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -557,14 +683,28 @@ export default function KvsMetalPage() {
       <main>
         <HeroSection />
         <SkillsSection />
+        <HomeCtaSection
+          title={procurementCta.title}
+          text={procurementCta.text}
+          ctaLabel={procurementCta.ctaLabel}
+          ctaHref={procurementCta.ctaHref}
+          showPhone
+        />
         <MarketSectorsSection />
+        <SteelMarqueeSection />
         <AboutTextSection />
         <PartnersSection />
         <ProductsSection />
+        <HomeCtaSection
+          title={productsCta.title}
+          text={productsCta.text}
+          ctaLabel={productsCta.ctaLabel}
+          ctaHref={productsCta.ctaHref}
+        />
         <TestimonialsSection />
       </main>
       <UniFooter />
-      <UniWidgets />
+      <UniWidgets hideUntilPastHero />
     </div>
   )
 }

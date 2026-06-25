@@ -50,6 +50,13 @@ export default function SectorDetailPage({ sector }: { sector: Sector }) {
               {sector.paragraphs.map((paragraph) => (
                 <p key={paragraph.slice(0, 32)}>{paragraph}</p>
               ))}
+              {sector.bullets.length > 0 ? (
+                <ul className="sectorDetailBullets">
+                  {sector.bullets.map((bullet) => (
+                    <li key={bullet}>{bullet}</li>
+                  ))}
+                </ul>
+              ) : null}
             </div>
 
             <aside className="sectorDetailPanel">
@@ -62,12 +69,12 @@ export default function SectorDetailPage({ sector }: { sector: Sector }) {
                   Get in Touch
                 </Link>
                 <Link href="/#sectors" className="sectorDetailLink">
-                  View all sectors
+                  View all industries
                 </Link>
               </div>
 
               <div className="sectorDetailRelated">
-                <p className="sectorDetailRelatedLabel">Other sectors</p>
+                <p className="sectorDetailRelatedLabel">Other industries</p>
                 <ul>
                   {otherSectors.map((item) => (
                     <li key={item.slug}>

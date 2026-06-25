@@ -83,43 +83,73 @@ export function StarIcon() {
   )
 }
 
-export function OnlineCoursesIcon() {
+const skillsIconProps = {
+  width: 64,
+  height: 64,
+  viewBox: '0 0 48 48',
+  fill: 'none' as const,
+  stroke: 'currentColor',
+  strokeWidth: 1.5,
+  strokeLinecap: 'round' as const,
+  strokeLinejoin: 'round' as const,
+  'aria-hidden': true,
+}
+
+export function SteelSheetIcon() {
   return (
-    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="#FF6B35" strokeWidth="1.5" aria-hidden>
-      <rect x="8" y="14" width="32" height="22" rx="2" />
-      <path d="M8 20h32M16 14V10M32 14V10" />
-      <path d="M18 28h12M18 32h8" strokeWidth="1.2" />
+    <svg {...skillsIconProps}>
+      <path d="M8 20h32" />
+      <path d="M10 26h28" />
+      <path d="M12 32h24" />
+      <path d="M8 20v6" />
+      <path d="M40 20v6" />
+      <path d="M10 26v6" />
+      <path d="M38 26v6" />
+      <path d="M12 32v4" />
+      <path d="M36 32v4" />
     </svg>
   )
 }
 
-export function EmpoweringIcon() {
+export function MetalPipeIcon() {
   return (
-    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="#FF6B35" strokeWidth="1.5" aria-hidden>
-      <circle cx="24" cy="24" r="14" />
-      <circle cx="24" cy="24" r="6" />
-      <path d="M24 10v4M24 34v4M10 24h4M34 24h4M14.5 14.5l2.8 2.8M30.7 30.7l2.8 2.8M33.5 14.5l-2.8 2.8M17.3 30.7l-2.8 2.8" />
+    <svg {...skillsIconProps}>
+      <ellipse cx="24" cy="14" rx="14" ry="5" />
+      <path d="M10 14v20" />
+      <path d="M38 14v20" />
+      <ellipse cx="24" cy="34" rx="14" ry="5" />
+      <ellipse cx="24" cy="24" rx="9" ry="3.5" />
     </svg>
   )
 }
 
-export function InnovativeIcon() {
+export function StructuralSteelIcon() {
   return (
-    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="#FF6B35" strokeWidth="1.5" aria-hidden>
-      <path d="M12 36l8-20h8l8 20" />
-      <path d="M16 28h16" />
-      <path d="M20 20h8v-6H20v6z" />
-      <circle cx="24" cy="12" r="2" fill="#FF6B35" />
+    <svg {...skillsIconProps}>
+      <path d="M12 12h24" />
+      <path d="M19 12v24" />
+      <path d="M29 12v24" />
+      <path d="M12 36h24" />
+      <path d="M12 12v3" />
+      <path d="M36 12v3" />
+      <path d="M12 33v3" />
+      <path d="M36 33v3" />
     </svg>
   )
 }
 
-export function TailoredIcon() {
+export function PrecisionFabricationIcon() {
   return (
-    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="#FF6B35" strokeWidth="1.5" aria-hidden>
-      <rect x="10" y="18" width="28" height="16" rx="2" />
-      <path d="M16 18V14a8 8 0 0116 0v4" />
-      <path d="M18 26h4M26 26h4M18 30h12" strokeWidth="1.2" />
+    <svg {...skillsIconProps}>
+      <path d="M14 38V12" />
+      <path d="M34 38V12" />
+      <path d="M14 12h20" />
+      <path d="M14 22h7" />
+      <path d="M34 22h-7" />
+      <path d="M21 22v8" />
+      <path d="M27 22v8" />
+      <circle cx="24" cy="30" r="3.5" />
+      <path d="M24 33.5V38" />
     </svg>
   )
 }
