@@ -29,24 +29,18 @@ export type KvsProductCategory = {
   productSlugs: string[]
 }
 
-const IMG = {
-  coils: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=700&q=80',
-  aluminium: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=700&q=80',
-  gi: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=700&q=80',
-  foundation: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=700&q=80',
-  angles: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=700&q=80',
-  bars: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=700&q=80',
-  channels: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=700&q=80',
-  beams: 'https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?w=700&q=80',
-  mesh: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=700&q=80',
-}
+import {
+  getKvsProductGallery,
+  getKvsProductImage,
+  kvsCategoryImageBySlug,
+} from './product-images'
 
 export const kvsProductCategories: KvsProductCategory[] = [
   {
     slug: 'hr-cr-coils-sheets-plates',
     title: 'HR/CR Coils, Sheets & Plates',
-    img: IMG.coils,
-    heroImg: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=1400&q=85',
+    img: kvsCategoryImageBySlug['hr-cr-coils-sheets-plates'].img,
+    heroImg: kvsCategoryImageBySlug['hr-cr-coils-sheets-plates'].heroImg,
     description: 'Hot & cold rolled flat products',
     headline: 'SUPPLY HR/CR COILS, SHEETS AND PLATES FOR FABRICATION AND INDUSTRIAL APPLICATIONS.',
     paragraphs: [
@@ -58,8 +52,8 @@ export const kvsProductCategories: KvsProductCategory[] = [
   {
     slug: 'aluminium-coils-sheets-plates',
     title: 'Aluminium Coils, Sheets & Plates',
-    img: IMG.aluminium,
-    heroImg: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1400&q=85',
+    img: kvsCategoryImageBySlug['aluminium-coils-sheets-plates'].img,
+    heroImg: kvsCategoryImageBySlug['aluminium-coils-sheets-plates'].heroImg,
     description: 'Aluminium flat products',
     headline: 'ALUMINIUM COILS, SHEETS AND PLATES FOR CLADDING, FABRICATION AND INDUSTRIAL USE.',
     paragraphs: [
@@ -71,8 +65,8 @@ export const kvsProductCategories: KvsProductCategory[] = [
   {
     slug: 'gi-ppgi-coils-sheets',
     title: 'GI/PPGI Coils & Sheets',
-    img: IMG.gi,
-    heroImg: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1400&q=85',
+    img: kvsCategoryImageBySlug['gi-ppgi-coils-sheets'].img,
+    heroImg: kvsCategoryImageBySlug['gi-ppgi-coils-sheets'].heroImg,
     description: 'Galvanized & pre-painted coils',
     headline: 'GI AND PPGI COILS AND SHEETS FOR ROOFING, CLADDING AND CORROSION-RESISTANT APPLICATIONS.',
     paragraphs: [
@@ -84,8 +78,8 @@ export const kvsProductCategories: KvsProductCategory[] = [
   {
     slug: 'precast-foundation-materials',
     title: 'Precast Foundation Materials',
-    img: IMG.foundation,
-    heroImg: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1400&q=85',
+    img: kvsCategoryImageBySlug['precast-foundation-materials'].img,
+    heroImg: kvsCategoryImageBySlug['precast-foundation-materials'].heroImg,
     description: 'Foundation & precast supplies',
     headline: 'PRECAST AND FOUNDATION MATERIALS FOR DEMANDING CONSTRUCTION ENVIRONMENTS.',
     paragraphs: [
@@ -97,8 +91,8 @@ export const kvsProductCategories: KvsProductCategory[] = [
   {
     slug: 'angles',
     title: 'Angles',
-    img: IMG.angles,
-    heroImg: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1400&q=85',
+    img: kvsCategoryImageBySlug.angles.img,
+    heroImg: kvsCategoryImageBySlug.angles.heroImg,
     description: 'Equal & unequal angles',
     headline: 'STRUCTURAL ANGLES FOR FRAMES, BRACKETS AND FABRICATION WORK.',
     paragraphs: [
@@ -110,8 +104,8 @@ export const kvsProductCategories: KvsProductCategory[] = [
   {
     slug: 'bars',
     title: 'Bars',
-    img: IMG.bars,
-    heroImg: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1400&q=85',
+    img: kvsCategoryImageBySlug.bars.img,
+    heroImg: kvsCategoryImageBySlug.bars.heroImg,
     description: 'TMT & round bars',
     headline: 'REINFORCEMENT AND LONG BAR PRODUCTS FOR CONSTRUCTION AND INDUSTRIAL USE.',
     paragraphs: [
@@ -123,8 +117,8 @@ export const kvsProductCategories: KvsProductCategory[] = [
   {
     slug: 'channels',
     title: 'Channels',
-    img: IMG.channels,
-    heroImg: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1400&q=85',
+    img: kvsCategoryImageBySlug.channels.img,
+    heroImg: kvsCategoryImageBySlug.channels.heroImg,
     description: 'C & U channels',
     headline: 'MS CHANNELS FOR STRUCTURAL FRAMING, SUPPORTS AND FABRICATION.',
     paragraphs: [
@@ -136,8 +130,8 @@ export const kvsProductCategories: KvsProductCategory[] = [
   {
     slug: 'structural-sections-beams',
     title: 'Structural Sections & Beams',
-    img: IMG.beams,
-    heroImg: 'https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?w=1400&q=85',
+    img: kvsCategoryImageBySlug['structural-sections-beams'].img,
+    heroImg: kvsCategoryImageBySlug['structural-sections-beams'].heroImg,
     description: 'H-beams, I-beams & sections',
     headline: 'STRUCTURAL SECTIONS AND BEAMS FOR HEAVY CONSTRUCTION AND ENGINEERING.',
     paragraphs: [
@@ -149,8 +143,8 @@ export const kvsProductCategories: KvsProductCategory[] = [
   {
     slug: 'mesh-gi-gratings',
     title: 'Mesh & GI Gratings',
-    img: IMG.mesh,
-    heroImg: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1400&q=85',
+    img: kvsCategoryImageBySlug['mesh-gi-gratings'].img,
+    heroImg: kvsCategoryImageBySlug['mesh-gi-gratings'].heroImg,
     description: 'Welded mesh & gratings',
     headline: 'MESH AND GI GRATINGS FOR FLOORING, FENCING AND INDUSTRIAL PLATFORMS.',
     paragraphs: [
@@ -168,8 +162,8 @@ export const kvsDemoProducts: KvsDemoProduct[] = [
     title: 'HR Steel Coils',
     price: 'On request',
     rating: '4.8',
-    img: IMG.coils,
-    images: [IMG.coils],
+    img: getKvsProductImage('hr-coils')!,
+    images: getKvsProductGallery('hr-coils'),
     category: 'HR/CR Coils, Sheets & Plates',
     shortDescription: 'HOT-ROLLED STEEL COILS FOR ROLL-FORMING, FABRICATION AND INDUSTRIAL PROCESSING.',
     description:
@@ -186,8 +180,8 @@ export const kvsDemoProducts: KvsDemoProduct[] = [
     title: 'Aluminium Coils',
     price: 'On request',
     rating: '4.7',
-    img: IMG.aluminium,
-    images: [IMG.aluminium],
+    img: getKvsProductImage('aluminium-coils')!,
+    images: getKvsProductGallery('aluminium-coils'),
     category: 'Aluminium Coils, Sheets & Plates',
     shortDescription: 'ALUMINIUM COILS FOR CLADDING, TRANSPORT AND PRECISION FABRICATION APPLICATIONS.',
     description:
@@ -204,8 +198,8 @@ export const kvsDemoProducts: KvsDemoProduct[] = [
     title: 'Aluminium Sheets & Plates',
     price: 'On request',
     rating: '4.8',
-    img: IMG.aluminium,
-    images: [IMG.aluminium],
+    img: getKvsProductImage('aluminium-sheets')!,
+    images: getKvsProductGallery('aluminium-sheets'),
     category: 'Aluminium Coils, Sheets & Plates',
     shortDescription: 'FLAT ALUMINIUM SHEETS AND PLATES FOR INDUSTRIAL AND ARCHITECTURAL PROJECTS.',
     description:
@@ -222,8 +216,8 @@ export const kvsDemoProducts: KvsDemoProduct[] = [
     title: 'PC Strand Coils',
     price: 'On request',
     rating: '4.9',
-    img: IMG.foundation,
-    images: [IMG.foundation],
+    img: getKvsProductImage('pc-strand-coils')!,
+    images: getKvsProductGallery('pc-strand-coils'),
     category: 'Precast Foundation Materials',
     badge: 'High Tensile',
     shortDescription: 'PRESTRESSED CONCRETE STRAND COILS FOR FOUNDATION AND PRECAST APPLICATIONS.',
@@ -241,8 +235,8 @@ export const kvsDemoProducts: KvsDemoProduct[] = [
     title: 'Precast Spacers & Accessories',
     price: 'On request',
     rating: '4.6',
-    img: IMG.foundation,
-    images: [IMG.foundation],
+    img: getKvsProductImage('precast-spacers')!,
+    images: getKvsProductGallery('precast-spacers'),
     category: 'Precast Foundation Materials',
     shortDescription: 'PRECAST SPACERS AND REINFORCEMENT ACCESSORIES FOR CONCRETE ELEMENT PRODUCTION.',
     description:
@@ -259,8 +253,8 @@ export const kvsDemoProducts: KvsDemoProduct[] = [
     title: 'MS Equal Angles',
     price: 'On request',
     rating: '4.8',
-    img: IMG.angles,
-    images: [IMG.angles],
+    img: getKvsProductImage('ms-equal-angles')!,
+    images: getKvsProductGallery('ms-equal-angles'),
     category: 'Angles',
     shortDescription: 'EQUAL LEG MS ANGLES FOR STRUCTURAL BRACKETS, TOWERS AND FABRICATION.',
     description:
@@ -277,8 +271,8 @@ export const kvsDemoProducts: KvsDemoProduct[] = [
     title: 'MS Round Bars',
     price: 'On request',
     rating: '4.7',
-    img: IMG.bars,
-    images: [IMG.bars],
+    img: getKvsProductImage('ms-round-bars')!,
+    images: getKvsProductGallery('ms-round-bars'),
     category: 'Bars',
     shortDescription: 'MILD STEEL ROUND BARS FOR MACHINING, FABRICATION AND GENERAL ENGINEERING.',
     description:
@@ -295,8 +289,8 @@ export const kvsDemoProducts: KvsDemoProduct[] = [
     title: 'MS C Channels',
     price: 'On request',
     rating: '4.8',
-    img: IMG.channels,
-    images: [IMG.channels],
+    img: getKvsProductImage('ms-c-channels')!,
+    images: getKvsProductGallery('ms-c-channels'),
     category: 'Channels',
     shortDescription: 'C-CHANNEL SECTIONS FOR STRUCTURAL FRAMES, PURLINS AND EQUIPMENT SUPPORTS.',
     description:
@@ -313,8 +307,8 @@ export const kvsDemoProducts: KvsDemoProduct[] = [
     title: 'MS U Channels',
     price: 'On request',
     rating: '4.7',
-    img: IMG.channels,
-    images: [IMG.channels],
+    img: getKvsProductImage('ms-u-channels')!,
+    images: getKvsProductGallery('ms-u-channels'),
     category: 'Channels',
     shortDescription: 'U-CHANNEL SECTIONS FOR FRAMING, GUIDES AND FABRICATION APPLICATIONS.',
     description:
@@ -331,8 +325,8 @@ export const kvsDemoProducts: KvsDemoProduct[] = [
     title: 'Universal Beams (I-Beams)',
     price: 'On request',
     rating: '4.9',
-    img: IMG.beams,
-    images: [IMG.beams],
+    img: getKvsProductImage('universal-beams')!,
+    images: getKvsProductGallery('universal-beams'),
     category: 'Structural Sections & Beams',
     shortDescription: 'UNIVERSAL BEAMS FOR HEAVY STRUCTURAL AND INDUSTRIAL CONSTRUCTION PROJECTS.',
     description:
@@ -349,8 +343,8 @@ export const kvsDemoProducts: KvsDemoProduct[] = [
     title: 'GI Gratings',
     price: 'On request',
     rating: '4.8',
-    img: IMG.mesh,
-    images: [IMG.mesh],
+    img: getKvsProductImage('gi-gratings')!,
+    images: getKvsProductGallery('gi-gratings'),
     category: 'Mesh & GI Gratings',
     shortDescription: 'GALVANIZED GRATINGS FOR PLATFORMS, TRENCH COVERS AND INDUSTRIAL FLOORING.',
     description:
@@ -367,8 +361,8 @@ export const kvsDemoProducts: KvsDemoProduct[] = [
     title: 'Welded Wire Mesh',
     price: 'On request',
     rating: '4.7',
-    img: IMG.mesh,
-    images: [IMG.mesh],
+    img: getKvsProductImage('welded-wire-mesh')!,
+    images: getKvsProductGallery('welded-wire-mesh'),
     category: 'Mesh & GI Gratings',
     shortDescription: 'WELDED WIRE MESH FOR REINFORCEMENT, FENCING AND INDUSTRIAL SCREENING.',
     description:

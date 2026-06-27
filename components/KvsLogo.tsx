@@ -9,7 +9,7 @@ type KvsLogoProps = {
 }
 
 const heights = {
-  nav: 44,
+  nav: 54,
   footer: 52,
   contact: 56,
 } as const

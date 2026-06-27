@@ -29,10 +29,16 @@ html { scroll-behavior: smooth; }
 
 body {
   font-family: var(--font-sans);
-  color: var(--color-text);
+  color: #1a365d;
   background: var(--color-white);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  color: #000000;
 }
 
 img { max-width: 100%; display: block; }
@@ -90,12 +96,13 @@ a { color: inherit; }
   font-weight: 400;
   line-height: 1.15;
   letter-spacing: -0.02em;
+  color: #000;
 }
 
 .sectionDesc {
   margin-top: 16px;
   font-size: 16px;
-  color: var(--color-text-muted);
+  color: #1a365d;
   line-height: 1.7;
 }
 

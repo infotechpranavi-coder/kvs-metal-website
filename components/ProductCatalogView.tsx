@@ -11,8 +11,9 @@ import { UniNavbar } from '@/components/UniNavbar'
 import { UniFooter } from '@/components/UniFooter'
 import { UniWidgets } from '@/components/UniWidgets'
 
-const CATALOG_HERO_IMG =
-  'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1600&q=85'
+import { kvsCatalogHeroImage } from '@/lib/product-images'
+
+const CATALOG_HERO_IMG = kvsCatalogHeroImage
 
 type ProductCatalogViewProps = {
   category: HomepageProductCategory | null

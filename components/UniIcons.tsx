@@ -154,16 +154,110 @@ export function PrecisionFabricationIcon() {
   )
 }
 
+export function CompetitivePricingIcon() {
+  return (
+    <svg {...skillsIconProps}>
+      <path d="M8 36h32" />
+      <rect x="9.5" y="22" width="5" height="14" rx="0.5" />
+      <rect x="16.5" y="28" width="5" height="8" rx="0.5" />
+      <rect x="23.5" y="25" width="5" height="11" rx="0.5" />
+      <rect x="30.5" y="18" width="5" height="18" rx="0.5" />
+      <path d="M12 18l7 9 7-5 9-11" />
+      <path d="M35 11l5-5" />
+      <path d="M35 11l-5-1" />
+    </svg>
+  )
+}
+
+export function TimelyDeliveryIcon() {
+  return (
+    <svg {...skillsIconProps}>
+      <rect x="6" y="18" width="20" height="12" rx="1" />
+      <path d="M26 22h8l4 4v4H26" />
+      <circle cx="14" cy="34" r="3" />
+      <circle cx="34" cy="34" r="3" />
+      <circle cx="38" cy="12" r="6" />
+      <path d="M38 12v4" />
+      <path d="M38 12l3.5 2" />
+    </svg>
+  )
+}
+
+export function GlobalSourcingIcon() {
+  return (
+    <svg {...skillsIconProps}>
+      <circle cx="24" cy="24" r="14" />
+      <ellipse cx="24" cy="24" rx="6" ry="14" />
+      <path d="M10 24h28" />
+      <path d="M12.5 17h23" />
+      <path d="M12.5 31h23" />
+      <path d="M24 10v28" />
+    </svg>
+  )
+}
+
+export function CustomerServiceIcon() {
+  return (
+    <svg {...skillsIconProps}>
+      <rect x="13" y="7" width="22" height="11" rx="3" />
+      <path d="M22 18v2.5" />
+      <path d="M19.5 20.5h5" />
+      <path d="M17 11h14" />
+      <path d="M17 14h9" />
+      <g strokeWidth="2.25">
+        <circle cx="12" cy="30" r="4.5" />
+        <path d="M5 41a7 7 0 0114 0" />
+        <circle cx="24" cy="27" r="5.25" />
+        <path d="M13.5 41a10.5 10.5 0 0121 0" />
+        <circle cx="36" cy="30" r="4.5" />
+        <path d="M29 41a7 7 0 0114 0" />
+      </g>
+    </svg>
+  )
+}
+
+const SCRIBBLE_PATH_MAIN = 'M20 60 C40 20, 80 10, 110 35 C130 50, 150 25, 180 40'
+const SCRIBBLE_PATH_ALT = 'M18 58 C38 22, 82 12, 112 33 C132 48, 152 27, 182 38'
+
 export function YellowScribble() {
   return (
     <svg className="uniScribble" viewBox="0 0 200 80" fill="none" aria-hidden>
       <path
-        d="M20 60 C40 20, 80 10, 110 35 C130 50, 150 25, 180 40"
-        stroke="#FFD23F"
+        className="uniScribbleLayer uniScribbleLayer--glow"
+        d={SCRIBBLE_PATH_MAIN}
+        stroke="currentColor"
+        strokeWidth="18"
+        strokeLinecap="round"
+        fill="none"
+        transform="translate(5, 6)"
+      />
+      <path
+        className="uniScribbleLayer uniScribbleLayer--navy-deep"
+        d={SCRIBBLE_PATH_MAIN}
+        stroke="currentColor"
         strokeWidth="12"
         strokeLinecap="round"
         fill="none"
+        transform="translate(5, 6)"
       />
+      <path
+        className="uniScribbleLayer uniScribbleLayer--navy"
+        d={SCRIBBLE_PATH_ALT}
+        stroke="currentColor"
+        strokeWidth="8"
+        strokeLinecap="round"
+        fill="none"
+      />
+      <path
+        className="uniScribbleLayer uniScribbleLayer--orange"
+        d={SCRIBBLE_PATH_MAIN}
+        stroke="currentColor"
+        strokeWidth="7"
+        strokeLinecap="round"
+        fill="none"
+      />
+      <circle className="uniScribbleLayer uniScribbleLayer--dot uniScribbleLayer--dot-start" cx="22" cy="58" r="2.5" />
+      <circle className="uniScribbleLayer uniScribbleLayer--dot uniScribbleLayer--dot-end" cx="180" cy="40" r="3" />
     </svg>
   )
 }

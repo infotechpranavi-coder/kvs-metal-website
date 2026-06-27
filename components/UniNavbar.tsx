@@ -3,7 +3,7 @@
 import { useEffect, useState, type CSSProperties } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { CloseIcon, MenuIcon } from './Icons'
+import { CloseIcon, DownloadIcon, MenuIcon } from './Icons'
 import { KvsLogo } from './KvsLogo'
 import { UniNavSearch } from './UniNavSearch'
 import { BROCHURE_FILENAME, BROCHURE_URL } from '@/lib/site'
@@ -109,7 +109,8 @@ export function UniNavbar({ lightMode = false, glass = false }: { lightMode?: bo
               className="uniNavBrochure"
               download={BROCHURE_FILENAME}
             >
-              Download
+              <DownloadIcon size={16} />
+              Download Product Brochure
             </a>
             <Link href="/contact" className="uniNavCta" onClick={closeMenu}>
               Get in Touch
@@ -148,7 +149,8 @@ export function UniNavbar({ lightMode = false, glass = false }: { lightMode?: bo
           download={BROCHURE_FILENAME}
           onClick={closeMenu}
         >
-          Download
+          <DownloadIcon size={18} />
+          Download Product Brochure
         </a>
       </nav>
     </header>

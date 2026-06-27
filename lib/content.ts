@@ -55,23 +55,23 @@ export const aboutUsHome = {
   ],
 }
 
+import { kvsProcurementCtaImage, kvsProductsCtaImage } from './product-images'
+
 export const procurementCta = {
-  title: 'Looking for smoother steel procurement?',
-  text: 'Contact KVS Metals to simplify your sourcing.',
+  title: 'Smoother steel procurement?',
   phoneLabel: 'Call Us',
-  ctaLabel: 'Request A Call',
+  ctaLabel: 'Contact Us',
   ctaHref: '/contact',
-  image: '/market/conturction.jpg',
-  imageAlt: 'Construction site steel supply',
+  image: kvsProcurementCtaImage,
+  imageAlt: 'KVS Metals steel products',
 }
 
 export const productsCta = {
-  title: 'Need premium steel products delivered with speed and reliable service?',
-  text: 'Count on KVS Metals.',
-  ctaLabel: 'Request A Call',
+  title: 'Premium steel, delivered on time.',
+  ctaLabel: 'Contact Us',
   ctaHref: '/contact',
-  image: '/market/oil andgas.jpg',
-  imageAlt: 'Industrial steel products',
+  image: kvsProductsCtaImage,
+  imageAlt: 'KVS Metals structural steel supply',
 }
 
 export const productsHome = {

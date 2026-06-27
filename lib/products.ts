@@ -42,10 +42,11 @@ export type LimitedProduct = {
 }
 
 import { kvsDemoProducts, kvsProductCategories } from './kvs-catalog'
+import { applyKvsLocalImages } from './product-images'
 
 const homepageProductSlugs = kvsProductCategories.flatMap((category) => category.productSlugs)
 
-const catalog: Product[] = [
+const catalog: Product[] = applyKvsLocalImages([
   {
     id: 'kvs-001',
     slug: 'gi-corrugated-roofing-sheets',
@@ -1122,7 +1123,7 @@ const catalog: Product[] = [
     inStock: true,
     stockCount: 8,
   },
-]
+])
 
 export const allProducts: Product[] = catalog
 

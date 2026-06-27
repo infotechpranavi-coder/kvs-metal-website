@@ -5,17 +5,14 @@ import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { UniNavbar } from '@/components/UniNavbar'
 import { UniFooter } from '@/components/UniFooter'
 import { UniWidgets } from '@/components/UniWidgets'
-import { KvsSkillsBrandMark } from '@/components/KvsSkillsBrandMark'
 import { ScrollReveal } from '@/components/ScrollReveal'
 import {
-  aboutHomeBlocks,
   aboutUsHome,
   heroContent,
   PHONE_DISPLAY,
   PHONE_E164,
   procurementCta,
   productHighlights,
-  productMarqueeTerms,
   productsCta,
   productsHome,
   sectorsSection,
@@ -23,20 +20,20 @@ import {
 import { sectors } from '@/lib/sectors'
 import { testimonials, testimonialsSection } from '@/lib/testimonials'
 import {
-  MetalPipeIcon,
-  PrecisionFabricationIcon,
+  CompetitivePricingIcon,
+  CustomerServiceIcon,
+  GlobalSourcingIcon,
   StarIcon,
-  SteelSheetIcon,
-  StructuralSteelIcon,
+  TimelyDeliveryIcon,
   YellowScribble,
 } from '@/components/UniIcons'
 
 const features = aboutUsHome.features.map((item, index) => {
   const icons = [
-    <SteelSheetIcon key="steel" />,
-    <MetalPipeIcon key="pipe" />,
-    <StructuralSteelIcon key="structural" />,
-    <PrecisionFabricationIcon key="fab" />,
+    <CompetitivePricingIcon key="pricing" />,
+    <TimelyDeliveryIcon key="delivery" />,
+    <GlobalSourcingIcon key="sourcing" />,
+    <CustomerServiceIcon key="service" />,
   ]
   return {
     icon: icons[index] ?? icons[0],
@@ -130,29 +127,29 @@ function HeroSection() {
         style={heroStyle}
         aria-label="Hero banner"
       >
-        <div className="uniHeroSlides" aria-hidden>
-          {heroSlides.map((item, index) => (
-            <div
-              key={item.video}
-              className={`uniHeroSlide${index === activeSlide ? ' uniHeroSlide--active' : ''}`}
-            >
-              <video
-                className="uniHeroSlideVideo"
-                autoPlay
-                muted
-                loop
-                playsInline
-                poster={item.poster}
-              >
-                <source src={item.video} type="video/mp4" />
-              </video>
-            </div>
-          ))}
-        </div>
-
         <div className="uniHeroInner">
-          <div className="uniHeroLayout">
-            <div className="uniHeroMediaZone">
+          <div className="uniHeroSplit">
+            <div className="uniHeroVideoCol">
+              <div className="uniHeroSlides" aria-hidden>
+                {heroSlides.map((item, index) => (
+                  <div
+                    key={item.video}
+                    className={`uniHeroSlide${index === activeSlide ? ' uniHeroSlide--active' : ''}`}
+                  >
+                    <video
+                      className="uniHeroSlideVideo"
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      poster={item.poster}
+                    >
+                      <source src={item.video} type="video/mp4" />
+                    </video>
+                  </div>
+                ))}
+              </div>
+
               <div className="uniHeroStatsBar">
                 <div className="uniHeroStats">
                   {heroStats.map((stat) => (
@@ -165,54 +162,91 @@ function HeroSection() {
               </div>
             </div>
 
-            <div className="uniHeroPanelWrap">
+            <div className="uniHeroContentCol">
               <div className="uniHeroPanelShape">
-                <div className="uniHeroPanelContent">
-                  <p className="uniHeroEyebrow">{heroContent.eyebrow}</p>
-                  <div className="uniHeroTitleBlock">
-                    <span className="uniHeroGhostTitle" aria-hidden>
-                      {heroContent.ghostTitle}
-                    </span>
-                    <h1>{heroContent.title}</h1>
-                  </div>
-                  <p className="uniHeroDesc">{heroContent.description}</p>
+                <div className="uniHeroPanelCard">
+                  <span className="uniHeroPanelCardAccent" aria-hidden />
+                  <span className="uniHeroPanelCardShape" aria-hidden />
+                  <span className="uniHeroPanelEdgeBorder" aria-hidden>
+                    <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+                      <path
+                        className="uniHeroPanelEdgeBorderMain"
+                        d="M 100,0 L 0,50 L 100,100"
+                        vectorEffect="non-scaling-stroke"
+                      />
+                    </svg>
+                  </span>
+                  <div className="uniHeroPanelContent">
+                    <p className="uniHeroEyebrow">{heroContent.eyebrow}</p>
+                    <div className="uniHeroTitleBlock">
+                      <span className="uniHeroGhostTitle" aria-hidden>
+                        {heroContent.ghostTitle}
+                      </span>
+                      <h1>
+                        <span className="uniHeroTitleLine uniHeroTitleLine--navy">
+                          Build Smart.
+                        </span>
+                        <span className="uniHeroTitleLine uniHeroTitleLine--navy">
+                          Build Strong.
+                        </span>
+                        <span className="uniHeroTitleLine uniHeroTitleLine--orange">
+                          Build with KVS.
+                        </span>
+                      </h1>
+                      <span className="uniHeroTitleRule" aria-hidden />
+                    </div>
+                    <p className="uniHeroDesc">{heroContent.description}</p>
 
-                  <div className="uniHeroActions">
-                    <Link href={heroContent.ctaHref} className="uniHeroBtn">
-                      {heroContent.ctaLabel}
-                    </Link>
-                    <Link href={heroContent.secondaryCtaHref} className="uniHeroBtnGhost">
-                      {heroContent.secondaryCtaLabel}
+                    <div className="uniHeroActions">
+                      <Link href={heroContent.ctaHref} className="uniHeroBtn">
+                        {heroContent.ctaLabel}
+                      </Link>
+                      <Link href={heroContent.secondaryCtaHref} className="uniHeroBtnGhost">
+                        {heroContent.secondaryCtaLabel}
+                      </Link>
+                    </div>
+
+                    <Link href="/about" className="uniHeroReadMore">
+                      <span className="uniHeroReadMoreDots" aria-hidden>
+                        <span />
+                        <span />
+                        <span />
+                      </span>
+                      Read more
                     </Link>
                   </div>
 
-                  <Link href="/about" className="uniHeroReadMore">
-                    <span className="uniHeroReadMoreDots" aria-hidden>
-                      <span />
-                      <span />
-                      <span />
-                    </span>
-                    Read more
-                  </Link>
+                  <div className="uniHeroSliderUi">
+                    <div className="uniHeroSliderMeta">
+                      <span className="uniHeroSliderLabel">Featured</span>
+                      <span className="uniHeroSliderCount">
+                        {String(activeSlide + 1).padStart(2, '0')}
+                        <span className="uniHeroSliderSep">/</span>
+                        {String(heroSlides.length).padStart(2, '0')}
+                      </span>
+                    </div>
+                    <div className="uniHeroSliderTrack">
+                      <div className="uniHeroSliderDots" aria-hidden>
+                        {heroSlides.map((_, index) => (
+                          <span
+                            key={index}
+                            className={`uniHeroSliderDot${
+                              index === activeSlide ? ' uniHeroSliderDot--active' : ''
+                            }`}
+                          />
+                        ))}
+                      </div>
+                      <div className="uniHeroSliderProgress" aria-hidden>
+                        <span style={{ width: `${slideProgress}%` }} />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <Link href="/products" className="uniHeroSideTab">
-              Product Catalog
-            </Link>
-
-            <div className="uniHeroLayoutFoot">
-              <div className="uniHeroSliderUi">
-                <span className="uniHeroSliderCount">
-                  {String(activeSlide + 1).padStart(2, '0')}
-                  {' / '}
-                  {String(heroSlides.length).padStart(2, '0')}
-                </span>
-                <div className="uniHeroSliderProgress" aria-hidden>
-                  <span style={{ width: `${slideProgress}%` }} />
-                </div>
-              </div>
+              <Link href="/products" className="uniHeroSideTab">
+                Product Catalog
+              </Link>
             </div>
           </div>
         </div>
@@ -224,8 +258,6 @@ function HeroSection() {
 function SkillsSection() {
   return (
     <ScrollReveal as="section" className="uniSkills">
-      <KvsSkillsBrandMark />
-
       <div className="uniContainer uniSkillsInner">
         <ScrollReveal className="uniSkillsTop">
           <div className="uniSkillsHeadingCol">
@@ -261,189 +293,29 @@ function MarketSectorsSection() {
           <h2 className="uniSectorsTitle">{sectorsSection.title}</h2>
           <p className="uniSectorsTagline">{sectorsSection.tagline}</p>
         </ScrollReveal>
-        <div className="uniSectorsGridWrap">
-          <div className="uniSectorsGrid">
+        <div className="uniSectorsDiamondGrid">
             {sectors.map((sector, index) => (
               <ScrollReveal
                 key={sector.slug}
                 direction="up"
-                delay={0.06 + index * 0.11}
-                className={`uniSectorsCardReveal uniSectorsCard--${index + 1}`}
+                delay={0.05 + index * 0.08}
+                className="uniSectorsDiamondReveal"
               >
-                <Link href={`/sectors/${sector.slug}`} className="sectorCard uniSectorsCard">
-                  <div className="sectorCardMedia">
-                    <img src={sector.img} alt={sector.name} />
-                    <div className="sectorCardOverlay" />
-                    <h3>{sector.name}</h3>
-                  </div>
+                <Link href={`/sectors/${sector.slug}`} className="uniSectorsDiamondCard">
+                  <span className="uniSectorsDiamondAccent" aria-hidden />
+                  <span className="uniSectorsDiamondFrame">
+                    <span className="uniSectorsDiamondMedia">
+                      <img src={sector.img} alt={sector.name} />
+                      <span className="uniSectorsDiamondOverlay" aria-hidden />
+                    </span>
+                    <span className="uniSectorsDiamondLabel">{sector.name}</span>
+                  </span>
                 </Link>
               </ScrollReveal>
             ))}
-          </div>
         </div>
       </div>
     </ScrollReveal>
-  )
-}
-
-const steelMarqueeTerms = productMarqueeTerms
-
-function SteelMarqueeSection() {
-  const marqueeItems = [...steelMarqueeTerms, ...steelMarqueeTerms]
-
-  return (
-    <section className="uniSteelMarquee" aria-label="Steel product highlights">
-      <div className="uniSteelMarqueeViewport">
-        <div className="uniSteelMarqueeTrack">
-          {marqueeItems.map((term, index) => (
-            <span key={`${term}-${index}`} className="uniSteelMarqueeItem">
-              {term}
-            </span>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-const aboutBlocks = aboutHomeBlocks
-
-function AboutTextSection() {
-  const sectionRef = useRef<HTMLElement>(null)
-  const pinRef = useRef<HTMLDivElement>(null)
-  const viewportRef = useRef<HTMLDivElement>(null)
-  const trackRef = useRef<HTMLDivElement>(null)
-  const [revealed, setRevealed] = useState(false)
-  const [scrollLinked, setScrollLinked] = useState(false)
-
-  useEffect(() => {
-    const section = sectionRef.current
-    const pin = pinRef.current
-    const viewport = viewportRef.current
-    const track = trackRef.current
-    if (!section) return
-
-    const STICKY_TOP = 112
-    let raf = 0
-
-    const revealObserver = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setRevealed(true)
-          revealObserver.disconnect()
-        }
-      },
-      { threshold: 0.12, rootMargin: '0px 0px -6% 0px' },
-    )
-    revealObserver.observe(section)
-
-    const update = () => {
-      if (!pin || !viewport || !track) return
-
-      const enabled =
-        window.matchMedia('(min-width: 1025px)').matches &&
-        !window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
-        aboutBlocks.length > 1
-
-      setScrollLinked(enabled)
-      section.classList.toggle('uniAboutText--scroll', enabled)
-
-      if (!enabled) {
-        section.style.removeProperty('height')
-        track.style.removeProperty('transform')
-        viewport.style.removeProperty('--about-slide-width')
-        return
-      }
-
-      const slideWidth = viewport.clientWidth
-      viewport.style.setProperty('--about-slide-width', `${slideWidth}px`)
-
-      const scrollRange = Math.max(0, (aboutBlocks.length - 1) * slideWidth)
-      const pinHeight = window.innerHeight - STICKY_TOP
-
-      section.style.height = `${pinHeight + scrollRange}px`
-
-      const sectionTop = section.getBoundingClientRect().top
-      const progress =
-        scrollRange > 0
-          ? Math.min(1, Math.max(0, (-sectionTop + STICKY_TOP) / scrollRange))
-          : 0
-
-      track.style.transform = `translate3d(-${progress * scrollRange}px, 0, 0)`
-    }
-
-    const onScroll = () => {
-      cancelAnimationFrame(raf)
-      raf = requestAnimationFrame(update)
-    }
-
-    const resizeObserver = new ResizeObserver(onScroll)
-    ;[section, pin, viewport, track].forEach((node) => {
-      if (node) resizeObserver.observe(node)
-    })
-
-    window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', onScroll)
-    update()
-
-    return () => {
-      cancelAnimationFrame(raf)
-      revealObserver.disconnect()
-      resizeObserver.disconnect()
-      window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', onScroll)
-    }
-  }, [])
-
-  return (
-    <section
-      ref={sectionRef}
-      className={`uniAboutText${revealed ? ' uniAboutText--revealed' : ''}${scrollLinked ? ' uniAboutText--scroll' : ''}`}
-      id="about"
-    >
-      <div className="uniAboutDecor" aria-hidden>
-        <span className="uniAboutDecorRing" />
-        <span className="uniAboutDecorLine" />
-      </div>
-      <div ref={pinRef} className="uniAboutPin">
-        <div className="uniAboutInner">
-          <div className="uniAboutGrid">
-            <div className="uniAboutIntro">
-              <h2 className="uniAboutIntroLabel uniAboutRevealItem">{aboutUsHome.eyebrow}</h2>
-              <p className="uniAboutIntroTagline uniAboutRevealItem">{aboutUsHome.tagline}</p>
-              <h3 className="uniAboutIntroTitle uniAboutRevealItem">{aboutUsHome.title}</h3>
-              <p className="uniAboutIntroLead uniAboutRevealItem">
-                {aboutUsHome.paragraphs[0]}
-              </p>
-              <Link href="/about" className="uniAboutMoreLink uniAboutRevealItem">
-                Learn more about KVS
-              </Link>
-            </div>
-
-            <div ref={viewportRef} className="uniAboutCardsViewport">
-              <div ref={trackRef} className="uniAboutCardsTrack">
-                {aboutBlocks.map((block, index) => (
-                  <article
-                    key={block.id}
-                    className="uniAboutCard uniAboutRevealItem"
-                    style={{ '--reveal-delay': `${0.15 + index * 0.12}s` } as CSSProperties}
-                  >
-                    <div className="uniAboutCardBody">
-                      <span className="uniAboutCardLabel">{block.label}</span>
-                      <div className="uniAboutCardRule" aria-hidden />
-                      <p className="uniAboutCardText">{block.text}</p>
-                    </div>
-                    <div className="uniAboutCardMedia">
-                      <img src={block.image} alt={block.alt} loading="lazy" />
-                    </div>
-                  </article>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
   )
 }
 
@@ -536,35 +408,43 @@ function TestimonialsSection() {
                   aria-hidden={testimonials[active].id !== item.id}
                 >
                   <div className="uniTestimonialCard">
-                    <div className="uniTestimonialCardAccent" aria-hidden />
-                    <div className="uniTestimonialCardBody">
-                      <div className="uniTestimonialCardHead">
-                        <div className="uniTestimonialCardRating" aria-label="5 out of 5 stars">
-                          <div className="uniTestimonialCardStars" aria-hidden>
-                            {[1, 2, 3, 4, 5].map((n) => (
-                              <StarIcon key={n} />
-                            ))}
+                    <span className="uniTestimonialCardFrameAccent" aria-hidden />
+                    <span className="uniTestimonialCardFrameShape" aria-hidden />
+                    <div className="uniTestimonialCardInner">
+                      <div className="uniTestimonialCardAccent" aria-hidden />
+                      <div className="uniTestimonialCardBody">
+                        <div className="uniTestimonialCardHead">
+                          <div className="uniTestimonialCardRating" aria-label="5 out of 5 stars">
+                            <div className="uniTestimonialCardStars" aria-hidden>
+                              {[1, 2, 3, 4, 5].map((n) => (
+                                <StarIcon key={n} />
+                              ))}
+                            </div>
+                            <span className="uniTestimonialCardRatingLabel">5.0 rating</span>
                           </div>
-                          <span className="uniTestimonialCardRatingLabel">5.0 rating</span>
+                          <span className="uniTestimonialCardIndex" aria-hidden>
+                            {String(index + 1).padStart(2, '0')}
+                          </span>
                         </div>
-                        <span className="uniTestimonialCardIndex" aria-hidden>
-                          {String(index + 1).padStart(2, '0')}
-                        </span>
+                        <div className="uniTestimonialCardQuoteWrap">
+                          <span className="uniTestimonialCardMark" aria-hidden>&ldquo;</span>
+                          <blockquote className="uniTestimonialCardQuote">{item.quote}</blockquote>
+                        </div>
+                        <div className="uniTestimonialCardGraphic" aria-hidden>
+                          <YellowScribble />
+                        </div>
                       </div>
-                      <div className="uniTestimonialCardQuoteWrap">
-                        <span className="uniTestimonialCardMark" aria-hidden>&ldquo;</span>
-                        <blockquote className="uniTestimonialCardQuote">{item.quote}</blockquote>
-                      </div>
+                      <footer className="uniTestimonialCardFooter">
+                        <div className="uniTestimonialCardPortrait">
+                          <span className="uniTestimonialCardPortraitAccent" aria-hidden />
+                          <img src={item.image} alt="" className="uniTestimonialCardAvatar" />
+                        </div>
+                        <div className="uniTestimonialCardAuthor">
+                          <strong>{item.name}</strong>
+                          <span>{item.role}</span>
+                        </div>
+                      </footer>
                     </div>
-                    <footer className="uniTestimonialCardFooter">
-                      <div className="uniTestimonialCardPortrait">
-                        <img src={item.image} alt="" className="uniTestimonialCardAvatar" />
-                      </div>
-                      <div className="uniTestimonialCardAuthor">
-                        <strong>{item.name}</strong>
-                        <span>{item.role}</span>
-                      </div>
-                    </footer>
                   </div>
                 </article>
               ))}
@@ -602,7 +482,6 @@ function TestimonialsSection() {
 
 function HomeCtaSection({
   title,
-  text,
   ctaLabel,
   ctaHref,
   image,
@@ -610,7 +489,6 @@ function HomeCtaSection({
   showPhone = false,
 }: {
   title: string
-  text: string
   ctaLabel: string
   ctaHref: string
   image: string
@@ -618,22 +496,23 @@ function HomeCtaSection({
   showPhone?: boolean
 }) {
   return (
-    <ScrollReveal as="section" className="uniHomeCta">
+    <section className="uniHomeCta">
       <div className="uniContainer">
         <div className="uniHomeCtaInner">
           <div className="uniHomeCtaContent">
-            <h2>{title}</h2>
-            <p className="uniHomeCtaText">{text}</p>
-            {showPhone && (
-              <p className="uniHomeCtaPhone">
-                {procurementCta.phoneLabel}:{' '}
-                <a href={`tel:${PHONE_E164}`}>{PHONE_DISPLAY}</a>
-              </p>
-            )}
-            <div className="uniHomeCtaActions">
-              <Link href={ctaHref} className="uniHeroBtn">
-                {ctaLabel}
-              </Link>
+            <div className="uniHomeCtaRow">
+              <h2 className="uniHomeCtaTitle">{title}</h2>
+              <div className="uniHomeCtaEnd">
+                {showPhone && (
+                  <p className="uniHomeCtaPhone">
+                    {procurementCta.phoneLabel}:{' '}
+                    <a href={`tel:${PHONE_E164}`}>{PHONE_DISPLAY}</a>
+                  </p>
+                )}
+                <Link href={ctaHref} className="uniHomeCtaBtn">
+                  {ctaLabel}
+                </Link>
+              </div>
             </div>
           </div>
           <div className="uniHomeCtaMedia">
@@ -642,7 +521,7 @@ function HomeCtaSection({
           </div>
         </div>
       </div>
-    </ScrollReveal>
+    </section>
   )
 }
 
@@ -651,30 +530,33 @@ function ProductsSection() {
     <section className="uniProducts" id="products">
       <div className="uniContainer uniProductsInner">
         <div className="uniProductsSplit">
-          <div className="uniProductsStickyCol">
-            <div className="uniProductsSticky">
-              <p className="uniProductsEyebrow">{productsHome.eyebrow}</p>
-              <h2 className="uniProductsTitle">{productsHome.title}</h2>
-              <p className="uniProductsLead">{productsHome.lead}</p>
-              <div className="uniProductsScribble">
-                <YellowScribble />
-              </div>
+          <div className="uniProductsHeader">
+            <p className="uniProductsEyebrow">{productsHome.eyebrow}</p>
+            <h2 className="uniProductsTitle">{productsHome.title}</h2>
+            <p className="uniProductsLead">{productsHome.lead}</p>
+            <div className="uniProductsScribble">
+              <YellowScribble />
             </div>
           </div>
-          <div className="uniProductsCardsTrack">
-            {productHighlights.map((category) => (
-              <Link
-                key={category.slug}
-                href={category.href}
-                className="sectorCard uniProductsCard"
-              >
-                <div className="sectorCardMedia">
-                  <img src={category.img} alt={category.title} />
-                  <div className="sectorCardOverlay" />
-                  <h3>{category.title}</h3>
-                </div>
-              </Link>
-            ))}
+          <div className="uniProductsDiamondWrap">
+            <div className="uniProductsDiamondGrid">
+              {productHighlights.map((category) => (
+                <Link
+                  key={category.slug}
+                  href={category.href}
+                  className="uniSectorsDiamondCard"
+                >
+                  <span className="uniSectorsDiamondAccent" aria-hidden />
+                  <span className="uniSectorsDiamondFrame">
+                    <span className="uniSectorsDiamondMedia">
+                      <img src={category.img} alt={category.title} />
+                      <span className="uniSectorsDiamondOverlay" aria-hidden />
+                    </span>
+                    <span className="uniSectorsDiamondLabel">{category.title}</span>
+                  </span>
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -691,7 +573,6 @@ export default function KvsMetalPage() {
         <SkillsSection />
         <HomeCtaSection
           title={procurementCta.title}
-          text={procurementCta.text}
           ctaLabel={procurementCta.ctaLabel}
           ctaHref={procurementCta.ctaHref}
           image={procurementCta.image}
@@ -699,13 +580,10 @@ export default function KvsMetalPage() {
           showPhone
         />
         <MarketSectorsSection />
-        <SteelMarqueeSection />
-        <AboutTextSection />
         <PartnersSection />
         <ProductsSection />
         <HomeCtaSection
           title={productsCta.title}
-          text={productsCta.text}
           ctaLabel={productsCta.ctaLabel}
           ctaHref={productsCta.ctaHref}
           image={productsCta.image}
