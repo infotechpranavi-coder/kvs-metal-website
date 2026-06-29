@@ -123,141 +123,83 @@ function HeroSection() {
     <div className="uniHeroShell">
       <section
         ref={heroRef}
-        className="uniHero"
+        className="uniHero uniHero--overlay"
         style={heroStyle}
         aria-label="Hero banner"
       >
-        <div className="uniHeroInner">
-          <div className="uniHeroSplit">
-            <div className="uniHeroVideoCol">
-              <div className="uniHeroSlides" aria-hidden>
-                {heroSlides.map((item, index) => (
-                  <div
-                    key={item.video}
-                    className={`uniHeroSlide${index === activeSlide ? ' uniHeroSlide--active' : ''}`}
-                  >
-                    <video
-                      className="uniHeroSlideVideo"
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      poster={item.poster}
-                    >
-                      <source src={item.video} type="video/mp4" />
-                    </video>
-                  </div>
-                ))}
+        <div className="uniHeroMedia" aria-hidden>
+          <div className="uniHeroSlides">
+            {heroSlides.map((item, index) => (
+              <div
+                key={item.video}
+                className={`uniHeroSlide${index === activeSlide ? ' uniHeroSlide--active' : ''}`}
+              >
+                <video
+                  className="uniHeroSlideVideo"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  poster={item.poster}
+                >
+                  <source src={item.video} type="video/mp4" />
+                </video>
               </div>
+            ))}
+          </div>
+          <div className="uniHeroMediaOverlay" />
+        </div>
 
-              <div className="uniHeroStatsBar">
-                <div className="uniHeroStats">
-                  {heroStats.map((stat) => (
-                    <div key={stat.label} className="uniHeroStat">
-                      <strong>{stat.value}</strong>
-                      <span>{stat.label}</span>
-                    </div>
+        <div className="uniHeroInner">
+          <div className="uniHeroOverlayBody">
+            <h1 className="uniHeroOverlayTitle">
+              <span className="uniHeroTitleLine uniHeroTitleLine--navy">Build Smart.</span>
+              <span className="uniHeroTitleLine uniHeroTitleLine--navy">Build Strong.</span>
+              <span className="uniHeroTitleLine uniHeroTitleLine--orange">Build with KVS.</span>
+            </h1>
+            <span className="uniHeroTitleRule uniHeroTitleRule--overlay" aria-hidden />
+            <p className="uniHeroOverlayDesc">{heroContent.description}</p>
+            <div className="uniHeroActions uniHeroActions--overlay">
+              <Link href={heroContent.ctaHref} className="uniHeroBtn">
+                {heroContent.ctaLabel}
+              </Link>
+              <Link href={heroContent.secondaryCtaHref} className="uniHeroBtnGhost uniHeroBtnGhost--overlay">
+                {heroContent.secondaryCtaLabel}
+              </Link>
+            </div>
+
+            <div className="uniHeroOverlaySlider">
+              <span className="uniHeroSliderCount">
+                {String(activeSlide + 1).padStart(2, '0')}
+                <span className="uniHeroSliderSep">/</span>
+                {String(heroSlides.length).padStart(2, '0')}
+              </span>
+              <div className="uniHeroSliderTrack">
+                <div className="uniHeroSliderDots" aria-hidden>
+                  {heroSlides.map((_, index) => (
+                    <span
+                      key={index}
+                      className={`uniHeroSliderDot${
+                        index === activeSlide ? ' uniHeroSliderDot--active' : ''
+                      }`}
+                    />
                   ))}
+                </div>
+                <div className="uniHeroSliderProgress" aria-hidden>
+                  <span style={{ width: `${slideProgress}%` }} />
                 </div>
               </div>
             </div>
+          </div>
 
-            <div className="uniHeroContentCol">
-              <div className="uniHeroPanelShape">
-                <div className="uniHeroPanelCard">
-                  <span className="uniHeroPanelCardAccent" aria-hidden />
-                  <span className="uniHeroPanelCardShape" aria-hidden />
-                  <span className="uniHeroPanelEdgeBorder" aria-hidden>
-                    <svg viewBox="0 0 100 100" preserveAspectRatio="none">
-                      <path
-                        className="uniHeroPanelEdgeBorderOrange"
-                        d="M 100,0 L 0,50 L 100,100"
-                        vectorEffect="non-scaling-stroke"
-                      />
-                      <path
-                        className="uniHeroPanelEdgeBorderLight"
-                        d="M 96,4 L 6,50 L 96,96"
-                        vectorEffect="non-scaling-stroke"
-                      />
-                      <path
-                        className="uniHeroPanelEdgeBorderNavy"
-                        d="M 91,9 L 12,50 L 91,91"
-                        vectorEffect="non-scaling-stroke"
-                      />
-                    </svg>
-                  </span>
-                  <div className="uniHeroPanelContent">
-                    <div className="uniHeroPanelMain">
-                      <div className="uniHeroTitleBlock">
-                        <span className="uniHeroGhostTitle" aria-hidden>
-                          {heroContent.ghostTitle}
-                        </span>
-                        <h1>
-                          <span className="uniHeroTitleLine uniHeroTitleLine--navy">
-                            Build Smart.
-                          </span>
-                          <span className="uniHeroTitleLine uniHeroTitleLine--navy">
-                            Build Strong.
-                          </span>
-                          <span className="uniHeroTitleLine uniHeroTitleLine--orange">
-                            Build with KVS.
-                          </span>
-                        </h1>
-                        <span className="uniHeroTitleRule" aria-hidden />
-                      </div>
-                      <p className="uniHeroDesc">{heroContent.description}</p>
-
-                      <div className="uniHeroActions">
-                        <Link href={heroContent.ctaHref} className="uniHeroBtn">
-                          {heroContent.ctaLabel}
-                        </Link>
-                        <Link href={heroContent.secondaryCtaHref} className="uniHeroBtnGhost">
-                          {heroContent.secondaryCtaLabel}
-                        </Link>
-                      </div>
-                    </div>
-
-                    <Link href="/about" className="uniHeroReadMore">
-                      <span className="uniHeroReadMoreDots" aria-hidden>
-                        <span />
-                        <span />
-                        <span />
-                      </span>
-                      Read more
-                    </Link>
-                  </div>
-
-                  <div className="uniHeroSliderUi">
-                    <div className="uniHeroSliderMeta">
-                      <span className="uniHeroSliderLabel">Featured</span>
-                      <span className="uniHeroSliderCount">
-                        {String(activeSlide + 1).padStart(2, '0')}
-                        <span className="uniHeroSliderSep">/</span>
-                        {String(heroSlides.length).padStart(2, '0')}
-                      </span>
-                    </div>
-                    <div className="uniHeroSliderTrack">
-                      <div className="uniHeroSliderDots" aria-hidden>
-                        {heroSlides.map((_, index) => (
-                          <span
-                            key={index}
-                            className={`uniHeroSliderDot${
-                              index === activeSlide ? ' uniHeroSliderDot--active' : ''
-                            }`}
-                          />
-                        ))}
-                      </div>
-                      <div className="uniHeroSliderProgress" aria-hidden>
-                        <span style={{ width: `${slideProgress}%` }} />
-                      </div>
-                    </div>
-                  </div>
+          <div className="uniHeroStatsBar uniHeroStatsBar--overlay">
+            <div className="uniHeroStats">
+              {heroStats.map((stat) => (
+                <div key={stat.label} className="uniHeroStat">
+                  <strong>{stat.value}</strong>
+                  <span>{stat.label}</span>
                 </div>
-              </div>
-
-              <Link href="/products" className="uniHeroSideTab">
-                Product Catalog
-              </Link>
+              ))}
             </div>
           </div>
         </div>

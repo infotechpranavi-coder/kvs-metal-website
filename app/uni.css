@@ -808,6 +808,188 @@
   overflow: hidden;
 }
 
+/* ── HERO: full-bleed overlay layout ── */
+.uniHero--overlay {
+  isolation: isolate;
+}
+
+.uniHero--overlay .uniHeroMedia {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.uniHero--overlay .uniHeroSlides {
+  position: absolute;
+  inset: 0;
+}
+
+.uniHero--overlay .uniHeroSlide::after {
+  display: none;
+}
+
+.uniHeroMediaOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(8, 18, 32, 0.12) 0%,
+      rgba(8, 18, 32, 0.22) 32%,
+      rgba(8, 18, 32, 0.52) 62%,
+      rgba(8, 18, 32, 0.84) 100%
+    ),
+    linear-gradient(0deg, rgba(8, 18, 32, 0.55) 0%, transparent 42%),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.028) 2px,
+      rgba(0, 0, 0, 0.028) 3px
+    );
+}
+
+.uniHero--overlay .uniHeroInner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  height: 100%;
+}
+
+.uniHeroOverlayBody {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: clamp(16px, 2.2vh, 24px);
+  width: 100%;
+  max-width: min(680px, 54vw);
+  min-height: 0;
+  margin-left: auto;
+  text-align: right;
+  padding: calc(var(--uni-nav-stack) + 20px) clamp(24px, 4.5vw, 72px)
+    clamp(128px, 15vh, 168px);
+}
+
+.uniHeroOverlayTitle {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.08em;
+  margin: 0;
+  font-family: var(--uni-section-title-font);
+  font-size: clamp(1.85rem, 4.2vw, 3.35rem);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.uniHero--overlay .uniHeroTitleLine--navy {
+  background: linear-gradient(125deg, #9ed8f7 0%, #5ba3d9 38%, #dceefb 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 2px 12px rgba(8, 18, 32, 0.35));
+}
+
+.uniHero--overlay .uniHeroTitleLine--orange {
+  filter: drop-shadow(0 4px 16px rgba(255, 107, 53, 0.35));
+}
+
+.uniHeroTitleRule--overlay {
+  display: block;
+  width: clamp(72px, 10vw, 120px);
+  height: 4px;
+  margin: 0 0 0 auto;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #7ec8f0 0%, #1a365d 50%, var(--uni-orange) 100%);
+}
+
+.uniPage .uniHero--overlay .uniHeroOverlayDesc {
+  margin: 0 0 0 auto;
+  max-width: 42ch;
+  font-size: clamp(14px, 1.2vw, 17px);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.uniHeroActions--overlay {
+  margin-top: 4px;
+  justify-content: flex-end;
+}
+
+.uniHeroBtnGhost--overlay {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.42);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: none;
+}
+
+.uniHeroBtnGhost--overlay:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.72);
+  color: #fff;
+}
+
+.uniHeroStatsBar--overlay {
+  left: auto;
+  right: clamp(24px, 4.5vw, 72px);
+  width: min(520px, calc(100% - clamp(48px, 6vw, 96px)));
+  max-width: 520px;
+}
+
+.uniHeroOverlaySlider {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  align-self: flex-end;
+  gap: 8px;
+  width: min(220px, 100%);
+  margin-top: clamp(10px, 1.4vh, 18px);
+}
+
+.uniHeroOverlaySlider .uniHeroSliderCount {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.uniHeroOverlaySlider .uniHeroSliderSep {
+  color: rgba(255, 255, 255, 0.42);
+}
+
+.uniHeroOverlaySlider .uniHeroSliderTrack {
+  width: 100%;
+}
+
+.uniHeroOverlaySlider .uniHeroSliderProgress {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.uniHeroOverlaySlider .uniHeroSliderDot {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.uniHeroOverlaySlider .uniHeroSliderDot--active {
+  background: var(--uni-orange);
+}
+
+.uniHero--overlay .uniHeroTitleLine {
+  animation: none;
+}
+
 .uniHeroSplit {
   --hero-panel-r: clamp(24px, 2.8vw, 32px);
   --hero-point: clamp(60px, 7vw, 88px);
@@ -2009,12 +2191,31 @@
   }
 }
 
-.uniPage:has(.uniHeroShell) .uniHeroVideoCol {
+.uniPage:has(.uniHeroShell) .uniHero--overlay .uniHeroMedia {
   animation: uniHeroMediaEnter 0.5s cubic-bezier(0.33, 1, 0.68, 1) both;
 }
 
 .uniPage:has(.uniHeroShell) .uniNav {
   animation: uniNavSlideDown 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.28s both;
+}
+
+.uniPage:has(.uniHeroShell) .uniHeroOverlayBody {
+  animation: uniHeroOverlayEnter 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.5s both;
+}
+
+.uniPage:has(.uniHeroShell) .uniHeroStatsBar--overlay {
+  animation: uniHeroOverlayEnter 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.72s both;
+}
+
+@keyframes uniHeroOverlayEnter {
+  from {
+    opacity: 0;
+    transform: translate3d(28px, 12px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
 }
 
 .uniPage:has(.uniHeroShell) .uniHeroPanelShape,
@@ -2030,7 +2231,10 @@
 
 @media (prefers-reduced-motion: reduce) {
   .uniPage:has(.uniHeroShell) .uniHeroVideoCol,
+  .uniPage:has(.uniHeroShell) .uniHero--overlay .uniHeroMedia,
   .uniPage:has(.uniHeroShell) .uniNav,
+  .uniPage:has(.uniHeroShell) .uniHeroOverlayBody,
+  .uniPage:has(.uniHeroShell) .uniHeroStatsBar--overlay,
   .uniPage:has(.uniHeroShell) .uniHeroPanelShape,
   .uniPage:has(.uniHeroShell) .uniHeroSideTab {
     animation: none !important;
@@ -6923,6 +7127,38 @@
     height: auto;
     max-height: none;
     min-height: 100svh;
+  }
+
+  .uniHero--overlay .uniHeroOverlayBody {
+    max-width: none;
+    align-items: flex-start;
+    text-align: left;
+    justify-content: flex-end;
+    margin-left: 0;
+    padding: calc(var(--uni-nav-stack) + 16px) 20px 148px;
+  }
+
+  .uniHeroOverlayTitle {
+    align-items: flex-start;
+    font-size: clamp(1.65rem, 7.5vw, 2.35rem);
+  }
+
+  .uniPage .uniHero--overlay .uniHeroOverlayDesc {
+    margin-left: 0;
+  }
+
+  .uniHeroStatsBar--overlay {
+    left: 20px;
+    right: 20px;
+    width: auto;
+    max-width: none;
+    bottom: 20px;
+  }
+
+  .uniHeroOverlaySlider {
+    align-self: flex-start;
+    width: 100%;
+    margin-top: 14px;
   }
 
   .uniHeroSplit {
