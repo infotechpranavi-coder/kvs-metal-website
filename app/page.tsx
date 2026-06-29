@@ -170,40 +170,51 @@ function HeroSection() {
                   <span className="uniHeroPanelEdgeBorder" aria-hidden>
                     <svg viewBox="0 0 100 100" preserveAspectRatio="none">
                       <path
-                        className="uniHeroPanelEdgeBorderMain"
+                        className="uniHeroPanelEdgeBorderOrange"
                         d="M 100,0 L 0,50 L 100,100"
+                        vectorEffect="non-scaling-stroke"
+                      />
+                      <path
+                        className="uniHeroPanelEdgeBorderLight"
+                        d="M 96,4 L 6,50 L 96,96"
+                        vectorEffect="non-scaling-stroke"
+                      />
+                      <path
+                        className="uniHeroPanelEdgeBorderNavy"
+                        d="M 91,9 L 12,50 L 91,91"
                         vectorEffect="non-scaling-stroke"
                       />
                     </svg>
                   </span>
                   <div className="uniHeroPanelContent">
-                    <p className="uniHeroEyebrow">{heroContent.eyebrow}</p>
-                    <div className="uniHeroTitleBlock">
-                      <span className="uniHeroGhostTitle" aria-hidden>
-                        {heroContent.ghostTitle}
-                      </span>
-                      <h1>
-                        <span className="uniHeroTitleLine uniHeroTitleLine--navy">
-                          Build Smart.
+                    <div className="uniHeroPanelMain">
+                      <div className="uniHeroTitleBlock">
+                        <span className="uniHeroGhostTitle" aria-hidden>
+                          {heroContent.ghostTitle}
                         </span>
-                        <span className="uniHeroTitleLine uniHeroTitleLine--navy">
-                          Build Strong.
-                        </span>
-                        <span className="uniHeroTitleLine uniHeroTitleLine--orange">
-                          Build with KVS.
-                        </span>
-                      </h1>
-                      <span className="uniHeroTitleRule" aria-hidden />
-                    </div>
-                    <p className="uniHeroDesc">{heroContent.description}</p>
+                        <h1>
+                          <span className="uniHeroTitleLine uniHeroTitleLine--navy">
+                            Build Smart.
+                          </span>
+                          <span className="uniHeroTitleLine uniHeroTitleLine--navy">
+                            Build Strong.
+                          </span>
+                          <span className="uniHeroTitleLine uniHeroTitleLine--orange">
+                            Build with KVS.
+                          </span>
+                        </h1>
+                        <span className="uniHeroTitleRule" aria-hidden />
+                      </div>
+                      <p className="uniHeroDesc">{heroContent.description}</p>
 
-                    <div className="uniHeroActions">
-                      <Link href={heroContent.ctaHref} className="uniHeroBtn">
-                        {heroContent.ctaLabel}
-                      </Link>
-                      <Link href={heroContent.secondaryCtaHref} className="uniHeroBtnGhost">
-                        {heroContent.secondaryCtaLabel}
-                      </Link>
+                      <div className="uniHeroActions">
+                        <Link href={heroContent.ctaHref} className="uniHeroBtn">
+                          {heroContent.ctaLabel}
+                        </Link>
+                        <Link href={heroContent.secondaryCtaHref} className="uniHeroBtnGhost">
+                          {heroContent.secondaryCtaLabel}
+                        </Link>
+                      </div>
                     </div>
 
                     <Link href="/about" className="uniHeroReadMore">
@@ -567,7 +578,7 @@ function ProductsSection() {
 export default function KvsMetalPage() {
   return (
     <div className="uniPage">
-      <UniNavbar glass />
+      <UniNavbar />
       <main>
         <HeroSection />
         <SkillsSection />

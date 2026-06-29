@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, type CSSProperties } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { CloseIcon, DownloadIcon, MenuIcon } from './Icons'
@@ -25,48 +25,21 @@ function isNavActive(pathname: string, href: string) {
   return false
 }
 
-export function UniNavbar({ lightMode = false, glass = false }: { lightMode?: boolean; glass?: boolean }) {
+export function UniNavbar({ lightMode = false }: { lightMode?: boolean; glass?: boolean }) {
   const pathname = usePathname()
   const [scrolled, setScrolled] = useState(false)
-  const [navMorph, setNavMorph] = useState(0)
   const [menuOpen, setMenuOpen] = useState(false)
-  const useHeroMorph = glass && !lightMode
-  const showGlass = glass && !scrolled && !lightMode && !useHeroMorph
   const showSolid = lightMode || scrolled
-  const isLight = lightMode || scrolled || glass
+  const isLight = lightMode || scrolled
 
   useEffect(() => {
     if (lightMode) return
 
-    const updateScrollState = () => {
-      if (glass) {
-        const hero = document.querySelector('.uniHeroShell')
-        if (hero) {
-          const heroBottom = hero.getBoundingClientRect().bottom
-          const morphStart = 220
-          const morphEnd = 56
-          const progress = Math.min(
-            1,
-            Math.max(0, (morphStart - heroBottom) / (morphStart - morphEnd)),
-          )
-          setNavMorph(progress)
-          setScrolled(progress >= 0.98)
-          return
-        }
-      }
-
-      setNavMorph(window.scrollY > 80 ? 1 : 0)
-      setScrolled(window.scrollY > 80)
-    }
-
-    updateScrollState()
-    window.addEventListener('scroll', updateScrollState, { passive: true })
-    window.addEventListener('resize', updateScrollState)
-    return () => {
-      window.removeEventListener('scroll', updateScrollState)
-      window.removeEventListener('resize', updateScrollState)
-    }
-  }, [lightMode, glass])
+    const onScroll = () => setScrolled(window.scrollY > 80)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [lightMode])
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : ''
@@ -79,12 +52,11 @@ export function UniNavbar({ lightMode = false, glass = false }: { lightMode?: bo
 
   return (
     <header
-      className={`uniNav${useHeroMorph ? ' uniNav--heroMorph' : ''}${!useHeroMorph && showSolid ? ' uniNav--scrolled' : ''}${showGlass ? ' uniNav--glass' : ''}${menuOpen ? ' uniNav--open' : ''}`}
-      style={useHeroMorph ? ({ '--nav-morph': navMorph } as CSSProperties) : undefined}
+      className={`uniNav${showSolid ? ' uniNav--scrolled' : ''}${menuOpen ? ' uniNav--open' : ''}`}
     >
       <div className="uniNavInner">
         <Link href="/" className="uniLogo" onClick={closeMenu}>
-          <KvsLogo size="nav" priority />
+          <KvsLogo size="nav" priority variant={isLight ? 'default' : 'white'} />
         </Link>
 
         <UniNavSearch light={isLight} onNavigate={closeMenu} />

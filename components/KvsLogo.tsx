@@ -6,6 +6,7 @@ type KvsLogoProps = {
   className?: string
   size?: 'nav' | 'footer' | 'contact'
   priority?: boolean
+  variant?: 'default' | 'white'
 }
 
 const heights = {
@@ -14,7 +15,12 @@ const heights = {
   contact: 56,
 } as const
 
-export function KvsLogo({ className = '', size = 'nav', priority = false }: KvsLogoProps) {
+export function KvsLogo({
+  className = '',
+  size = 'nav',
+  priority = false,
+  variant = 'default',
+}: KvsLogoProps) {
   const height = heights[size]
 
   return (
@@ -23,7 +29,7 @@ export function KvsLogo({ className = '', size = 'nav', priority = false }: KvsL
       alt="KVS Metal"
       width={Math.round(height * 3.2)}
       height={height}
-      className={`kvsLogo kvsLogo--${size}${className ? ` ${className}` : ''}`}
+      className={`kvsLogo kvsLogo--${size}${variant === 'white' ? ' kvsLogo--white' : ''}${className ? ` ${className}` : ''}`}
       priority={priority}
     />
   )
