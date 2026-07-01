@@ -8,7 +8,7 @@ type NavPage = 'home' | 'about' | 'products' | 'contact'
 
 const navItems: { href: string; label: string; page: NavPage }[] = [
   { href: '/', label: 'Home', page: 'home' },
-  { href: '/about', label: 'About', page: 'about' },
+  { href: '/about', label: 'About Us', page: 'about' },
   { href: '/products', label: 'Products', page: 'products' },
   { href: '/contact', label: 'Contact', page: 'contact' },
 ]

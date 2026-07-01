@@ -5,18 +5,25 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "db:seed": "npx tsx scripts/seed.ts",
+    "db:clear": "npx tsx scripts/clear-demo-data.ts"
   },
   "dependencies": {
+    "cloudinary": "^2.9.0",
     "framer-motion": "^11.18.2",
+    "mongoose": "^8.19.1",
     "next": "^14.2.0",
     "react": "^18.3.0",
-    "react-dom": "^18.3.0"
+    "react-dom": "^18.3.0",
+    "resend": "^6.16.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "tsx": "^4.22.4",
     "typescript": "^5"
   }
 }

@@ -19,9 +19,15 @@ export default function KvsContactPage() {
   const productSku = searchParams.get('sku') ?? ''
   const isProductEnquiry = enquiryType === 'product-enquiry' && Boolean(productName)
 
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
   const [subject, setSubject] = useState('general')
   const [subjectLine, setSubjectLine] = useState('')
   const [message, setMessage] = useState('')
+  const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
+  const [submitSuccess, setSubmitSuccess] = useState(false)
 
   useEffect(() => {
     if (isProductEnquiry) {
@@ -31,33 +37,72 @@ export default function KvsContactPage() {
     }
   }, [isProductEnquiry, productName, productSku])
 
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    setSubmitting(true)
+    setSubmitError('')
+    setSubmitSuccess(false)
+
+    try {
+      const response = await fetch('/api/enquiries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+          phone: phone.trim() || undefined,
+          type: subject,
+          subject: subjectLine.trim(),
+          message: message.trim(),
+          productSku: isProductEnquiry ? productSku || undefined : undefined,
+        }),
+      })
+
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({}))
+        setSubmitError(
+          typeof data.error === 'string'
+            ? data.error
+            : 'Could not send your enquiry. Please try again or email us directly.',
+        )
+        return
+      }
+
+      await response.json()
+      setSubmitSuccess(true)
+      if (!isProductEnquiry) {
+        setName('')
+        setEmail('')
+        setPhone('')
+        setSubject('general')
+        setSubjectLine('')
+        setMessage('')
+      }
+    } catch {
+      setSubmitError('Could not send your enquiry. Please try again or email us directly.')
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
   return (
     <div className="uniPage">
-      <UniNavbar lightMode />
+      <UniNavbar />
       <main className="kvsContact">
-        <section className="kvsContactHero">
-          <div className="uniContainer kvsContactHeroInner">
-            <div className="kvsContactHeroCopy">
+        <section className="kvsContactBody">
+          <div className="uniContainer">
+            <header className="kvsContactPageHead">
               <p className="kvsContactEyebrow">Contact us</p>
-              <h1>{isProductEnquiry ? 'Product enquiry' : 'Get in touch'}</h1>
+              <h1>{isProductEnquiry ? 'Product enquiry' : 'Reach KVS Metals'}</h1>
               <p className="kvsContactLead">
                 {isProductEnquiry
                   ? `Send your requirements for ${productName}. Our team will respond with pricing and supply details.`
                   : 'Tell us about your project, quantity, and delivery needs. We will get back to you shortly.'}
               </p>
-            </div>
-          </div>
-        </section>
+            </header>
 
-        <section className="kvsContactBody">
-          <div className="kvsContactBodyPattern" aria-hidden />
-          <div className="uniContainer">
             <div className="kvsContactPanel">
-              <aside className="kvsContactAside">
-                <h2>Reach KVS Metals</h2>
-                <p className="kvsContactAsideLead">
-                  Speak with our team for quotes, bulk supply, and steel procurement coordination.
-                </p>
+              <aside className="kvsContactAside" aria-label="Contact details">
                 <ul className="kvsContactMethods">
                   <li className="kvsContactMethodCard">
                     <span className="kvsContactMethodIcon" aria-hidden>
@@ -94,25 +139,42 @@ export default function KvsContactPage() {
                   <h2>Send a message</h2>
                   <p>Fill in the details below and we will respond within one business day.</p>
                 </div>
-                <form
-                  className="kvsContactForm"
-                  onSubmit={(event) => event.preventDefault()}
-                >
+                <form className="kvsContactForm" onSubmit={handleSubmit}>
                   <div className="kvsContactFormRow">
                     <div className="kvsContactField">
                       <label htmlFor="contactName">Full name</label>
-                      <input id="contactName" type="text" placeholder="Your name" required />
+                      <input
+                        id="contactName"
+                        type="text"
+                        placeholder="Your name"
+                        value={name}
+                        onChange={(event) => setName(event.target.value)}
+                        required
+                      />
                     </div>
                     <div className="kvsContactField">
                       <label htmlFor="contactEmail">Email</label>
-                      <input id="contactEmail" type="email" placeholder="you@company.com" required />
+                      <input
+                        id="contactEmail"
+                        type="email"
+                        placeholder="you@company.com"
+                        value={email}
+                        onChange={(event) => setEmail(event.target.value)}
+                        required
+                      />
                     </div>
                   </div>
 
                   <div className="kvsContactFormRow">
                     <div className="kvsContactField">
                       <label htmlFor="contactPhone">Phone</label>
-                      <input id="contactPhone" type="tel" placeholder="+971" />
+                      <input
+                        id="contactPhone"
+                        type="tel"
+                        placeholder="+971"
+                        value={phone}
+                        onChange={(event) => setPhone(event.target.value)}
+                      />
                     </div>
                     <div className="kvsContactField">
                       <label htmlFor="contactSubject">Enquiry type</label>
@@ -153,8 +215,20 @@ export default function KvsContactPage() {
                     />
                   </div>
 
-                  <button type="submit" className="kvsContactSubmit">
-                    Send enquiry
+                  {submitError ? (
+                    <p className="kvsContactFormError" role="alert">
+                      {submitError}
+                    </p>
+                  ) : null}
+                  {submitSuccess ? (
+                    <p className="kvsContactFormSuccess" role="status">
+                      Thank you — your enquiry has been received. Our team will respond within one
+                      business day.
+                    </p>
+                  ) : null}
+
+                  <button type="submit" className="kvsContactSubmit" disabled={submitting}>
+                    {submitting ? 'Sending enquiry…' : 'Send enquiry'}
                   </button>
                 </form>
               </div>

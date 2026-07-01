@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, type CSSProperties, type MouseEvent } from 'react'
 import Link from 'next/link'
 import type { Product } from '@/lib/products'
 import { getProductCategoryForProduct, getProductsPageHref, getRelatedHomepageProducts } from '@/lib/products'
@@ -8,7 +8,6 @@ import { getProductEnquiryHref } from '@/lib/contact'
 import { UniNavbar } from '@/components/UniNavbar'
 import { UniFooter } from '@/components/UniFooter'
 import { UniWidgets } from '@/components/UniWidgets'
-import { ClockIcon, StarIcon } from '@/components/UniIcons'
 
 function BackArrowIcon() {
   return (
@@ -23,31 +22,32 @@ function BackArrowIcon() {
     </svg>
   )
 }
-function CheckIcon() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M20 6L9 17l-5-5"
-        stroke="currentColor"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
-}
 
 export default function KvsProductDetailPage({ product }: { product: Product }) {
   const related = getRelatedHomepageProducts(product.slug)
   const parentCategory = getProductCategoryForProduct(product.slug)
   const [activeImage, setActiveImage] = useState(0)
+  const [imageZoom, setImageZoom] = useState({ active: false, x: 50, y: 50 })
   const images = product.images.length > 0 ? product.images : [product.img]
+
+  const updateImageZoom = (event: MouseEvent<HTMLDivElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect()
+    const x = ((event.clientX - rect.left) / rect.width) * 100
+    const y = ((event.clientY - rect.top) / rect.height) * 100
+    setImageZoom({ active: true, x, y })
+  }
+
+  const galleryZoomStyle = {
+    '--gallery-zoom-x': `${imageZoom.x}%`,
+    '--gallery-zoom-y': `${imageZoom.y}%`,
+  } as CSSProperties
 
   const specs = [
     { label: 'Category', value: product.category },
-    product.material ? { label: 'Material', value: product.material } : null,
-    product.dimensions ? { label: 'Dimensions', value: product.dimensions } : null,
-    { label: 'SKU', value: product.sku },
+    product.material ? { label: 'Type / Grade', value: product.material } : null,
+    product.dimensions ? { label: 'Size', value: product.dimensions } : null,
+    product.standard ? { label: 'Standard', value: product.standard } : null,
+    product.thickness ? { label: 'Thickness', value: product.thickness } : null,
     product.warranty ? { label: 'Warranty', value: product.warranty } : null,
     {
       label: 'Availability',
@@ -61,7 +61,7 @@ export default function KvsProductDetailPage({ product }: { product: Product }) 
 
   return (
     <div className="uniPage">
-      <UniNavbar lightMode />
+      <UniNavbar />
       <main className="uniProductDetail">
         <div className="uniProductTopBar">
           <div className="uniContainer uniProductTopBarInner">
@@ -74,11 +74,18 @@ export default function KvsProductDetailPage({ product }: { product: Product }) 
         <section className="uniProductShowcase">
           <div className="uniContainer uniProductShowcaseGrid">
             <div className="uniProductGallery">
-              <div className="uniProductGalleryMain">
+              <div
+                className={`uniProductGalleryMain${imageZoom.active ? ' uniProductGalleryMain--zoom' : ''}`}
+                style={galleryZoomStyle}
+                onMouseEnter={updateImageZoom}
+                onMouseMove={updateImageZoom}
+                onMouseLeave={() => setImageZoom({ active: false, x: 50, y: 50 })}
+              >
                 {product.badge && (
                   <span className="uniProductBadge">{product.badge}</span>
                 )}
                 <img
+                  key={images[activeImage]}
                   src={images[activeImage]}
                   alt={product.title}
                   className="uniProductGalleryImg"
@@ -94,7 +101,10 @@ export default function KvsProductDetailPage({ product }: { product: Product }) 
                       aria-selected={activeImage === index}
                       aria-label={`View image ${index + 1}`}
                       className={`uniProductGalleryThumb${activeImage === index ? ' uniProductGalleryThumb--active' : ''}`}
-                      onClick={() => setActiveImage(index)}
+                      onClick={() => {
+                        setActiveImage(index)
+                        setImageZoom({ active: false, x: 50, y: 50 })
+                      }}
                     >
                       <img src={src} alt="" />
                     </button>
@@ -107,19 +117,6 @@ export default function KvsProductDetailPage({ product }: { product: Product }) 
               <p className="uniProductCategory">{product.category}</p>
               <h1 className="uniProductTitle">{product.title}</h1>
 
-              <div className="uniProductRating">
-                <span className="uniProductRatingStars" aria-hidden>
-                  {[1, 2, 3, 4, 5].map((n) => (
-                    <StarIcon key={n} />
-                  ))}
-                </span>
-                <span className="uniProductRatingValue">{product.rating}</span>
-                <span className="uniProductRatingCount">
-                  ({product.reviewCount} reviews)
-                </span>
-              </div>
-
-              <p className="uniProductPrice">{product.price}</p>
               <p className="uniProductLead">{product.shortDescription}</p>
 
               <dl className="uniProductQuickSpecs">
@@ -133,56 +130,55 @@ export default function KvsProductDetailPage({ product }: { product: Product }) 
 
               <div className="uniProductActions">
                 <Link href={getProductEnquiryHref(product)} className="uniProductCtaPrimary">
-                  Get a Quote
+                  Inquire Now
                 </Link>
               </div>
             </div>
           </div>
         </section>
 
-        <section className="uniProductFeaturesBand">
-          <div className="uniContainer">
-            <div className="uniProductFeaturesHead">
-              <h2 className="uniProductSectionTitle">Key features</h2>
-              <p className="uniProductFeaturesSub">
-                Quality and supply you can rely on for {product.title.toLowerCase()}.
-              </p>
+        {product.features.length > 0 ? (
+          <section className="uniProductFeaturesBand">
+            <div className="uniContainer">
+              <div className="uniProductFeaturesHead">
+                <h2 className="uniProductSectionTitle">Key features</h2>
+                <p className="uniProductFeaturesSub">
+                  Quality and supply you can rely on for {product.title.toLowerCase()}.
+                </p>
+              </div>
+              <ul className="uniProductFeaturesGrid">
+                {product.features.map((feature) => (
+                  <li key={feature} className="uniProductFeatureCard">
+                    <span className="uniProductFeatureText">{feature}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <ul className="uniProductFeaturesGrid">
-              {product.features.map((feature, index) => (
-                <li key={feature} className="uniProductFeatureCard">
-                  <span className="uniProductFeatureIndex" aria-hidden>
-                    {String(index + 1).padStart(2, '0')}
-                  </span>
-                  <span className="uniProductFeatureIcon" aria-hidden>
-                    <CheckIcon />
-                  </span>
-                  <span className="uniProductFeatureText">{feature}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
+          </section>
+        ) : null}
 
         <section className="uniProductDetails">
           <div className="uniContainer uniProductDetailsGrid">
             <div className="uniProductDescription">
-              <h2 className="uniProductSectionTitle">Product overview</h2>
-              <p>{product.description}</p>
+              <div className="uniProductOverviewHead">
+                <span className="uniProductOverviewEyebrow">Details</span>
+                <h2 className="uniProductSectionTitle">Product overview</h2>
+              </div>
+              <p className="uniProductOverviewLead">
+                {product.description.trim() || product.shortDescription}
+              </p>
             </div>
 
             <div className="uniProductSpecsCard">
               <h2 className="uniProductSectionTitle">Specifications</h2>
-              <table className="uniProductSpecsTable">
-                <tbody>
-                  {specs.map((item) => (
-                    <tr key={item.label}>
-                      <th scope="row">{item.label}</th>
-                      <td>{item.value}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <dl className="uniProductSpecsList">
+                {specs.map((item) => (
+                  <div key={item.label} className="uniProductSpecRow">
+                    <dt>{item.label}</dt>
+                    <dd>{item.value}</dd>
+                  </div>
+                ))}
+              </dl>
             </div>
           </div>
         </section>
@@ -206,23 +202,31 @@ export default function KvsProductDetailPage({ product }: { product: Product }) 
                   View category
                 </Link>
               </div>
-              <div className="uniProductRelatedGrid">
+              <div className="productCatalogGrid uniProductRelatedGrid">
                 {related.map((item) => (
                   <Link
                     key={item.slug}
                     href={`/products/${item.slug}`}
-                    className="uniProductRelatedCard"
+                    className="productCatalogCard"
+                    aria-label={`View details for ${item.title}`}
                   >
-                    <div className="uniProductRelatedImg">
+                    <div className="productCatalogCardMedia">
                       <img src={item.img} alt={item.title} />
                     </div>
-                    <div className="uniProductRelatedBody">
-                      <p className="uniProductRelatedCategory">{item.category}</p>
-                      <h3>{item.title}</h3>
-                      <div className="uniProductRelatedMeta">
-                        <ClockIcon />
-                        <span>{item.dimensions ?? item.material ?? item.category}</span>
-                      </div>
+                    <div className="productCatalogCardBody">
+                      <h4>{item.title}</h4>
+                      <span className="productCatalogCardLink">
+                        View details
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+                          <path
+                            d="M5 12H19M19 12L13 6M19 12L13 18"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </span>
                     </div>
                   </Link>
                 ))}

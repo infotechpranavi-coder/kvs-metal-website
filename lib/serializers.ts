@@ -1,0 +1,117 @@
+import type { CategoryDocument } from '@/models/Category'
+import type { EnquiryDocument } from '@/models/Enquiry'
+import type { MaterialDocument } from '@/models/Material'
+import type mongoose from 'mongoose'
+
+export type CategoryDto = {
+  id: string
+  slug: string
+  title: string
+  img: string
+  heroImg: string
+  description: string
+  headline: string
+  paragraphs: string[]
+  productSlugs: string[]
+  sortOrder: number
+  showOnHomepage: boolean
+  createdAt: string
+  updatedAt: string
+}
+
+export type MaterialDto = {
+  id: string
+  slug: string
+  title: string
+  description: string
+  img: string
+  sortOrder: number
+  categoryIds: string[]
+  categorySlugs: string[]
+  createdAt: string
+  updatedAt: string
+}
+
+export type EnquiryDto = {
+  id: string
+  name: string
+  email: string
+  phone: string | null
+  type: string
+  subject: string | null
+  message: string
+  productSku: string | null
+  status: string
+  createdAt: string
+  updatedAt: string
+}
+
+type PopulatedCategoryRef = {
+  _id: mongoose.Types.ObjectId
+  slug: string
+}
+
+export function serializeCategory(category: CategoryDocument): CategoryDto {
+  return {
+    id: category._id.toString(),
+    slug: category.slug,
+    title: category.title,
+    img: category.img,
+    heroImg: category.heroImg || '',
+    description: category.description || '',
+    headline: category.headline || '',
+    paragraphs: category.paragraphs || [],
+    productSlugs: category.productSlugs || [],
+    sortOrder: category.sortOrder ?? 0,
+    showOnHomepage: category.showOnHomepage === true,
+    createdAt: category.createdAt.toISOString(),
+    updatedAt: category.updatedAt.toISOString(),
+  }
+}
+
+export function serializeMaterial(
+  material: MaterialDocument & { categoryIds?: Array<PopulatedCategoryRef | mongoose.Types.ObjectId> },
+): MaterialDto {
+  const populated: PopulatedCategoryRef[] = []
+
+  for (const item of material.categoryIds || []) {
+    if (typeof item === 'object' && item !== null && 'slug' in item) {
+      populated.push(item as PopulatedCategoryRef)
+    }
+  }
+
+  const rawIds = (material.categoryIds || []).map((item) =>
+    typeof item === 'object' && item !== null && '_id' in item
+      ? item._id.toString()
+      : String(item),
+  )
+
+  return {
+    id: material._id.toString(),
+    slug: material.slug,
+    title: material.title,
+    description: material.description || '',
+    img: material.img,
+    sortOrder: material.sortOrder ?? 0,
+    categoryIds: populated.length > 0 ? populated.map((item) => item._id.toString()) : rawIds,
+    categorySlugs: populated.map((item) => item.slug),
+    createdAt: material.createdAt.toISOString(),
+    updatedAt: material.updatedAt.toISOString(),
+  }
+}
+
+export function serializeEnquiry(enquiry: EnquiryDocument): EnquiryDto {
+  return {
+    id: enquiry._id.toString(),
+    name: enquiry.name,
+    email: enquiry.email,
+    phone: enquiry.phone || null,
+    type: enquiry.type || 'general',
+    subject: enquiry.subject || null,
+    message: enquiry.message,
+    productSku: enquiry.productSku || null,
+    status: enquiry.status || 'new',
+    createdAt: enquiry.createdAt.toISOString(),
+    updatedAt: enquiry.updatedAt.toISOString(),
+  }
+}

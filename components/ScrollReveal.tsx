@@ -28,23 +28,36 @@ export function ScrollReveal({
     const node = ref.current
     if (!node) return
 
+    const show = () => setVisible(true)
+
     const prefersReduced =
       typeof window !== 'undefined' &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
     if (prefersReduced) {
-      setVisible(true)
+      show()
       return
     }
+
+    const revealIfInView = () => {
+      const rect = node.getBoundingClientRect()
+      if (rect.top < window.innerHeight * 0.92 && rect.bottom > 0) {
+        show()
+        return true
+      }
+      return false
+    }
+
+    if (revealIfInView()) return
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setVisible(true)
+          show()
           observer.disconnect()
         }
       },
-      { threshold, rootMargin: '0px 0px -6% 0px' },
+      { threshold, rootMargin: '0px 0px -4% 0px' },
     )
 
     observer.observe(node)

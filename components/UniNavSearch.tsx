@@ -78,7 +78,7 @@ export function UniNavSearch({ light = false, onNavigate, className = '' }: UniN
           id={`${listId}-input`}
           type="search"
           value={query}
-          placeholder="Search products, industries..."
+          placeholder="Search..."
           autoComplete="off"
           aria-expanded={open && hasResults}
           aria-controls={hasResults ? `${listId}-results` : undefined}

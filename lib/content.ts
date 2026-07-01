@@ -3,7 +3,7 @@ export const COMPANY_NAME = 'KVS Metals'
 export const PHONE_E164 = '+971503646193'
 export const PHONE_DISPLAY = '+971 503646193'
 export const WHATSAPP_URL = 'https://wa.me/971503646193'
-export const EMAIL = 'info@kvsmetals.com'
+export const EMAIL = 'gsamyani@kvsmetals.com'
 
 export const heroContent = {
   eyebrow: '25+ Years of Excellence in Steel Trading',
@@ -16,7 +16,7 @@ export const heroContent = {
   stats: [
     { value: '25+', label: 'Years' },
     { value: '98%', label: 'On-time' },
-    { value: '2K+', label: 'Clients' },
+    { value: '1K+', label: 'Clients' },
   ],
   highlights: [
     'Structural & industrial steel supply',
@@ -58,17 +58,18 @@ export const aboutUsHome = {
 import { kvsProcurementCtaImage, kvsProductsCtaImage } from './product-images'
 
 export const procurementCta = {
-  title: 'Smoother steel procurement?',
+  title: 'Looking for smoother steel procurement? Contact KVS Metals to simplify your sourcing.',
   phoneLabel: 'Call Us',
-  ctaLabel: 'Contact Us',
+  ctaLabel: 'Request A Call',
   ctaHref: '/contact',
   image: kvsProcurementCtaImage,
   imageAlt: 'KVS Metals steel products',
 }
 
 export const productsCta = {
-  title: 'Premium steel, delivered on time.',
-  ctaLabel: 'Contact Us',
+  title: 'Looking for smoother steel procurement? Contact KVS Metals to simplify your sourcing.',
+  phoneLabel: 'Call Us',
+  ctaLabel: 'Request A Call',
   ctaHref: '/contact',
   image: kvsProductsCtaImage,
   imageAlt: 'KVS Metals structural steel supply',
@@ -77,8 +78,10 @@ export const productsCta = {
 export const productsHome = {
   eyebrow: 'Our Products',
   title: 'Our Products',
-  lead:
-    'KVS Metals supplies a comprehensive range of structural and industrial steel materials designed to meet the demands of modern construction, fabrication, engineering, and industrial projects. Available in multiple grades, sizes, and specifications, our products include coils, sheets, pipes, structural sections, bars, channels, and foundation materials procured as per international standards.',
+  paragraphs: [
+    'KVS Metals supplies a comprehensive range of structural and industrial steel materials designed to meet the demands of modern construction, fabrication, engineering, and industrial projects.',
+    'Available in multiple grades, sizes, and specifications, our products include coils, sheets, pipes, structural sections, bars, channels, and foundation materials procured as per international standards.',
+  ],
 }
 
 export { productHighlights, productMarqueeTerms } from './kvs-catalog'
@@ -87,6 +90,12 @@ export const sectorsSection = {
   title: 'Industries We Serve',
   tagline:
     'Establish a robust steel foundation for construction, engineering and industrial projects.',
+}
+
+export const materialsSection = {
+  title: 'Material Supplies',
+  tagline:
+    'Procure, stock, and supply structural and industrial metals across grades, sizes, and specifications for projects across the UAE.',
 }
 
 export const testimonialsSection = {
@@ -108,6 +117,12 @@ export const footerContent = {
     'Custom Requirements on Request',
   ],
   address: 'Dubai, United Arab Emirates',
+  materials: [
+    { label: 'Mild Steel', href: '/products?material=mild-steel' },
+    { label: 'Stainless Steel', href: '/products?material=stainless-steel' },
+    { label: 'Aluminum', href: '/products?material=aluminum' },
+    { label: 'Galvanized Iron', href: '/products?material=galvanized-iron' },
+  ],
 }
 
 export const aboutPage = {
@@ -122,10 +137,9 @@ export const aboutPage = {
     'We continue to strengthen our product portfolio and capabilities to meet the growing demands of modern industries.',
   ],
   stats: [
-    { value: '25+', label: 'Years in industry' },
-    { value: '500+', label: 'Projects supplied' },
-    { value: '98%', label: 'On-time delivery' },
-    { value: '2K+', label: 'Active clients' },
+    { value: '25+', label: 'Years' },
+    { value: '98%', label: 'On-time' },
+    { value: '1K+', label: 'Clients' },
   ],
   whyChooseTitle: 'Why Choose KVS Metals',
   whyChoose: [
@@ -161,6 +175,7 @@ export const aboutPage = {
     'At KVS Metals, our approach goes beyond supplying materials. We believe in building long-standing relationships through transparent communication, responsive service, practical support, and a commitment to delivering value in every interaction.',
     'The way we work is shaped by values that guide every decision, commitment, and customer interaction. These principles help us build lasting relationships and earn trust through consistent actions.',
   ],
+  valuesLead: 'Our brand stands for values we are driven by:',
   values: [
     'Integrity & Trust',
     'Commitment',
@@ -171,6 +186,61 @@ export const aboutPage = {
   ctaTitle: 'Ready to discuss your steel requirements?',
   ctaText: 'Share grade, quantity, and delivery location — our team will respond with a tailored quote.',
   ctaLabel: 'Request A Call',
+  ctaHref: '/contact',
+  ctaPhoneLabel: 'Call Us',
+  heroImage: '/images/about/hero.jpg',
+  heroImageAlt: 'Rows of steel coils stored in an industrial warehouse',
+  heroImageCaption: 'Steel coils & sheet stock — the materials we supply across grades and specifications',
+  storyImage: '/images/about/story.jpg',
+  storyImageAlt: 'Structural steel beams and sections stacked in a metal supply yard',
+  storyImageCaption: 'Structural sections, pipes & long products — ready for project delivery',
+  ctaImage:
+    'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1200&q=85&auto=format&fit=crop',
+  ctaImageAlt: 'Business team discussing steel procurement and project requirements',
+}
+
+export const brochurePage = {
+  eyebrow: 'Product Brochure',
+  title: 'KVS Metals Product Brochure',
+  lead:
+    'Access product specifications, grades, dimensions, and material standards across KVS Metals’ steel range for construction, fabrication, marine, foundation, and industrial requirements.',
+  downloadLabel: 'Download Product Brochure (PDF)',
+  formTitle: 'Get the KVS Metals Product Brochure',
+  formDescription:
+    'Fill in your details to access the brochure and receive a copy in your email.',
+  nameLabel: 'Name',
+  companyLabel: 'Company name (optional)',
+  emailLabel: 'Email (optional)',
+  emailHint: 'If provided, we will email a copy of the brochure to this address.',
+  phoneLabel: 'Phone number',
+  submitLabel: 'Download Product Brochure',
+  successTitle: 'Thank you. Your brochure is now downloading.',
+  successDownloadHint: 'If the download did not start, use the button below.',
+  successEmailNote: 'A copy has also been sent to your email.',
+  successWhatsappPrefix: 'Need further assistance? Our team is available on WhatsApp at',
+  successAgainLabel: 'Submit another request',
+}
+
+export const careersPage = {
+  eyebrow: 'Careers',
+  title: 'Build Your Career with KVS Metals',
+  subheading: 'Be part of a workplace that values professionalism, commitment, and integrity.',
+  intro: [
+    'At KVS Metals, we value practical industry knowledge, dedication, and a professional approach to work. We welcome motivated individuals looking to grow in the steel trading and industrial sector.',
+    'If you wish to explore career opportunities with KVS Metals, please submit your details and upload your CV below.',
+  ],
+  formTitle: 'Share your profile',
+  formDescription: 'Submit your details and CV. Our team will review your application and get in touch if there is a suitable opportunity.',
+  firstNameLabel: 'First name',
+  lastNameLabel: 'Last name',
+  emailLabel: 'Email address',
+  cvLabel: 'Upload CV',
+  cvHint: 'PDF, DOC, or DOCX — max 5 MB',
+  messageLabel: 'Message',
+  messageLimit: 500,
+  submitLabel: 'Share your CV',
+  successTitle: 'Thank you — your profile has been submitted.',
+  successMessage: 'Our team will review your application and contact you if there is a suitable opportunity.',
 }
 
 export const aboutHomeBlocks = [

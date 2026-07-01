@@ -12,7 +12,7 @@ export default function SectorDetailPage({ sector }: { sector: Sector }) {
 
   return (
     <div className="uniPage">
-      <UniNavbar lightMode />
+      <UniNavbar />
       <main className="sectorDetail">
         <section className="sectorDetailHero">
           <img src={sector.img} alt="" className="sectorDetailBannerImg" />

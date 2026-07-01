@@ -52,7 +52,7 @@ export function LayoutSidebarIcon() {
 
 export function ChevronUpIcon() {
   return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" aria-hidden>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden>
       <path d="M18 15l-6-6-6 6" />
     </svg>
   )
@@ -216,48 +216,29 @@ export function CustomerServiceIcon() {
   )
 }
 
-const SCRIBBLE_PATH_MAIN = 'M20 60 C40 20, 80 10, 110 35 C130 50, 150 25, 180 40'
-const SCRIBBLE_PATH_ALT = 'M18 58 C38 22, 82 12, 112 33 C132 48, 152 27, 182 38'
-
-export function YellowScribble() {
+export function ReliableAvailabilityIcon() {
   return (
-    <svg className="uniScribble" viewBox="0 0 200 80" fill="none" aria-hidden>
-      <path
-        className="uniScribbleLayer uniScribbleLayer--glow"
-        d={SCRIBBLE_PATH_MAIN}
-        stroke="currentColor"
-        strokeWidth="18"
-        strokeLinecap="round"
-        fill="none"
-        transform="translate(5, 6)"
-      />
-      <path
-        className="uniScribbleLayer uniScribbleLayer--navy-deep"
-        d={SCRIBBLE_PATH_MAIN}
-        stroke="currentColor"
-        strokeWidth="12"
-        strokeLinecap="round"
-        fill="none"
-        transform="translate(5, 6)"
-      />
-      <path
-        className="uniScribbleLayer uniScribbleLayer--navy"
-        d={SCRIBBLE_PATH_ALT}
-        stroke="currentColor"
-        strokeWidth="8"
-        strokeLinecap="round"
-        fill="none"
-      />
-      <path
-        className="uniScribbleLayer uniScribbleLayer--orange"
-        d={SCRIBBLE_PATH_MAIN}
-        stroke="currentColor"
-        strokeWidth="7"
-        strokeLinecap="round"
-        fill="none"
-      />
-      <circle className="uniScribbleLayer uniScribbleLayer--dot uniScribbleLayer--dot-start" cx="22" cy="58" r="2.5" />
-      <circle className="uniScribbleLayer uniScribbleLayer--dot uniScribbleLayer--dot-end" cx="180" cy="40" r="3" />
+    <svg {...skillsIconProps}>
+      <path d="M24 8l13 4.5v11.5c0 8.5-5.5 14.5-13 17-7.5-2.5-13-8.5-13-17V12.5L24 8z" />
+      <path d="M17 24.5l4.5 4.5L31 19.5" />
+    </svg>
+  )
+}
+
+export function IndustryUnderstandingIcon() {
+  return (
+    <svg {...skillsIconProps}>
+      <path d="M6 36h36" />
+      <path d="M9 36V22h9v14" />
+      <path d="M12 26h3" />
+      <path d="M12 30h3" />
+      <path d="M22 36V16l9-4v24" />
+      <path d="M25 24h3" />
+      <path d="M25 29h3" />
+      <path d="M35 36V26h7v10" />
+      <path d="M38 30v2" />
+      <path d="M31 12v3" />
+      <path d="M29 12h4" />
     </svg>
   )
 }

@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useRef, useState, type CSSProperties } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { UniNavbar } from '@/components/UniNavbar'
 import { UniFooter } from '@/components/UniFooter'
 import { UniWidgets } from '@/components/UniWidgets'
@@ -9,23 +9,21 @@ import { ScrollReveal } from '@/components/ScrollReveal'
 import {
   aboutUsHome,
   heroContent,
-  PHONE_DISPLAY,
-  PHONE_E164,
   procurementCta,
-  productHighlights,
   productsCta,
-  productsHome,
   sectorsSection,
 } from '@/lib/content'
 import { sectors } from '@/lib/sectors'
 import { testimonials, testimonialsSection } from '@/lib/testimonials'
+import { MaterialSuppliesSection } from '@/components/MaterialSuppliesSection'
+import { HomeProductsSection } from '@/components/HomeProductsSection'
+import { HomeCtaSection } from '@/components/HomeCtaSection'
 import {
   CompetitivePricingIcon,
   CustomerServiceIcon,
   GlobalSourcingIcon,
   StarIcon,
   TimelyDeliveryIcon,
-  YellowScribble,
 } from '@/components/UniIcons'
 
 const features = aboutUsHome.features.map((item, index) => {
@@ -51,104 +49,150 @@ const partners = [
   { name: 'Essar', className: 'uniPartnerLogo--orfit' },
 ]
 
-const heroSlides = [
-  {
-    poster: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1600&q=85',
-    video: '/hero/steel%203.mp4',
-  },
-  {
-    poster: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1600&q=85',
-    video: '/hero/steel_2.mp4',
-  },
-  {
-    poster: 'https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?w=1600&q=85',
-    video: '/hero/steel_video.mp4',
-  },
-]
+const HERO_VIDEO = '/hero/Precise-Quality-1080p.mp4'
+
+const heroSlides = [{ video: HERO_VIDEO }]
 
 const heroStats = heroContent.stats
 
 const SLIDE_MS = 6500
 
+function HeroVolumeOffIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width={20} height={20} fill="none" aria-hidden>
+      <path
+        d="M11 5 6 9H3v6h3l5 4V5Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <path d="m22 9-6 6M16 9l6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  )
+}
+
+function HeroVolumeOnIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width={20} height={20} fill="none" aria-hidden>
+      <path
+        d="M11 5 6 9H3v6h3l5 4V5Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    </svg>
+  )
+}
+
 function HeroSection() {
-  const heroRef = useRef<HTMLElement>(null)
+  const progressRef = useRef<HTMLSpanElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
   const [activeSlide, setActiveSlide] = useState(0)
-  const [slideProgress, setSlideProgress] = useState(0)
-  const [shrink, setShrink] = useState(0)
+  const [isMuted, setIsMuted] = useState(true)
 
   useEffect(() => {
-    const onScroll = () => {
-      const hero = heroRef.current
-      if (!hero) return
-      const scrollY = window.scrollY
-      const shrinkDistance = hero.offsetHeight * 0.72
-      const progress = Math.min(1, Math.max(0, scrollY / shrinkDistance))
-      setShrink(progress)
+    const video = videoRef.current
+    if (!video) return
+
+    video.defaultPlaybackRate = 1
+    video.playbackRate = 1
+
+    const tryPlay = () => {
+      void video.play().catch(() => {})
     }
 
-    onScroll()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', onScroll, { passive: true })
+    video.addEventListener('loadeddata', tryPlay, { once: true })
+    video.addEventListener('canplay', tryPlay, { once: true })
+
+    if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) tryPlay()
+
     return () => {
-      window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', onScroll)
+      video.removeEventListener('loadeddata', tryPlay)
+      video.removeEventListener('canplay', tryPlay)
     }
-  }, [])
-
-  useEffect(() => {
-    setSlideProgress(0)
-    const started = Date.now()
-    const timer = window.setInterval(() => {
-      const elapsed = Date.now() - started
-      const progress = Math.min(100, (elapsed / SLIDE_MS) * 100)
-      setSlideProgress(progress)
-      if (elapsed >= SLIDE_MS) {
-        setActiveSlide((current) => (current + 1) % heroSlides.length)
-        window.clearInterval(timer)
-      }
-    }, 40)
-
-    return () => window.clearInterval(timer)
   }, [activeSlide])
 
-  const heroStyle = {
-    '--hero-inset': `${shrink * 56}px`,
-    '--hero-radius': `${shrink * 28}px`,
-    '--hero-height-offset': `${shrink * 140}px`,
-    '--hero-inset-bottom': `${shrink * 36}px`,
-    '--hero-shrink-progress': shrink,
-  } as CSSProperties
+  useEffect(() => {
+    const video = videoRef.current
+    if (video) video.muted = isMuted
+  }, [isMuted])
+
+  const toggleMute = () => {
+    const video = videoRef.current
+    if (!video) return
+
+    const nextMuted = !isMuted
+    video.muted = nextMuted
+    if (!nextMuted) {
+      video.volume = 1
+      void video.play().catch(() => {})
+    }
+    setIsMuted(nextMuted)
+  }
+
+  useEffect(() => {
+    if (heroSlides.length <= 1) return
+
+    const progressEl = progressRef.current
+    if (progressEl) progressEl.style.width = '0%'
+
+    const started = performance.now()
+    let rafId = 0
+
+    const tick = (now: number) => {
+      const elapsed = now - started
+      const progress = Math.min(100, (elapsed / SLIDE_MS) * 100)
+      if (progressEl) progressEl.style.width = `${progress}%`
+
+      if (elapsed >= SLIDE_MS) {
+        setActiveSlide((current) => (current + 1) % heroSlides.length)
+        return
+      }
+
+      rafId = requestAnimationFrame(tick)
+    }
+
+    rafId = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(rafId)
+  }, [activeSlide])
 
   return (
     <div className="uniHeroShell">
-      <section
-        ref={heroRef}
-        className="uniHero"
-        style={heroStyle}
-        aria-label="Hero banner"
-      >
+      <section className="uniHero" aria-label="Hero banner">
         <div className="uniHeroInner">
           <div className="uniHeroSplit">
             <div className="uniHeroVideoCol">
               <div className="uniHeroSlides" aria-hidden>
-                {heroSlides.map((item, index) => (
-                  <div
-                    key={item.video}
-                    className={`uniHeroSlide${index === activeSlide ? ' uniHeroSlide--active' : ''}`}
-                  >
-                    <video
-                      className="uniHeroSlideVideo"
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      poster={item.poster}
-                    >
-                      <source src={item.video} type="video/mp4" />
-                    </video>
-                  </div>
-                ))}
+                <video
+                  ref={videoRef}
+                  className="uniHeroSlideVideo"
+                  autoPlay
+                  muted={isMuted}
+                  loop
+                  playsInline
+                  preload="auto"
+                  disablePictureInPicture
+                  disableRemotePlayback
+                >
+                  <source src={HERO_VIDEO} type="video/mp4" />
+                </video>
               </div>
+
+              <button
+                type="button"
+                className="uniHeroMuteBtn"
+                onClick={toggleMute}
+                aria-label={isMuted ? 'Unmute hero video' : 'Mute hero video'}
+                aria-pressed={!isMuted}
+              >
+                {isMuted ? <HeroVolumeOffIcon /> : <HeroVolumeOnIcon />}
+              </button>
 
               <div className="uniHeroStatsBar">
                 <div className="uniHeroStats">
@@ -164,34 +208,34 @@ function HeroSection() {
 
             <div className="uniHeroContentCol">
               <div className="uniHeroPanelShape">
-                <div className="uniHeroPanelCard">
-                  <span className="uniHeroPanelCardAccent" aria-hidden />
-                  <span className="uniHeroPanelCardShape" aria-hidden />
-                  <span className="uniHeroPanelEdgeBorder" aria-hidden>
-                    <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+                <span className="uniHeroPanelEdgeBorder" aria-hidden>
+                  <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+                    <g transform="translate(-5.5 0)">
                       <path
                         className="uniHeroPanelEdgeBorderOrange"
                         d="M 100,0 L 0,50 L 100,100"
-                        vectorEffect="non-scaling-stroke"
+                        vectorEffect="nonScalingStroke"
                       />
-                      <path
-                        className="uniHeroPanelEdgeBorderLight"
-                        d="M 96,4 L 6,50 L 96,96"
-                        vectorEffect="non-scaling-stroke"
-                      />
+                    </g>
+                    <g transform="translate(-2.75 0)">
                       <path
                         className="uniHeroPanelEdgeBorderNavy"
-                        d="M 91,9 L 12,50 L 91,91"
-                        vectorEffect="non-scaling-stroke"
+                        d="M 100,0 L 0,50 L 100,100"
+                        vectorEffect="nonScalingStroke"
                       />
-                    </svg>
-                  </span>
+                    </g>
+                    <path
+                      className="uniHeroPanelEdgeBorderLight"
+                      d="M 100,0 L 0,50 L 100,100"
+                      vectorEffect="nonScalingStroke"
+                    />
+                  </svg>
+                </span>
+                <div className="uniHeroPanelCard">
+                  <span className="uniHeroPanelCardShape" aria-hidden />
                   <div className="uniHeroPanelContent">
                     <div className="uniHeroPanelMain">
                       <div className="uniHeroTitleBlock">
-                        <span className="uniHeroGhostTitle" aria-hidden>
-                          {heroContent.ghostTitle}
-                        </span>
                         <h1>
                           <span className="uniHeroTitleLine uniHeroTitleLine--navy">
                             Build Smart.
@@ -248,7 +292,7 @@ function HeroSection() {
                         ))}
                       </div>
                       <div className="uniHeroSliderProgress" aria-hidden>
-                        <span style={{ width: `${slideProgress}%` }} />
+                        <span ref={progressRef} className="uniHeroSliderProgressFill" />
                       </div>
                     </div>
                   </div>
@@ -387,9 +431,6 @@ function TestimonialsSection() {
           }
         }}
       >
-      <div className="uniTestimonialsScribble" aria-hidden>
-        <YellowScribble />
-      </div>
 
       <div className="uniContainer">
         <header className="uniTestimonialsHeader">
@@ -441,9 +482,6 @@ function TestimonialsSection() {
                           <span className="uniTestimonialCardMark" aria-hidden>&ldquo;</span>
                           <blockquote className="uniTestimonialCardQuote">{item.quote}</blockquote>
                         </div>
-                        <div className="uniTestimonialCardGraphic" aria-hidden>
-                          <YellowScribble />
-                        </div>
                       </div>
                       <footer className="uniTestimonialCardFooter">
                         <div className="uniTestimonialCardPortrait">
@@ -491,93 +529,11 @@ function TestimonialsSection() {
   )
 }
 
-function HomeCtaSection({
-  title,
-  ctaLabel,
-  ctaHref,
-  image,
-  imageAlt,
-  showPhone = false,
-}: {
-  title: string
-  ctaLabel: string
-  ctaHref: string
-  image: string
-  imageAlt: string
-  showPhone?: boolean
-}) {
-  return (
-    <section className="uniHomeCta">
-      <div className="uniContainer">
-        <div className="uniHomeCtaInner">
-          <div className="uniHomeCtaContent">
-            <div className="uniHomeCtaRow">
-              <h2 className="uniHomeCtaTitle">{title}</h2>
-              <div className="uniHomeCtaEnd">
-                {showPhone && (
-                  <p className="uniHomeCtaPhone">
-                    {procurementCta.phoneLabel}:{' '}
-                    <a href={`tel:${PHONE_E164}`}>{PHONE_DISPLAY}</a>
-                  </p>
-                )}
-                <Link href={ctaHref} className="uniHomeCtaBtn">
-                  {ctaLabel}
-                </Link>
-              </div>
-            </div>
-          </div>
-          <div className="uniHomeCtaMedia">
-            <img src={image} alt={imageAlt} loading="lazy" />
-            <span className="uniHomeCtaMediaOverlay" aria-hidden />
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function ProductsSection() {
-  return (
-    <section className="uniProducts" id="products">
-      <div className="uniContainer uniProductsInner">
-        <div className="uniProductsSplit">
-          <div className="uniProductsHeader">
-            <p className="uniProductsEyebrow">{productsHome.eyebrow}</p>
-            <h2 className="uniProductsTitle">{productsHome.title}</h2>
-            <p className="uniProductsLead">{productsHome.lead}</p>
-            <div className="uniProductsScribble">
-              <YellowScribble />
-            </div>
-          </div>
-          <div className="uniProductsDiamondWrap">
-            <div className="uniProductsDiamondGrid">
-              {productHighlights.map((category) => (
-                <Link
-                  key={category.slug}
-                  href={category.href}
-                  className="uniSectorsDiamondCard"
-                >
-                  <span className="uniSectorsDiamondAccent" aria-hidden />
-                  <span className="uniSectorsDiamondFrame">
-                    <span className="uniSectorsDiamondMedia">
-                      <img src={category.img} alt={category.title} />
-                      <span className="uniSectorsDiamondOverlay" aria-hidden />
-                    </span>
-                    <span className="uniSectorsDiamondLabel">{category.title}</span>
-                  </span>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
 
 export default function KvsMetalPage() {
   return (
     <div className="uniPage">
+      <link rel="preload" href={HERO_VIDEO} as="video" type="video/mp4" />
       <UniNavbar />
       <main>
         <HeroSection />
@@ -588,17 +544,21 @@ export default function KvsMetalPage() {
           ctaHref={procurementCta.ctaHref}
           image={procurementCta.image}
           imageAlt={procurementCta.imageAlt}
+          phoneLabel={procurementCta.phoneLabel}
           showPhone
         />
         <MarketSectorsSection />
+        <MaterialSuppliesSection />
         <PartnersSection />
-        <ProductsSection />
+        <HomeProductsSection />
         <HomeCtaSection
           title={productsCta.title}
           ctaLabel={productsCta.ctaLabel}
           ctaHref={productsCta.ctaHref}
           image={productsCta.image}
           imageAlt={productsCta.imageAlt}
+          phoneLabel={productsCta.phoneLabel}
+          showPhone
         />
         <TestimonialsSection />
       </main>

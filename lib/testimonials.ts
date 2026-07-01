@@ -46,7 +46,7 @@ export const testimonials: Testimonial[] = [
   {
     id: 't5',
     quote:
-      'KVS Metals is a company we rely on whenever an urgent material requirement arises. Pricing remains competitive, communication is clear, and working with Mr. Girish has always been smooth and straightforward.',
+      'KVS Metals is a company we rely on whenever we urgent material requirement arises. Pricing remains competitive, communication is clear, and working with Mr. Girish has always been smooth and straightforward.',
     name: 'Steel Buyer',
     role: 'UAE',
     image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=85',
