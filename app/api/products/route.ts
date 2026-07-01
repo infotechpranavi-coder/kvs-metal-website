@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { requireDashboardAuth } from '@/lib/api-auth'
 import { getNextProductSku, getProductsForApi } from '@/lib/db/products'
-import { connectDB } from '@/lib/mongodb'
+import { connectDB, parseOptionalObjectId } from '@/lib/mongodb'
 import { ProductModel } from '@/models/Product'
 import { serializeProduct } from '@/lib/serializers'
 import { slugify } from '@/lib/slug'
@@ -51,7 +51,7 @@ export async function POST(request: Request) {
       title: data.title,
       sku,
       category: data.category,
-      categoryId: data.categoryId || null,
+      categoryId: parseOptionalObjectId(data.categoryId),
       img: data.img,
       images,
       shortDescription: data.shortDescription || '',

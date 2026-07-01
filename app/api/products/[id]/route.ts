@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { requireDashboardAuth } from '@/lib/api-auth'
 import { renumberProductSkus } from '@/lib/db/products'
-import { connectDB } from '@/lib/mongodb'
+import { connectDB, parseOptionalObjectId } from '@/lib/mongodb'
 import { ProductModel } from '@/models/Product'
 import { serializeProduct } from '@/lib/serializers'
 import { slugify } from '@/lib/slug'
@@ -42,7 +42,7 @@ export async function PUT(request: Request, context: RouteContext) {
     existing.slug = slug
     existing.title = data.title
     existing.category = data.category
-    existing.categoryId = data.categoryId || null
+    existing.categoryId = parseOptionalObjectId(data.categoryId)
     existing.img = data.img
     existing.images = images
     existing.shortDescription = data.shortDescription || ''

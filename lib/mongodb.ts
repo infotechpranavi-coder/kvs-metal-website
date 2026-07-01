@@ -73,6 +73,14 @@ export async function connectDB() {
   return cached.conn
 }
 
+export function parseOptionalObjectId(
+  value: string | null | undefined,
+): mongoose.Types.ObjectId | null {
+  if (!value) return null
+  if (!mongoose.Types.ObjectId.isValid(value)) return null
+  return new mongoose.Types.ObjectId(value)
+}
+
 export function isMongoConfigured() {
   const uri = process.env.MONGODB_URI?.trim()
   if (!uri) return false
