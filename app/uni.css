@@ -10,6 +10,9 @@
   --uni-text: #000000;
   --uni-text-muted: rgba(26, 54, 93, 0.78);
   --uni-navy: #1a365d;
+  --kvs-navy-card-bg: linear-gradient(165deg, #1a365d 0%, #152a47 52%, #121f36 100%);
+  --kvs-navy-card-border: rgba(26, 54, 93, 0.12);
+  --kvs-navy-card-shadow: 0 18px 48px rgba(26, 54, 93, 0.14);
   --uni-text-body: var(--uni-navy);
   --uni-heading-color: var(--uni-text);
   --uni-body-color: var(--uni-navy);
@@ -154,7 +157,6 @@
 .uniFeature p,
 .uniSectorsTagline,
 .uniMaterialSuppliesTagline,
-.uniProductsLead p,
 .uniTestimonialCardQuote,
 .kvsAboutLead,
 .kvsAboutStoryCopy p,
@@ -172,12 +174,19 @@
 .productCatalogProductsCount,
 .productCatalogNavMeta,
 .productCatalogSidebarCta p,
-.uniFooterBrand p,
 .uniFooterCol li a,
 .uniFooterColList--grid a {
   color: var(--uni-body-color);
   font-size: 15px;
   line-height: 1.75;
+}
+
+.uniProductsLead p,
+.uniFooterBrand p,
+.uniFooterCol--materials a {
+  color: var(--uni-navy);
+  font-size: 14px;
+  line-height: 1.5;
 }
 
 .uniFeature h3,
@@ -4411,9 +4420,9 @@
 
 .uniProductsLead p {
   margin: 0 0 18px;
-  font-size: clamp(13px, 1.1vw, 14px);
+  font-size: 14px;
   font-weight: 400;
-  line-height: 1.7;
+  line-height: 1.5;
   color: var(--uni-navy);
 }
 
@@ -4458,13 +4467,38 @@
     calc(var(--diamond-bounds) * 0.06) calc(var(--diamond-bounds) * 0.04) calc(var(--diamond-bounds) * 0.06) calc(var(--diamond-bounds) * 0.04 + var(--diamond-accent-offset) * 1.4);
 }
 
-.uniProductsDiamondGrid > .uniSectorsDiamondCard {
+.uniProductsDiamondGrid > .uniProductsDiamondReveal {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-self: center;
+  align-self: center;
+}
+
+.uniProductsDiamondGrid > .uniProductsDiamondReveal:hover {
+  z-index: 2;
+}
+
+.uniProductsDiamondReveal.uniReveal--up {
+  transform: translateY(20px);
+}
+
+.uniProductsDiamondReveal.uniReveal--visible {
+  transform: translateY(0);
+}
+
+.uniProductsDiamondGrid > .uniSectorsDiamondCard,
+.uniProductsDiamondGrid > .uniProductsDiamondReveal .uniSectorsDiamondCard {
   position: relative;
   z-index: 1;
   justify-self: center;
   align-self: center;
 }
 
+.uniProductsDiamondGrid > .uniProductsDiamondReveal:hover .uniSectorsDiamondCard,
 .uniProductsDiamondGrid > .uniSectorsDiamondCard:hover {
   z-index: 2;
 }
@@ -6069,10 +6103,11 @@
 }
 
 .uniFooterBrand p {
-  font-size: 13px;
-  line-height: 1.7;
+  font-size: 14px;
+  line-height: 1.5;
   margin: 0 0 22px;
   max-width: 100%;
+  color: var(--uni-navy);
 }
 
 .uniFooterSocials {
@@ -6678,9 +6713,9 @@
 
 .kvsAboutValueCard:hover {
   transform: translateY(-6px);
-  background: linear-gradient(165deg, var(--uni-orange) 0%, var(--uni-orange-hover) 100%);
-  border-color: var(--uni-orange);
-  box-shadow: 0 20px 48px rgba(255, 107, 53, 0.32);
+  background: var(--kvs-navy-card-bg);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: var(--kvs-navy-card-shadow);
 }
 
 .kvsAboutValueCard:hover::before {
@@ -7091,29 +7126,37 @@
 
 .kvsAboutCoreValuesGrid {
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.95fr);
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
   gap: clamp(32px, 5vw, 56px);
-  align-items: stretch;
+  align-items: start;
 }
 
-.kvsAboutCoreValuesCopy {
+.kvsAboutCoreValuesOverview {
+  height: auto;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.kvsAboutCoreValuesOverviewCopy {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   gap: 18px;
-  height: 100%;
-  min-height: 100%;
-  padding: clamp(24px, 3vw, 32px);
-  border-radius: 18px;
-  background: linear-gradient(165deg, #faf9f6 0%, #f5f3ee 100%);
-  border: 1px solid rgba(26, 54, 93, 0.08);
-  box-shadow: 0 12px 32px rgba(26, 26, 26, 0.04);
+  max-width: 62ch;
+  margin: 0;
+  padding-left: 16px;
+  border-left: 3px solid var(--uni-orange);
 }
 
-.kvsAboutCoreValuesCopy p {
+.kvsAboutCoreValuesOverviewCopy p {
   margin: 0;
-  font-size: 15px;
-  line-height: 1.75;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.65;
+  color: var(--uni-navy);
 }
 
 .kvsAboutCoreValuesPanel {
@@ -7123,7 +7166,7 @@
   min-height: 100%;
   padding: clamp(24px, 3vw, 32px);
   border-radius: 18px;
-  background: linear-gradient(165deg, #ffffff 0%, #faf9f6 100%);
+  background: #fff;
   border: 1px solid rgba(26, 54, 93, 0.08);
   box-shadow: 0 12px 32px rgba(26, 26, 26, 0.05);
 }
@@ -7157,8 +7200,9 @@
   min-height: 52px;
   padding: 14px 16px;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.72);
-  border: 1px solid rgba(26, 54, 93, 0.06);
+  background: var(--kvs-navy-card-bg);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 10px 28px rgba(26, 54, 93, 0.18);
   transition:
     transform 0.24s ease,
     background 0.24s ease,
@@ -7168,9 +7212,9 @@
 
 .kvsAboutCoreValuePoint:hover {
   transform: translateX(4px);
-  background: linear-gradient(165deg, var(--uni-orange) 0%, var(--uni-orange-hover) 100%);
-  border-color: var(--uni-orange);
-  box-shadow: 0 12px 28px rgba(255, 107, 53, 0.22);
+  background: linear-gradient(165deg, #1f4270 0%, #1a365d 52%, #152a47 100%);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: var(--kvs-navy-card-shadow);
 }
 
 .kvsAboutCoreValueBullet {
@@ -7179,8 +7223,8 @@
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: rgba(255, 107, 53, 0.1);
-  border: 1.5px solid rgba(255, 107, 53, 0.28);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
   transition:
     background 0.24s ease,
     border-color 0.24s ease;
@@ -7193,31 +7237,31 @@
   top: 50%;
   width: 5px;
   height: 9px;
-  border-right: 2px solid var(--uni-orange);
-  border-bottom: 2px solid var(--uni-orange);
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
   transform: translate(-50%, -58%) rotate(45deg);
   transition: border-color 0.24s ease;
 }
 
 .kvsAboutCoreValuePoint:hover .kvsAboutCoreValueBullet {
-  background: #fff;
-  border-color: #fff;
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
 }
 
 .kvsAboutCoreValuePoint:hover .kvsAboutCoreValueBullet::after {
-  border-color: var(--uni-orange);
+  border-color: #fff;
 }
 
 .kvsAboutCoreValueLabel {
   font-size: 15px;
   font-weight: 600;
   line-height: 1.45;
-  color: var(--uni-navy);
+  color: #fff;
   transition: color 0.24s ease;
 }
 
 .kvsAboutCoreValuePoint:hover .kvsAboutCoreValueLabel {
-  color: #fff;
+  color: rgba(255, 255, 255, 0.96);
 }
 
 @media (max-width: 900px) {
@@ -7226,12 +7270,14 @@
   }
 
   .kvsAboutCoreValuesCopy,
+  .kvsAboutCoreValuesOverview,
   .kvsAboutCoreValuesPanel {
     height: auto;
     min-height: 0;
   }
 
-  .kvsAboutCoreValuesCopy {
+  .kvsAboutCoreValuesCopy,
+  .kvsAboutCoreValuesOverview {
     justify-content: flex-start;
   }
 
@@ -7258,13 +7304,27 @@
 .uniFooterStandardsList li {
   display: inline-flex;
   align-items: center;
-  padding: 7px 12px;
-  border-radius: 6px;
+  padding: 10px 14px;
+  border-radius: 10px;
   font-size: 12px;
+  font-weight: 600;
   line-height: 1.35;
-  color: var(--uni-navy);
-  background: #fff;
-  border: 1px solid #d8dee6;
+  color: #fff;
+  background: var(--kvs-navy-card-bg);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 22px rgba(26, 54, 93, 0.16);
+  transition:
+    background 0.22s ease,
+    border-color 0.22s ease,
+    box-shadow 0.22s ease,
+    transform 0.22s ease;
+}
+
+.uniFooterStandardsList li:hover {
+  transform: translateY(-1px);
+  background: linear-gradient(165deg, #1f4270 0%, #1a365d 52%, #152a47 100%);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: var(--kvs-navy-card-shadow);
 }
 
 .uniFooterStandardsList li::before {
@@ -7582,9 +7642,9 @@
 .kvsContactFormCard {
   padding: 0;
   border-radius: 18px;
-  background: linear-gradient(165deg, #1a365d 0%, #152a47 52%, #121f36 100%);
-  border: 1px solid rgba(26, 54, 93, 0.12);
-  box-shadow: 0 18px 48px rgba(26, 54, 93, 0.14);
+  background: var(--kvs-navy-card-bg);
+  border: 1px solid var(--kvs-navy-card-border);
+  box-shadow: var(--kvs-navy-card-shadow);
   overflow: hidden;
 }
 

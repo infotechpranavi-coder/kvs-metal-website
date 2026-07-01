@@ -10,6 +10,7 @@ type ScrollRevealProps = {
   as?: 'div' | 'section' | 'article' | 'header'
   id?: string
   threshold?: number
+  style?: CSSProperties
 }
 
 export function ScrollReveal({
@@ -20,6 +21,7 @@ export function ScrollReveal({
   as: Tag = 'div',
   id,
   threshold = 0.18,
+  style: styleProp,
 }: ScrollRevealProps) {
   const ref = useRef<HTMLElement>(null)
   const [visible, setVisible] = useState(false)
@@ -64,7 +66,7 @@ export function ScrollReveal({
     return () => observer.disconnect()
   }, [threshold])
 
-  const style = { '--reveal-delay': `${delay}s` } as CSSProperties
+  const style = { ...styleProp, '--reveal-delay': `${delay}s` } as CSSProperties
 
   return (
     <Tag

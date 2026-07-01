@@ -171,6 +171,8 @@ export const aboutPage = {
   valuesTitle: 'Our Core Values',
   valuesTagline:
     'Driven by integrity, powered by expertise, and committed to long-term value.',
+  valuesOverviewEyebrow: 'Values',
+  valuesOverviewTitle: 'Our approach',
   valuesIntro: [
     'At KVS Metals, our approach goes beyond supplying materials. We believe in building long-standing relationships through transparent communication, responsive service, practical support, and a commitment to delivering value in every interaction.',
     'The way we work is shaped by values that guide every decision, commitment, and customer interaction. These principles help us build lasting relationships and earn trust through consistent actions.',

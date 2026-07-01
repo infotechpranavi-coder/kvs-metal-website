@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { ScrollReveal } from '@/components/ScrollReveal'
 import { productsHome } from '@/lib/content'
 import { categoryToProductCard, fetchHomepageCategories } from '@/lib/category-cards'
 import { catalogCardImageUrl } from '@/lib/image-url'
@@ -46,17 +47,17 @@ export function HomeProductsSection() {
   }, [])
 
   return (
-    <section className="uniProducts" id="products">
+    <ScrollReveal as="section" className="uniProducts" id="products">
       <div className="uniContainer uniProductsInner">
         <div className="uniProductsSplit">
-          <div className="uniProductsHeader">
+          <ScrollReveal direction="up" className="uniProductsHeader">
             <h2 className="uniProductsTitle">{productsHome.title}</h2>
             <div className="uniProductsLead">
               {productsHome.paragraphs.map((paragraph) => (
                 <p key={paragraph.slice(0, 48)}>{paragraph}</p>
               ))}
             </div>
-          </div>
+          </ScrollReveal>
           <div className="uniProductsDiamondWrap">
             {loading ? (
               <HomeProductsDiamondSkeleton count={6} />
@@ -68,32 +69,35 @@ export function HomeProductsSection() {
             ) : (
               <div className="uniProductsDiamondGrid">
                 {cards.map((card, index) => (
-                  <Link
+                  <ScrollReveal
                     key={card.key}
-                    href={card.href}
-                    className="uniSectorsDiamondCard"
+                    direction="up"
+                    delay={0.05 + index * 0.08}
+                    className="uniProductsDiamondReveal"
                     style={getDiamondPlacement(index)}
                   >
-                    <span className="uniSectorsDiamondAccent" aria-hidden />
-                    <span className="uniSectorsDiamondFrame">
-                      <span className="uniSectorsDiamondMedia">
-                        <img
-                          src={catalogCardImageUrl(card.img)}
-                          alt={card.title}
-                          loading="lazy"
-                          decoding="async"
-                        />
-                        <span className="uniSectorsDiamondOverlay" aria-hidden />
+                    <Link href={card.href} className="uniSectorsDiamondCard">
+                      <span className="uniSectorsDiamondAccent" aria-hidden />
+                      <span className="uniSectorsDiamondFrame">
+                        <span className="uniSectorsDiamondMedia">
+                          <img
+                            src={catalogCardImageUrl(card.img)}
+                            alt={card.title}
+                            loading="lazy"
+                            decoding="async"
+                          />
+                          <span className="uniSectorsDiamondOverlay" aria-hidden />
+                        </span>
+                        <span className="uniSectorsDiamondLabel">{card.title}</span>
                       </span>
-                      <span className="uniSectorsDiamondLabel">{card.title}</span>
-                    </span>
-                  </Link>
+                    </Link>
+                  </ScrollReveal>
                 ))}
               </div>
             )}
           </div>
         </div>
       </div>
-    </section>
+    </ScrollReveal>
   )
 }

@@ -120,12 +120,16 @@ export default function KvsAboutPage() {
             </div>
 
             <div className="kvsAboutCoreValuesGrid">
-              <div className="kvsAboutCoreValuesCopy">
-                {aboutPage.valuesIntro.map((paragraph) => (
-                  <p key={paragraph.slice(0, 48)} className="uniSectionText">
-                    {paragraph}
-                  </p>
-                ))}
+              <div className="uniProductDescription kvsAboutCoreValuesOverview">
+                <div className="uniProductOverviewHead">
+                  <span className="uniProductOverviewEyebrow">{aboutPage.valuesOverviewEyebrow}</span>
+                  <h2 className="uniProductSectionTitle">{aboutPage.valuesOverviewTitle}</h2>
+                </div>
+                <div className="kvsAboutCoreValuesOverviewCopy">
+                  {aboutPage.valuesIntro.map((paragraph) => (
+                    <p key={paragraph.slice(0, 48)}>{paragraph}</p>
+                  ))}
+                </div>
               </div>
 
               <div className="kvsAboutCoreValuesPanel">
