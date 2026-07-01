@@ -58,7 +58,12 @@ export function clearSessionCookieOptions() {
   }
 }
 
+export function checkDashboardCredentials(username: string, password: string) {
+  const expectedUser = process.env.DASHBOARD_USERNAME || 'admin'
+  const expectedPassword = process.env.DASHBOARD_PASSWORD || 'admin123'
+  return username === expectedUser && password === expectedPassword
+}
+
 export function checkDashboardPassword(password: string) {
-  const expected = process.env.DASHBOARD_PASSWORD || 'kvs-admin'
-  return password === expected
+  return checkDashboardCredentials(process.env.DASHBOARD_USERNAME || 'admin', password)
 }

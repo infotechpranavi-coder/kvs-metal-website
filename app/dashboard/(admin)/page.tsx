@@ -1,21 +1,10 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { DashboardDrawer } from '@/components/DashboardDrawer'
 import { DashboardImageGalleryField } from '@/components/DashboardImageGalleryField'
-import { getAllCatalogProducts, type Product } from '@/lib/products'
-import type { CategoryDto } from '@/lib/serializers'
-import {
-  addCustomDashboardProduct,
-  getNextCustomProductSku,
-  readDashboardStore,
-  removeCustomDashboardProduct,
-  slugifyProductTitle,
-  subscribeDashboardStore,
-  updateCustomDashboardProduct,
-} from '@/lib/dashboard-store'
-
-type DashboardRow = Product & { source: 'catalog' | 'custom'; showInFooter: boolean }
+import { readDashboardStore, writeDashboardStore } from '@/lib/dashboard-store'
+import type { CategoryDto, ProductDto } from '@/lib/serializers'
 
 const emptyProductForm = {
   title: '',
@@ -43,24 +32,6 @@ function parseTagValues(value: string) {
     .filter(Boolean)
 }
 
-function buildRows(catalogProducts: Product[]): DashboardRow[] {
-  const store = readDashboardStore()
-
-  const catalogRows = catalogProducts.map((product) => ({
-    ...product,
-    source: 'catalog' as const,
-    showInFooter: false,
-  }))
-
-  const customRows = store.customProducts.map((product) => ({
-    ...product,
-    source: 'custom' as const,
-    showInFooter: product.showInFooter,
-  }))
-
-  return [...customRows, ...catalogRows]
-}
-
 function TagPreview({ value }: { value: string }) {
   const tags = parseTagValues(value)
   if (tags.length === 0) return null
@@ -76,19 +47,82 @@ function TagPreview({ value }: { value: string }) {
   )
 }
 
+async function fetchDashboardProducts(): Promise<ProductDto[]> {
+  const response = await fetch('/api/products')
+  if (!response.ok) return []
+  const data = (await response.json()) as { products?: ProductDto[] }
+  return Array.isArray(data.products) ? data.products : []
+}
+
+async function migrateLocalProductsIfNeeded(): Promise<boolean> {
+  const store = readDashboardStore()
+  if (store.customProducts.length === 0) return false
+
+  const existing = await fetchDashboardProducts()
+  if (existing.length > 0) return false
+
+  for (const product of store.customProducts) {
+    const response = await fetch('/api/products', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        slug: product.slug,
+        title: product.title,
+        sku: product.sku,
+        category: product.category,
+        img: product.img,
+        images: product.images?.length ? product.images : [product.img],
+        shortDescription: product.shortDescription,
+        description: product.description,
+        features: product.features,
+        material: product.material,
+        dimensions: product.dimensions,
+        standard: product.standard,
+        thickness: product.thickness,
+        warranty: product.warranty,
+        badge: product.badge,
+        price: product.price,
+        rating: product.rating,
+        reviewCount: product.reviewCount,
+        inStock: product.inStock,
+        showInFooter: product.showInFooter,
+      }),
+    })
+
+    if (!response.ok) return false
+  }
+
+  writeDashboardStore({ footerFlags: {}, customProducts: [] })
+  return true
+}
+
 export default function DashboardProductsPage() {
-  const catalogProducts = useMemo(() => getAllCatalogProducts(), [])
-  const [rows, setRows] = useState<DashboardRow[]>([])
+  const [rows, setRows] = useState<ProductDto[]>([])
   const [categories, setCategories] = useState<CategoryDto[]>([])
   const [drawerOpen, setDrawerOpen] = useState(false)
-  const [editingSlug, setEditingSlug] = useState<string | null>(null)
+  const [editingId, setEditingId] = useState<string | null>(null)
   const [form, setForm] = useState(emptyProductForm)
+  const [saving, setSaving] = useState(false)
+
+  const loadProducts = useCallback(async () => {
+    const products = await fetchDashboardProducts()
+    setRows(products)
+    return products
+  }, [])
 
   useEffect(() => {
-    const refresh = () => setRows(buildRows(catalogProducts))
-    refresh()
-    return subscribeDashboardStore(refresh)
-  }, [catalogProducts])
+    let cancelled = false
+
+    ;(async () => {
+      await migrateLocalProductsIfNeeded()
+      if (cancelled) return
+      await loadProducts()
+    })()
+
+    return () => {
+      cancelled = true
+    }
+  }, [loadProducts])
 
   useEffect(() => {
     fetch('/api/categories')
@@ -105,20 +139,18 @@ export default function DashboardProductsPage() {
   }, [])
 
   const openAddDrawer = () => {
-    setEditingSlug(null)
+    setEditingId(null)
     setForm({
       ...emptyProductForm,
       categoryId: categories[0]?.id ?? '',
-      sku: getNextCustomProductSku(),
+      sku: String(rows.length + 1),
     })
     setDrawerOpen(true)
   }
 
-  const openEditDrawer = (row: DashboardRow) => {
-    if (row.source !== 'custom') return
-
+  const openEditDrawer = (row: ProductDto) => {
     const category = categories.find((item) => item.title === row.category)
-    setEditingSlug(row.slug)
+    setEditingId(row.id)
     setForm({
       title: row.title,
       sku: row.sku,
@@ -142,16 +174,19 @@ export default function DashboardProductsPage() {
 
   const closeDrawer = () => {
     setDrawerOpen(false)
-    setEditingSlug(null)
+    setEditingId(null)
     setForm({
       ...emptyProductForm,
       categoryId: categories[0]?.id ?? '',
     })
   }
 
-  const handleDeleteCustom = (slug: string) => {
+  const handleDelete = async (id: string) => {
     if (!window.confirm('Delete this product? SKU numbers will renumber automatically.')) return
-    removeCustomDashboardProduct(slug)
+
+    const response = await fetch(`/api/products/${id}`, { method: 'DELETE' })
+    if (!response.ok) return
+    await loadProducts()
   }
 
   const addFeature = () => {
@@ -171,7 +206,7 @@ export default function DashboardProductsPage() {
     }))
   }
 
-  const handleSave = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSave = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     const category = categories.find((item) => item.id === form.categoryId)
@@ -180,18 +215,19 @@ export default function DashboardProductsPage() {
     const images = form.images.map((url) => url.trim()).filter(Boolean)
     if (images.length === 0) return
 
-    const features = form.features
     const payload = {
       title: form.title.trim(),
+      sku: form.sku,
+      category: category.title,
+      categoryId: category.id,
       price: '',
       rating: '4.8',
       img: images[0],
       images,
-      category: category.title,
       badge: form.badge.trim() || undefined,
       shortDescription: form.shortDescription.trim(),
       description: form.description.trim() || form.shortDescription.trim(),
-      features,
+      features: form.features,
       material: form.typeGrade.trim() || undefined,
       dimensions: form.size.trim() || undefined,
       standard: form.standard.trim() || undefined,
@@ -202,23 +238,21 @@ export default function DashboardProductsPage() {
       showInFooter: form.showInFooter,
     }
 
-    if (editingSlug) {
-      updateCustomDashboardProduct(editingSlug, payload)
+    setSaving(true)
+    try {
+      const response = await fetch(editingId ? `/api/products/${editingId}` : '/api/products', {
+        method: editingId ? 'PUT' : 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+
+      if (!response.ok) return
+
       closeDrawer()
-      return
+      await loadProducts()
+    } finally {
+      setSaving(false)
     }
-
-    const slug = slugifyProductTitle(form.title)
-    if (!slug) return
-
-    addCustomDashboardProduct({
-      id: `custom-${slug}`,
-      slug,
-      sku: getNextCustomProductSku(),
-      ...payload,
-    })
-
-    closeDrawer()
   }
 
   return (
@@ -244,7 +278,7 @@ export default function DashboardProductsPage() {
               <th>Product</th>
               <th>SKU</th>
               <th>Category</th>
-              <th>Source</th>
+              <th>Footer</th>
               <th />
             </tr>
           </thead>
@@ -255,7 +289,7 @@ export default function DashboardProductsPage() {
               </tr>
             ) : (
               rows.map((row) => (
-                <tr key={`${row.source}-${row.slug}`}>
+                <tr key={row.id}>
                   <td>
                     {row.img ? (
                       <img src={row.img} alt={row.title} className="dashTableThumb" />
@@ -281,26 +315,24 @@ export default function DashboardProductsPage() {
                   <td>
                     <span className="dashBadge dashBadge--sm dashBadge--on">{row.category}</span>
                   </td>
-                  <td>{row.source === 'custom' ? 'Dashboard' : 'Catalog'}</td>
+                  <td>{row.showInFooter ? 'Yes' : '—'}</td>
                   <td>
-                    {row.source === 'custom' ? (
-                      <div className="dashTableActions">
-                        <button
-                          type="button"
-                          className="dashBtn dashBtn--small"
-                          onClick={() => openEditDrawer(row)}
-                        >
-                          Edit
-                        </button>
-                        <button
-                          type="button"
-                          className="dashBtn dashBtn--danger dashBtn--small"
-                          onClick={() => handleDeleteCustom(row.slug)}
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    ) : null}
+                    <div className="dashTableActions">
+                      <button
+                        type="button"
+                        className="dashBtn dashBtn--small"
+                        onClick={() => openEditDrawer(row)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        type="button"
+                        className="dashBtn dashBtn--danger dashBtn--small"
+                        onClick={() => handleDelete(row.id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))
@@ -311,7 +343,7 @@ export default function DashboardProductsPage() {
 
       <DashboardDrawer
         open={drawerOpen}
-        title={editingSlug ? 'Edit product' : 'Add product'}
+        title={editingId ? 'Edit product' : 'Add product'}
         onClose={closeDrawer}
       >
         <form className="dashDrawerForm" onSubmit={handleSave}>
@@ -335,7 +367,7 @@ export default function DashboardProductsPage() {
               className="dashInputReadonly"
             />
             <p className="dashHint">
-              Auto-assigned from 1. Renumbers when dashboard products are deleted.
+              Auto-assigned from 1. Renumbers when products are deleted.
             </p>
           </div>
 
@@ -534,8 +566,12 @@ export default function DashboardProductsPage() {
           </p>
 
           <div className="dashDrawerActions">
-            <button type="submit" className="dashBtn" disabled={!form.categoryId || form.images.length === 0}>
-              {editingSlug ? 'Save changes' : 'Save product'}
+            <button
+              type="submit"
+              className="dashBtn"
+              disabled={saving || !form.categoryId || form.images.length === 0}
+            >
+              {saving ? 'Saving…' : editingId ? 'Save changes' : 'Save product'}
             </button>
             <button type="button" className="dashBtn dashBtn--ghost" onClick={closeDrawer}>
               Cancel

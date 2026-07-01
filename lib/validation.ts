@@ -42,7 +42,33 @@ export const enquiryStatusSchema = z.object({
 })
 
 export const loginSchema = z.object({
+  username: z.string().min(1).optional().default('admin'),
   password: z.string().min(1),
+})
+
+export const productInputSchema = z.object({
+  slug: z.string().min(1).max(120).optional(),
+  title: z.string().min(1).max(200),
+  sku: z.string().max(40).optional(),
+  category: z.string().min(1).max(200),
+  categoryId: z.string().optional().nullable(),
+  img: z.string().min(1),
+  images: z.array(z.string()).optional(),
+  shortDescription: z.string().optional(),
+  description: z.string().optional(),
+  features: z.array(z.string()).optional(),
+  material: z.string().optional(),
+  dimensions: z.string().optional(),
+  standard: z.string().optional(),
+  thickness: z.string().optional(),
+  warranty: z.string().optional(),
+  badge: z.string().optional(),
+  price: z.string().optional(),
+  rating: z.string().optional(),
+  reviewCount: z.number().int().optional(),
+  inStock: z.boolean().optional(),
+  showInFooter: z.boolean().optional(),
+  sortOrder: z.number().int().optional(),
 })
 
 export const brochureRequestSchema = z.object({

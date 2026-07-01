@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
-import { checkDashboardPassword, createSessionToken, sessionCookieOptions } from '@/lib/auth'
+import { checkDashboardCredentials, createSessionToken, sessionCookieOptions } from '@/lib/auth'
 import { loginSchema } from '@/lib/validation'
 
 export async function POST(request: Request) {
@@ -11,8 +11,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Password is required' }, { status: 400 })
     }
 
-    if (!checkDashboardPassword(parsed.data.password)) {
-      return NextResponse.json({ error: 'Invalid password' }, { status: 401 })
+    if (!checkDashboardCredentials(parsed.data.username, parsed.data.password)) {
+      return NextResponse.json({ error: 'Invalid username or password' }, { status: 401 })
     }
 
     const token = createSessionToken()

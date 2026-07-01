@@ -1,9 +1,9 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useMemo, useState } from 'react'
-import { getAllCatalogProducts, type Product } from '@/lib/products'
-import { getFooterProducts, subscribeDashboardStore } from '@/lib/dashboard-store'
+import { useEffect, useState } from 'react'
+import type { Product } from '@/lib/products'
+import { fetchFooterProducts } from '@/lib/product-api'
 
 function splitFooterColumns<T>(items: T[]) {
   const midpoint = Math.ceil(items.length / 2)
@@ -15,14 +15,23 @@ type FooterProductsColumnProps = {
 }
 
 export function FooterProductsColumn({ onVisibilityChange }: FooterProductsColumnProps) {
-  const catalogProducts = useMemo(() => getAllCatalogProducts(), [])
   const [footerProducts, setFooterProducts] = useState<Product[]>([])
 
   useEffect(() => {
-    const refresh = () => setFooterProducts(getFooterProducts(catalogProducts))
-    refresh()
-    return subscribeDashboardStore(refresh)
-  }, [catalogProducts])
+    let cancelled = false
+
+    fetchFooterProducts()
+      .then((products) => {
+        if (!cancelled) setFooterProducts(products)
+      })
+      .catch(() => {
+        if (!cancelled) setFooterProducts([])
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
   useEffect(() => {
     onVisibilityChange?.(footerProducts.length > 0)

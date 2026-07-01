@@ -5,6 +5,7 @@ import { useState } from 'react'
 
 export default function DashboardLoginPage() {
   const router = useRouter()
+  const [username, setUsername] = useState('admin')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -18,7 +19,7 @@ export default function DashboardLoginPage() {
       const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password }),
+        body: JSON.stringify({ username, password }),
       })
 
       if (!response.ok) {
@@ -40,7 +41,18 @@ export default function DashboardLoginPage() {
     <div className="dashLoginPage">
       <form className="dashLoginCard" onSubmit={handleSubmit}>
         <h1>KVS Dashboard</h1>
-        <p>Sign in to manage categories, materials, and enquiries.</p>
+        <p>Sign in with your admin credentials.</p>
+        <div className="dashField">
+          <label htmlFor="dashboard-username">Username</label>
+          <input
+            id="dashboard-username"
+            type="text"
+            value={username}
+            onChange={(event) => setUsername(event.target.value)}
+            required
+            autoComplete="username"
+          />
+        </div>
         <div className="dashField">
           <label htmlFor="dashboard-password">Password</label>
           <input

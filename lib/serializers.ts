@@ -1,6 +1,7 @@
 import type { CategoryDocument } from '@/models/Category'
 import type { EnquiryDocument } from '@/models/Enquiry'
 import type { MaterialDocument } from '@/models/Material'
+import type { ProductDocument } from '@/models/Product'
 import type mongoose from 'mongoose'
 
 export type CategoryDto = {
@@ -42,6 +43,34 @@ export type EnquiryDto = {
   message: string
   productSku: string | null
   status: string
+  createdAt: string
+  updatedAt: string
+}
+
+export type ProductDto = {
+  id: string
+  slug: string
+  title: string
+  sku: string
+  category: string
+  categoryId: string | null
+  img: string
+  images: string[]
+  shortDescription: string
+  description: string
+  features: string[]
+  material: string
+  dimensions: string
+  standard: string
+  thickness: string
+  warranty: string
+  badge: string
+  price: string
+  rating: string
+  reviewCount: number
+  inStock: boolean
+  showInFooter: boolean
+  sortOrder: number
   createdAt: string
   updatedAt: string
 }
@@ -113,5 +142,35 @@ export function serializeEnquiry(enquiry: EnquiryDocument): EnquiryDto {
     status: enquiry.status || 'new',
     createdAt: enquiry.createdAt.toISOString(),
     updatedAt: enquiry.updatedAt.toISOString(),
+  }
+}
+
+export function serializeProduct(product: ProductDocument): ProductDto {
+  return {
+    id: product._id.toString(),
+    slug: product.slug,
+    title: product.title,
+    sku: product.sku,
+    category: product.category,
+    categoryId: product.categoryId ? product.categoryId.toString() : null,
+    img: product.img,
+    images: product.images || [],
+    shortDescription: product.shortDescription || '',
+    description: product.description || '',
+    features: product.features || [],
+    material: product.material || '',
+    dimensions: product.dimensions || '',
+    standard: product.standard || '',
+    thickness: product.thickness || '',
+    warranty: product.warranty || '',
+    badge: product.badge || '',
+    price: product.price || '',
+    rating: product.rating || '4.8',
+    reviewCount: product.reviewCount ?? 0,
+    inStock: product.inStock !== false,
+    showInFooter: product.showInFooter === true,
+    sortOrder: product.sortOrder ?? 0,
+    createdAt: product.createdAt.toISOString(),
+    updatedAt: product.updatedAt.toISOString(),
   }
 }

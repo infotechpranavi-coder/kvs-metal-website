@@ -3,12 +3,13 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { categoryDtoToHomepageCategory, fetchProductsCatalog } from '@/lib/category-cards'
-import { mergeCatalogWithCustomProducts, subscribeDashboardStore } from '@/lib/dashboard-store'
+import { fetchProducts } from '@/lib/product-api'
 import type { MaterialSupply } from '@/lib/materials'
 import {
   filterProductsByQuery,
   getProductsPageHref,
   type HomepageProductCategory,
+  type Product,
 } from '@/lib/products'
 import { ProductCatalogView } from '@/components/ProductCatalogView'
 
@@ -38,12 +39,10 @@ export default function KvsProductsPage() {
   const materialSlug = searchParams.get('material')
   const categorySlug = searchParams.get('category')
   const searchQuery = searchParams.get('q') ?? ''
-  const [customVersion, setCustomVersion] = useState(0)
   const [categories, setCategories] = useState<HomepageProductCategory[]>([])
   const [materials, setMaterials] = useState<MaterialSupply[]>([])
+  const [catalogProducts, setCatalogProducts] = useState<Product[]>([])
   const [catalogReady, setCatalogReady] = useState(false)
-
-  useEffect(() => subscribeDashboardStore(() => setCustomVersion((value) => value + 1)), [])
 
   useEffect(() => {
     let cancelled = false
@@ -62,6 +61,22 @@ export default function KvsProductsPage() {
       })
       .finally(() => {
         if (!cancelled) setCatalogReady(true)
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  useEffect(() => {
+    let cancelled = false
+
+    fetchProducts()
+      .then((products) => {
+        if (!cancelled) setCatalogProducts(products)
+      })
+      .catch(() => {
+        if (!cancelled) setCatalogProducts([])
       })
 
     return () => {
@@ -89,21 +104,19 @@ export default function KvsProductsPage() {
     return categories
   }, [material, categories])
 
-  const catalogProducts = useMemo(() => {
-    const mergeOptions = material
-      ? { categoryTitles: sidebarCategories.map((item) => item.title) }
-      : undefined
-
-    return mergeCatalogWithCustomProducts([], mergeOptions)
-  }, [material, sidebarCategories, customVersion])
+  const scopedCatalogProducts = useMemo(() => {
+    if (!material) return catalogProducts
+    const allowed = new Set(sidebarCategories.map((item) => item.title))
+    return catalogProducts.filter((product) => allowed.has(product.category))
+  }, [catalogProducts, material, sidebarCategories])
 
   const products = useMemo(() => {
     const scoped = category
-      ? catalogProducts.filter((product) => product.category === category.title)
-      : catalogProducts
+      ? scopedCatalogProducts.filter((product) => product.category === category.title)
+      : scopedCatalogProducts
 
     return filterProductsByQuery(scoped, searchQuery)
-  }, [category, catalogProducts, searchQuery])
+  }, [category, scopedCatalogProducts, searchQuery])
 
   const onSelectCategory = useCallback(
     (slug: string | null) => {
@@ -118,7 +131,7 @@ export default function KvsProductsPage() {
       category={category ?? null}
       material={material ?? null}
       sidebarCategories={sidebarCategories}
-      catalogProducts={catalogProducts}
+      catalogProducts={scopedCatalogProducts}
       products={products}
       searchQuery={searchQuery}
       onSelectCategory={onSelectCategory}
