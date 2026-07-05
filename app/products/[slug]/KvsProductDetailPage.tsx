@@ -3,7 +3,7 @@
 import { useState, type CSSProperties, type MouseEvent } from 'react'
 import Link from 'next/link'
 import type { Product } from '@/lib/products'
-import { getProductCategoryForProduct, getProductsPageHref, getRelatedHomepageProducts } from '@/lib/products'
+import { getProductCategoryForProduct, getProductsPageHref, getRelatedHomepageProducts, toReadableProductText } from '@/lib/products'
 import { getProductEnquiryHref } from '@/lib/contact'
 import { UniNavbar } from '@/components/UniNavbar'
 import { UniFooter } from '@/components/UniFooter'
@@ -117,16 +117,7 @@ export default function KvsProductDetailPage({ product }: { product: Product }) 
               <p className="uniProductCategory">{product.category}</p>
               <h1 className="uniProductTitle">{product.title}</h1>
 
-              <p className="uniProductLead">{product.shortDescription}</p>
-
-              <dl className="uniProductQuickSpecs">
-                {specs.slice(0, 4).map((item) => (
-                  <div key={item.label} className="uniProductQuickSpec">
-                    <dt>{item.label}</dt>
-                    <dd>{item.value}</dd>
-                  </div>
-                ))}
-              </dl>
+              <p className="uniProductLead">{toReadableProductText(product.shortDescription)}</p>
 
               <div className="uniProductActions">
                 <Link href={getProductEnquiryHref(product)} className="uniProductCtaPrimary">
@@ -143,7 +134,7 @@ export default function KvsProductDetailPage({ product }: { product: Product }) 
               <div className="uniProductFeaturesHead">
                 <h2 className="uniProductSectionTitle">Key features</h2>
                 <p className="uniProductFeaturesSub">
-                  Quality and supply you can rely on for {product.title.toLowerCase()}.
+                  Quality and supply you can rely on for {product.title}.
                 </p>
               </div>
               <ul className="uniProductFeaturesGrid">

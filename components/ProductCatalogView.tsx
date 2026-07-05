@@ -115,7 +115,10 @@ export function ProductCatalogView({
 
         <section className="productCatalogBody">
           <div className="uniContainer productCatalogContainer productCatalogLayout">
-            <aside className="productCatalogSidebarCol" aria-label="Product categories">
+            <aside
+              className="productCatalogSidebarCol productCatalogSidebarCol--desktop"
+              aria-label="Product categories"
+            >
               <div className="productCatalogSidebar">
                 <nav
                   className="productCatalogNav"
@@ -200,7 +203,7 @@ export function ProductCatalogView({
               </div>
 
               <div className="productCatalogSidebarCta">
-                <h3>Project pricing</h3>
+                <h3>Bulk pricing</h3>
                 <p>Need pricing or bulk supply for your project?</p>
                 <Link href="/contact" className="productCatalogSidebarBtn">
                   Get a Quote
@@ -209,6 +212,35 @@ export function ProductCatalogView({
             </aside>
 
             <div className="productCatalogMain">
+              {!loading && navCategories.length > 0 ? (
+                <div className="productCatalogMobilePicker" role="navigation" aria-label="Browse categories">
+                  <div className="productCatalogMobilePickerTrack">
+                    {navCategories.map((item) => {
+                      const isActive = category?.slug === item.slug
+                      return (
+                        <button
+                          key={item.slug}
+                          type="button"
+                          className={`productCatalogMobilePickerItem${isActive ? ' productCatalogMobilePickerItem--active' : ''}`}
+                          onClick={() => openCategory(item.slug)}
+                          aria-current={isActive ? 'page' : undefined}
+                        >
+                          <span className="productCatalogMobilePickerThumb">
+                            <img
+                              src={catalogCardImageUrl(item.img, 72)}
+                              alt=""
+                              loading="lazy"
+                              decoding="async"
+                            />
+                          </span>
+                          <span className="productCatalogMobilePickerTitle">{item.title}</span>
+                        </button>
+                      )
+                    })}
+                  </div>
+                </div>
+              ) : null}
+
               <section
                 className="productCatalogProducts"
                 aria-label={category ? `${category.title} products` : 'All products'}
@@ -270,6 +302,18 @@ export function ProductCatalogView({
                   )}
                 </div>
               </section>
+
+              {!loading ? (
+                <div className="productCatalogMobileCta">
+                  <div>
+                    <strong>Bulk pricing</strong>
+                    <p>Need pricing or bulk supply for your project?</p>
+                  </div>
+                  <Link href="/contact" className="productCatalogSidebarBtn">
+                    Get a Quote
+                  </Link>
+                </div>
+              ) : null}
             </div>
           </div>
         </section>

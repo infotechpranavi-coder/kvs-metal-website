@@ -56,13 +56,48 @@ export default function KvsCareersPage() {
     <div className="uniPage">
       <UniNavbar />
       <main className="kvsContact kvsCareers">
+        <section className="sectorDetailHero kvsCareersHero">
+          <div className="kvsCareersHeroMedia">
+            <img
+              src={careersPage.heroImage}
+              alt={careersPage.heroImageAlt}
+              className="kvsCareersHeroImg"
+              fetchPriority="high"
+              loading="eager"
+              decoding="sync"
+              width={1920}
+              height={720}
+            />
+          </div>
+          <div className="kvsCareersHeroOverlay" aria-hidden />
+          <div className="kvsCareersHeroFade" aria-hidden />
+
+          <div className="uniContainer productCatalogHeroContainer sectorDetailHeroContent">
+            <header className="sectorDetailPageTitle">
+              <div className="sectorDetailAccent" aria-hidden>
+                <span className="sectorDetailAccentBadge" />
+                <span className="sectorDetailAccentRail">
+                  <span className="sectorDetailAccentRailLine sectorDetailAccentRailLine--black" />
+                  <span className="sectorDetailAccentRailLine sectorDetailAccentRailLine--orange" />
+                </span>
+                <span className="sectorDetailAccentFoot">
+                  <span className="sectorDetailAccentFootBar" />
+                  <span className="sectorDetailAccentFootCap" />
+                </span>
+              </div>
+              <div className="productCatalogHeroCopy">
+                <p className="kvsContactEyebrow">{careersPage.eyebrow}</p>
+                <h1>{careersPage.title}</h1>
+                <p className="productCatalogHeroLead">{careersPage.subheading}</p>
+              </div>
+            </header>
+          </div>
+        </section>
+
         <section className="kvsContactBody">
           <div className="uniContainer">
             <div className="kvsContactPanel kvsContactPanel--contentForm">
-              <div className="kvsContactPageHead">
-                <p className="kvsContactEyebrow">{careersPage.eyebrow}</p>
-                <h1>{careersPage.title}</h1>
-                <p className="kvsContactLead kvsContactLead--strong">{careersPage.subheading}</p>
+              <div className="kvsContactPageHead kvsCareersIntro">
                 {careersPage.intro.map((paragraph) => (
                   <p key={paragraph} className="kvsContactLead">
                     {paragraph}

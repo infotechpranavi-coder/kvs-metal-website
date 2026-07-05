@@ -6,11 +6,19 @@ export function UniFooter() {
   return (
     <footer className="uniFooter">
       <div className="uniFooterTopbar">
-        <p>
-          Anything in steel is just a call away —{' '}
-          <a href={`tel:${PHONE_E164}`}>{PHONE_DISPLAY}</a>
-          {' | '}
-          <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+        <p className="uniFooterTopbarText">
+          <span className="uniFooterTopbarMessage">{footerContent.topbarMessage}</span>
+          <span className="uniFooterTopbarContact">
+            <a className="uniFooterTopbarLink" href={`tel:${PHONE_E164}`}>
+              {PHONE_DISPLAY}
+            </a>
+            <span className="uniFooterTopbarSep" aria-hidden>
+              |
+            </span>
+            <a className="uniFooterTopbarLink" href={`mailto:${EMAIL}`}>
+              {EMAIL}
+            </a>
+          </span>
         </p>
       </div>
 

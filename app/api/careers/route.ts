@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server'
 import { connectDB } from '@/lib/mongodb'
+import { isCloudinaryConfigured, uploadRawBuffer } from '@/lib/cloudinary'
+import { getCloudinaryFolder } from '@/lib/cloudinary-folder'
 import {
   isEmailConfigured,
   sendCareerConfirmation,
@@ -38,6 +40,7 @@ export async function POST(request: Request) {
     const data = parsed.data
     const fullName = `${data.firstName} ${data.lastName}`.trim()
     const cvBuffer = Buffer.from(await cvFile.arrayBuffer())
+    const cvMimeType = cvFile.type || 'application/octet-stream'
     const messageBody = [
       `CV file: ${cvFile.name}`,
       '',
@@ -46,6 +49,31 @@ export async function POST(request: Request) {
     ]
       .filter(Boolean)
       .join('\n')
+
+    let cvUrl = ''
+    let cvPublicId = ''
+
+    if (!isCloudinaryConfigured()) {
+      return NextResponse.json(
+        { error: 'CV upload is not available right now. Please try again later.' },
+        { status: 503 },
+      )
+    }
+
+    try {
+      const uploaded = await uploadRawBuffer(cvBuffer, {
+        folder: getCloudinaryFolder('careers-cvs'),
+        filename: cvFile.name,
+      })
+      cvUrl = uploaded.url
+      cvPublicId = uploaded.publicId
+    } catch (error) {
+      console.error('Career CV cloud upload failed:', error)
+      return NextResponse.json(
+        { error: 'Could not upload your CV. Please try again.' },
+        { status: 503 },
+      )
+    }
 
     await connectDB()
     await EnquiryModel.create({
@@ -56,6 +84,10 @@ export async function POST(request: Request) {
       subject: 'Career application',
       message: messageBody,
       productSku: cvFile.name,
+      cvUrl,
+      cvPublicId,
+      cvFilename: cvFile.name,
+      cvMimeType,
     })
 
     let emailSent = false
@@ -69,7 +101,8 @@ export async function POST(request: Request) {
         message: data.message,
         cvFilename: cvFile.name,
         cvContent: cvBuffer,
-        cvContentType: cvFile.type || 'application/octet-stream',
+        cvContentType: cvMimeType,
+        cvUrl: cvUrl || undefined,
       }
 
       try {
@@ -92,6 +125,7 @@ export async function POST(request: Request) {
       emailSent,
       adminNotified,
       emailConfigured: isEmailConfigured(),
+      cvUploaded: Boolean(cvUrl),
     })
   } catch {
     return NextResponse.json({ error: 'Could not submit your application. Please try again.' }, { status: 500 })

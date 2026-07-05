@@ -23,6 +23,16 @@ export const materialInputSchema = z.object({
   sortOrder: z.number().int().optional(),
 })
 
+export const partnerInputSchema = z.object({
+  name: z.string().min(1).max(120),
+  img: z.string().optional(),
+  sortOrder: z.number().int().optional(),
+})
+
+export const siteSettingsInputSchema = z.object({
+  heroNavWhiteLogo: z.boolean(),
+})
+
 export const enquiryInputSchema = z.object({
   name: z.string().min(1).max(120),
   email: z.string().email().max(200),

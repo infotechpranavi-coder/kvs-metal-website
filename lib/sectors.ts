@@ -60,7 +60,7 @@ export const sectors: Sector[] = [
   {
     slug: 'marine',
     name: 'Marine',
-    img: '/market/marine.webp',
+    img: '/market/marines-2.jpeg',
     tagline: 'Built for Demanding Marine Environments',
     headline: 'Built for Demanding Marine Environments',
     paragraphs: [

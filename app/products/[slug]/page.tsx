@@ -12,13 +12,15 @@ export function generateMetadata({ params }: Props): Metadata {
   const product = getProductBySlug(params.slug)
   if (!product) {
     return {
-      title: 'Product - KVS Metals',
-      description: 'View product details from KVS Metals.',
+      title: 'Product | KVS Metals',
+      description: 'View steel product details, specifications, and enquiry options from KVS Metals in Dubai, UAE.',
     }
   }
   return {
-    title: `${product.title} - KVS Metal`,
-    description: product.shortDescription,
+    title: `${product.title} | KVS Metals Dubai, UAE`,
+    description:
+      product.shortDescription ||
+      `Supply and enquiry for ${product.title} from KVS Metals — structural and industrial steel in Dubai, UAE.`,
   }
 }
 

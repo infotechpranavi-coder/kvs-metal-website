@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
+import { getCareerApplicantMessage } from '@/lib/career-cv'
 import type { EnquiryDto } from '@/lib/serializers'
 
 type EnquiryTab = 'all' | 'contact' | 'brochure' | 'product' | 'careers'
@@ -17,6 +18,10 @@ function matchesTab(enquiry: EnquiryDto, tab: EnquiryTab) {
   const config = tabs.find((item) => item.id === tab)
   if (!config?.types) return true
   return config.types.includes(enquiry.type)
+}
+
+function isEnquiryTab(value: string | null): value is EnquiryTab {
+  return tabs.some((tab) => tab.id === value)
 }
 
 export default function DashboardEnquiriesPage() {
@@ -47,6 +52,14 @@ export default function DashboardEnquiriesPage() {
   useEffect(() => {
     loadEnquiries()
     loadEmailStatus()
+  }, [])
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const tab = params.get('tab')
+    if (isEnquiryTab(tab)) {
+      setActiveTab(tab)
+    }
   }, [])
 
   const filteredEnquiries = useMemo(
@@ -113,16 +126,24 @@ export default function DashboardEnquiriesPage() {
     )
   }
 
+  const selectedCvFilename = selected?.cvFilename || selected?.productSku || null
+  const selectedApplicantMessage =
+    selected?.type === 'careers' ? getCareerApplicantMessage(selected.message) : selected?.message
+
   return (
     <div className="dashPage">
       <div className="dashPageHeader">
         <div>
-          <h1>Enquiries</h1>
+          <h1>{activeTab === 'careers' ? 'Career applications' : 'Enquiries'}</h1>
           <p>
-            Contact form, brochure requests, and product enquiries from the website.
+            {activeTab === 'careers'
+              ? 'CV uploads from the careers page are stored in your Cloudinary account (kvs-website/careers-cvs).'
+              : 'Contact form, brochure requests, product enquiries, and career applications from the website.'}
             {emailConfigured
-              ? ` Admin notifications go to ${notifyTo}.`
-              : ' Add Resend settings in .env to enable email.'}
+              ? ` Admin notifications go to ${notifyTo} via Resend.`
+              : activeTab === 'careers'
+                ? ' Add Resend settings in .env later to enable email notifications.'
+                : ' Add Resend settings in .env to enable email.'}
           </p>
         </div>
       </div>
@@ -153,7 +174,7 @@ export default function DashboardEnquiriesPage() {
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Type</th>
+                <th>{activeTab === 'careers' ? 'CV file' : 'Type'}</th>
                 <th>Status</th>
                 <th>Date</th>
               </tr>
@@ -178,7 +199,11 @@ export default function DashboardEnquiriesPage() {
                     }}
                   >
                     <td>{enquiry.name}</td>
-                    <td>{enquiry.type}</td>
+                    <td>
+                      {enquiry.type === 'careers'
+                        ? enquiry.cvFilename || enquiry.productSku || 'CV uploaded'
+                        : enquiry.type}
+                    </td>
                     <td>
                       <span className={`dashStatus dashStatus--${enquiry.status}`}>
                         {enquiry.status}
@@ -196,7 +221,11 @@ export default function DashboardEnquiriesPage() {
           {selected ? (
             <>
               <div className="dashEnquiryDetailHead">
-                <h2>{selected.subject || 'Enquiry'}</h2>
+                <h2>
+                  {selected.type === 'careers'
+                    ? selected.name
+                    : selected.subject || 'Enquiry'}
+                </h2>
                 <div className="dashEnquiryActions">
                   <button
                     type="button"
@@ -242,14 +271,43 @@ export default function DashboardEnquiriesPage() {
                   <dt>Type</dt>
                   <dd>{selected.type}</dd>
                 </div>
-                {selected.productSku ? (
+                {selected.type === 'careers' && selectedCvFilename ? (
                   <div>
-                    <dt>{selected.type === 'careers' ? 'CV file' : 'Product SKU'}</dt>
+                    <dt>CV file</dt>
+                    <dd>{selectedCvFilename}</dd>
+                  </div>
+                ) : null}
+                {selected.type === 'careers' && selected.cvMimeType ? (
+                  <div>
+                    <dt>File type</dt>
+                    <dd>{selected.cvMimeType}</dd>
+                  </div>
+                ) : null}
+                {selected.type !== 'careers' && selected.productSku ? (
+                  <div>
+                    <dt>Product SKU</dt>
                     <dd>{selected.productSku}</dd>
                   </div>
                 ) : null}
               </dl>
-              <p className="dashEnquiryMessage">{selected.message}</p>
+
+              {selected.type === 'careers' ? (
+                <div className="dashEnquiryMailActions">
+                  {selected.cvUrl ? (
+                    <a
+                      href={`/api/enquiries/${selected.id}/cv`}
+                      className="dashBtn dashBtn--small"
+                      download={selectedCvFilename || 'cv.pdf'}
+                    >
+                      Download CV
+                    </a>
+                  ) : (
+                    <p className="dashHint">No cloud CV stored for this older application.</p>
+                  )}
+                </div>
+              ) : null}
+
+              <p className="dashEnquiryMessage">{selectedApplicantMessage}</p>
 
               <div className="dashEnquiryMailActions">
                 <button
@@ -278,7 +336,11 @@ export default function DashboardEnquiriesPage() {
               {actionMessage ? <p className="dashHint">{actionMessage}</p> : null}
             </>
           ) : (
-            <p className="dashEmptyState">Select an enquiry to view details and resend emails.</p>
+            <p className="dashEmptyState">
+              {activeTab === 'careers'
+                ? 'Select a career application to view applicant details and download the CV.'
+                : 'Select an enquiry to view details and resend emails.'}
+            </p>
           )}
         </div>
       </div>

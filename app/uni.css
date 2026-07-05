@@ -974,12 +974,14 @@
 .uniMobileNav {
   display: none;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
   max-width: var(--uni-container);
   margin: 12px 24px 0;
-  padding: 16px 24px;
-  background: rgba(0, 0, 0, 0.85);
-  border-radius: 12px;
+  padding: 18px 20px 20px;
+  background: #fff;
+  border: 1px solid rgba(26, 54, 93, 0.1);
+  border-radius: 14px;
+  box-shadow: 0 14px 42px rgba(26, 54, 93, 0.12);
 }
 
 .uniMobileNav--open {
@@ -987,8 +989,118 @@
 }
 
 .uniMobileNav .uniNavLink {
-  padding: 12px 14px;
+  padding: 13px 14px;
+  border-radius: 10px;
+  color: var(--uni-navy);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.uniNav--scrolled .uniMobileNav .uniNavLink,
+.uniNav--glass .uniMobileNav .uniNavLink,
+.uniNav--heroMorph .uniMobileNav .uniNavLink {
+  color: var(--uni-navy);
+}
+
+.uniMobileNav .uniNavLink:hover,
+.uniMobileNav .uniNavLink:focus-visible {
+  background: rgba(26, 54, 93, 0.06);
+  color: var(--uni-navy);
+  opacity: 1;
+}
+
+.uniMobileNav .uniNavLink--active,
+.uniNav--scrolled .uniMobileNav .uniNavLink--active,
+.uniNav--glass .uniMobileNav .uniNavLink--active,
+.uniNav--heroMorph .uniMobileNav .uniNavLink--active {
+  color: var(--uni-orange);
+  background: rgba(255, 107, 53, 0.1);
+}
+
+.uniMobileNav .uniMobileNavGroupToggle {
+  color: var(--uni-navy);
+  padding: 13px 14px;
+  border-radius: 10px;
+}
+
+.uniNav--scrolled .uniMobileNav .uniMobileNavGroupToggle,
+.uniNav--glass .uniMobileNav .uniMobileNavGroupToggle,
+.uniNav--heroMorph .uniMobileNav .uniMobileNavGroupToggle {
+  color: var(--uni-navy);
+}
+
+.uniMobileNav .uniMobileNavGroupToggle:hover,
+.uniMobileNav .uniMobileNavGroupToggle:focus-visible {
+  background: rgba(26, 54, 93, 0.06);
+  color: var(--uni-navy);
+}
+
+.uniMobileNav .uniMobileNavGroupToggle.uniNavLink--active {
+  color: var(--uni-orange);
+  background: rgba(255, 107, 53, 0.1);
+}
+
+.uniMobileNav .uniMobileNavGroupToggle .uniNavDropdownChevron {
+  border-color: var(--uni-navy);
+}
+
+.uniMobileNav .uniMobileNavSublink {
+  color: var(--uni-text-muted);
+  padding: 10px 14px;
   border-radius: 8px;
+}
+
+.uniMobileNav .uniMobileNavSublink:hover,
+.uniMobileNav .uniMobileNavSublink:focus-visible {
+  color: var(--uni-navy);
+  background: rgba(26, 54, 93, 0.05);
+}
+
+.uniMobileNav .uniMobileNavSublink.uniNavLink--active {
+  color: var(--uni-orange);
+  background: rgba(255, 107, 53, 0.08);
+}
+
+.uniMobileNav .uniNavSearchWrap--mobile {
+  margin-bottom: 12px;
+}
+
+.uniMobileNav .uniNavSearch,
+.uniMobileNav .uniNavSearch--light {
+  border-color: rgba(0, 0, 0, 0.1);
+  background: #f3f3f3;
+}
+
+.uniMobileNav .uniNavSearch input,
+.uniNav--scrolled .uniMobileNav .uniNavSearch input,
+.uniNav--glass .uniMobileNav .uniNavSearch input,
+.uniNav--heroMorph .uniMobileNav .uniNavSearch input {
+  color: var(--uni-text);
+}
+
+.uniMobileNav .uniNavSearch input::placeholder,
+.uniNav--scrolled .uniMobileNav .uniNavSearch input::placeholder,
+.uniNav--glass .uniMobileNav .uniNavSearch input::placeholder,
+.uniNav--heroMorph .uniMobileNav .uniNavSearch input::placeholder {
+  color: color-mix(in srgb, var(--uni-navy) 55%, white);
+}
+
+.uniMobileNav .uniNavSearchIcon,
+.uniNav--scrolled .uniMobileNav .uniNavSearchIcon,
+.uniNav--glass .uniMobileNav .uniNavSearchIcon,
+.uniNav--heroMorph .uniMobileNav .uniNavSearchIcon {
+  color: var(--uni-text-muted);
+}
+
+.uniMobileNav .uniNavCall--mobile {
+  margin-top: 14px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(26, 54, 93, 0.1);
+}
+
+.uniMobileNav .uniNavBrochure--mobile {
+  margin-top: 10px;
 }
 
 .uniMobileNav .uniNavCta {
@@ -2837,6 +2949,22 @@
   display: inline-block;
 }
 
+.uniPartnerLogo--image {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.uniPartnerLogoImg {
+  display: block;
+  height: clamp(34px, 4.5vw, 56px);
+  width: auto;
+  max-width: clamp(120px, 16vw, 200px);
+  object-fit: contain;
+  filter: grayscale(0.05);
+}
+
 /* ── TESTIMONIALS ── */
 .uniTestimonials {
   position: relative;
@@ -3171,11 +3299,13 @@
 .uniTestimonialCardAvatar {
   position: relative;
   z-index: 1;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center top;
+  color: var(--uni-navy);
+  background: linear-gradient(180deg, #f7f9fc 0%, #eef2f7 100%);
   clip-path: polygon(0 8px,
       8px 0,
       100% 0,
@@ -3489,6 +3619,10 @@
   animation-delay: 0.36s;
 }
 
+.uniFloatActions--visible .uniFloatIcon:nth-child(5) {
+  animation-delay: 0.46s;
+}
+
 @keyframes uniFloatSlideIn {
   from {
     opacity: 0;
@@ -3520,6 +3654,7 @@
   text-decoration: none;
   border: none;
   cursor: pointer;
+  flex-shrink: 0;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -3562,34 +3697,16 @@
   background: #2d3748;
 }
 
-.uniBackTop {
-  position: fixed;
-  bottom: 28px;
-  right: 28px;
-  z-index: 900;
-  width: 40px;
-  height: 40px;
+.uniFloatIcon--backTop {
   background: var(--uni-navy);
-  color: #fff;
   border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition:
-    background 0.22s ease,
-    color 0.22s ease,
-    box-shadow 0.22s ease,
-    transform 0.22s ease;
+  padding: 0;
+  font: inherit;
 }
 
-.uniBackTop:hover,
-.uniBackTop:active,
-.uniBackTop:focus-visible {
+.uniFloatIcon--backTop:hover {
   background: var(--uni-orange);
   color: #1a1a1a;
-  box-shadow: 0 8px 22px rgba(255, 107, 53, 0.35);
-  transform: translateY(-2px);
 }
 
 /* ── KEY MARKET SECTORS ── */
@@ -3640,7 +3757,8 @@
   --diamond-bounds: calc(var(--diamond-side) * 1.41421356);
   --diamond-gutter: clamp(20px, 2.4vw, 32px);
   --diamond-pitch: calc(var(--diamond-bounds) + var(--diamond-gutter));
-  --diamond-row-step: calc(var(--diamond-bounds) * 0.54 + var(--diamond-gutter) * 0.42);
+  --diamond-label-space: clamp(22px, 2.2vw, 30px);
+  --diamond-row-step: calc(var(--diamond-bounds) * 0.54 + var(--diamond-gutter) * 0.42 + var(--diamond-label-space));
   --diamond-accent-offset: clamp(8px, 1.1vw, 12px);
 
   display: grid;
@@ -3662,9 +3780,9 @@
   min-width: 0;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   justify-self: center;
-  align-self: center;
+  align-self: start;
 }
 
 .uniSectorsDiamondReveal:hover {
@@ -3702,14 +3820,26 @@
 .uniSectorsDiamondCard {
   position: relative;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  width: var(--diamond-bounds);
-  height: var(--diamond-bounds);
+  justify-content: flex-start;
+  width: auto;
+  height: auto;
+  gap: clamp(8px, 1.1vw, 12px);
   padding: 0;
   text-decoration: none;
   text-align: center;
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.uniSectorsDiamondVisual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--diamond-bounds);
+  height: var(--diamond-bounds);
+  flex-shrink: 0;
 }
 
 .uniSectorsDiamondCard:hover {
@@ -3822,7 +3952,15 @@
   transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+.uniSectorsDiamondCard--marine .uniSectorsDiamondMedia img {
+  object-position: center 58%;
+}
+
 .uniSectorsDiamondCard:hover .uniSectorsDiamondMedia img {
+  transform: scale(1.08);
+}
+
+.uniSectorsDiamondCard--marine:hover .uniSectorsDiamondMedia img {
   transform: scale(1.08);
 }
 
@@ -3845,7 +3983,7 @@
   background: rgba(26, 54, 93, 0.62);
 }
 
-.uniSectorsDiamondLabel {
+.uniSectorsDiamondLabel--in {
   position: absolute;
   top: 50%;
   bottom: auto;
@@ -3871,17 +4009,28 @@
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
-.uniSectorsDiamondGrid .uniSectorsDiamondCard:hover .uniSectorsDiamondLabel,
-.uniSectorsDiamondGrid .uniSectorsDiamondCard:focus-visible .uniSectorsDiamondLabel,
-.uniSectorsDiamondGrid .uniSectorsDiamondCard:active .uniSectorsDiamondLabel,
-.uniProductsDiamondGrid .uniSectorsDiamondCard:hover .uniSectorsDiamondLabel,
-.uniProductsDiamondGrid .uniSectorsDiamondCard:focus-visible .uniSectorsDiamondLabel,
-.uniProductsDiamondGrid .uniSectorsDiamondCard:active .uniSectorsDiamondLabel {
+.uniSectorsDiamondLabel--below {
+  display: none;
+}
+
+.uniSectorsDiamondGrid .uniSectorsDiamondCard:hover .uniSectorsDiamondLabel--in,
+.uniSectorsDiamondGrid .uniSectorsDiamondCard:focus-visible .uniSectorsDiamondLabel--in,
+.uniSectorsDiamondGrid .uniSectorsDiamondCard:active .uniSectorsDiamondLabel--in,
+.uniProductsDiamondGrid .uniSectorsDiamondCard:hover .uniSectorsDiamondLabel--in,
+.uniProductsDiamondGrid .uniSectorsDiamondCard:focus-visible .uniSectorsDiamondLabel--in,
+.uniProductsDiamondGrid .uniSectorsDiamondCard:active .uniSectorsDiamondLabel--in {
   opacity: 1;
   transform: translate(-50%, -50%) rotate(-45deg) scale(1);
   font-size: clamp(14px, 1.25vw, 18px);
   letter-spacing: 0.07em;
   line-height: 1.28;
+}
+
+.uniProductsDiamondGrid .uniSectorsDiamondCard:hover .uniSectorsDiamondLabel--in,
+.uniProductsDiamondGrid .uniSectorsDiamondCard:focus-visible .uniSectorsDiamondLabel--in,
+.uniProductsDiamondGrid .uniSectorsDiamondCard:active .uniSectorsDiamondLabel--in {
+  font-size: clamp(13px, 1.2vw, 17px);
+  letter-spacing: 0.06em;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -4452,7 +4601,8 @@
   --diamond-bounds: calc(var(--diamond-side) * 1.41421356);
   --diamond-gutter: clamp(12px, 1.6vw, 20px);
   --diamond-pitch: calc(var(--diamond-bounds) + var(--diamond-gutter));
-  --diamond-row-step: calc(var(--diamond-bounds) * 0.54 + var(--diamond-gutter) * 0.42);
+  --diamond-label-space: clamp(22px, 2.2vw, 30px);
+  --diamond-row-step: calc(var(--diamond-bounds) * 0.54 + var(--diamond-gutter) * 0.42 + var(--diamond-label-space));
   --diamond-accent-offset: clamp(7px, 1vw, 11px);
 
   display: grid;
@@ -4473,9 +4623,9 @@
   min-width: 0;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   justify-self: center;
-  align-self: center;
+  align-self: start;
 }
 
 .uniProductsDiamondGrid > .uniProductsDiamondReveal:hover {
@@ -4501,13 +4651,6 @@
 .uniProductsDiamondGrid > .uniProductsDiamondReveal:hover .uniSectorsDiamondCard,
 .uniProductsDiamondGrid > .uniSectorsDiamondCard:hover {
   z-index: 2;
-}
-
-.uniProductsDiamondGrid .uniSectorsDiamondCard:hover .uniSectorsDiamondLabel,
-.uniProductsDiamondGrid .uniSectorsDiamondCard:focus-visible .uniSectorsDiamondLabel,
-.uniProductsDiamondGrid .uniSectorsDiamondCard:active .uniSectorsDiamondLabel {
-  font-size: clamp(13px, 1.2vw, 17px);
-  letter-spacing: 0.06em;
 }
 
 .uniProductsRow .sectorCard {
@@ -4547,6 +4690,10 @@
   object-fit: cover;
   object-position: center 30%;
   z-index: 0;
+}
+
+.sectorDetailBannerImg--marine {
+  object-position: center 62%;
 }
 
 .sectorDetailBannerOverlay {
@@ -5697,11 +5844,12 @@
 }
 
 .uniProductLead {
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 1.65;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.75;
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--uni-navy);
   margin: 0 0 24px;
   padding-bottom: 24px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
@@ -5822,33 +5970,58 @@
 }
 
 .uniProductFeatureCard {
+  position: relative;
   display: flex;
   align-items: flex-start;
-  padding: 18px 20px;
-  background: #f7f9fc;
+  padding: 18px 20px 18px 24px;
+  background: linear-gradient(165deg, #ffffff 0%, #faf9f6 100%);
   border: 1px solid rgba(26, 54, 93, 0.08);
-  border-left: 3px solid var(--uni-orange);
-  border-radius: 10px;
+  border-radius: 14px;
+  box-shadow:
+    0 12px 32px rgba(26, 26, 26, 0.05),
+    0 1px 0 rgba(255, 255, 255, 0.9) inset;
+  overflow: hidden;
   transition:
-    transform 0.22s ease,
-    border-color 0.22s ease,
-    box-shadow 0.22s ease,
-    background 0.22s ease;
+    transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.28s ease,
+    box-shadow 0.28s ease,
+    background 0.28s ease;
+}
+
+.uniProductFeatureCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--uni-orange) 0%, rgba(255, 107, 53, 0.35) 100%);
+  transition: opacity 0.28s ease;
 }
 
 .uniProductFeatureCard:hover {
-  transform: translateY(-2px);
-  background: #fff;
-  border-color: rgba(26, 54, 93, 0.14);
-  border-left-color: var(--uni-orange);
-  box-shadow: 0 10px 24px rgba(26, 54, 93, 0.08);
+  transform: translateY(-6px);
+  background: var(--kvs-navy-card-bg);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: var(--kvs-navy-card-shadow);
+}
+
+.uniProductFeatureCard:hover::before {
+  opacity: 0;
 }
 
 .uniProductFeatureText {
+  position: relative;
+  z-index: 1;
   font-size: 14px;
-  line-height: 1.6;
-  color: var(--uni-navy);
+  line-height: 1.65;
+  color: var(--uni-text);
   font-weight: 600;
+  transition: color 0.28s ease;
+}
+
+.uniProductFeatureCard:hover .uniProductFeatureText {
+  color: rgba(255, 255, 255, 0.92);
 }
 
 .uniProductDetails {
@@ -6012,16 +6185,47 @@
   background: var(--uni-orange);
   color: #fff;
   text-align: center;
-  padding: 11px 20px;
+  padding: 13px 20px;
 }
 
 .uniPage .uniFooterTopbar p,
-.uniFooterTopbar p {
+.uniFooterTopbar p,
+.uniFooterTopbarText {
   margin: 0;
-  font-size: clamp(12px, 1.5vw, 14px);
+  font-size: clamp(14px, 1.8vw, 17px);
   font-weight: 600;
   letter-spacing: 0.02em;
   color: #fff;
+}
+
+.uniFooterTopbarText {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 8px 12px;
+  line-height: 1.5;
+}
+
+.uniFooterTopbarMessage {
+  display: inline;
+}
+
+.uniFooterTopbarContact {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 8px 10px;
+}
+
+.uniFooterTopbarLink {
+  color: inherit;
+  text-decoration: none;
+}
+
+.uniFooterTopbarSep {
+  opacity: 0.75;
 }
 
 .uniPage .uniFooterTopbar a,
@@ -6438,26 +6642,68 @@
 .kvsAboutHeroActions {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
+  gap: 12px;
 }
 
-.kvsAboutHeroGhost {
+.kvsAboutHeroBtn {
   display: inline-flex;
   align-items: center;
-  padding: 14px 28px;
-  border-radius: 4px;
-  border: 1px solid #d8d5ce;
-  background: #fff;
-  color: var(--uni-text);
+  justify-content: center;
+  min-height: 48px;
+  padding: 14px 26px;
+  border-radius: 999px;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 700;
+  line-height: 1.2;
   text-decoration: none;
-  transition: border-color 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
+  color: #fff;
+  background: linear-gradient(135deg, #ff6b35 0%, #ff7f4f 100%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 22px rgba(255, 107, 53, 0.28);
+  transition:
+    background 0.22s ease,
+    border-color 0.22s ease,
+    box-shadow 0.22s ease,
+    transform 0.22s ease;
 }
 
-.kvsAboutHeroGhost:hover {
-  border-color: var(--uni-orange);
-  color: var(--uni-orange);
+.kvsAboutHeroBtn:hover {
+  transform: translateY(-1px);
+  background: linear-gradient(135deg, #ff7f4f 0%, #ff6b35 100%);
+  box-shadow: 0 12px 28px rgba(255, 107, 53, 0.34);
+}
+
+.kvsAboutHeroBtn--navy {
+  color: #fff;
+  background: var(--kvs-navy-card-bg);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 22px rgba(26, 54, 93, 0.16);
+}
+
+.kvsAboutHeroBtn--navy:hover {
+  background: linear-gradient(165deg, #1f4270 0%, #1a365d 52%, #152a47 100%);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: var(--kvs-navy-card-shadow);
+}
+
+@media (max-width: 768px) {
+  .kvsAboutHeroActions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    width: 100%;
+  }
+
+  .kvsAboutHeroBtn {
+    width: 100%;
+    min-height: 46px;
+    padding: 12px 14px;
+    font-size: 14px;
+    font-weight: 700;
+    white-space: normal;
+    text-align: center;
+  }
 }
 
 .kvsAboutHeroMedia {
@@ -6465,6 +6711,11 @@
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 24px 64px rgba(26, 26, 26, 0.14);
+}
+
+.kvsAboutHeroMediaFrame {
+  position: relative;
+  overflow: hidden;
 }
 
 .kvsAboutHeroMedia img {
@@ -6588,8 +6839,19 @@
   object-fit: cover;
 }
 
-.kvsAboutStoryContent h2 {
-  margin: 12px 0 24px;
+.kvsAboutStoryContent h2,
+.kvsAboutStoryTitle {
+  margin: 0 0 24px;
+  font-family: var(--uni-section-title-font);
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  color: var(--uni-orange);
+}
+
+.kvsAboutStoryContent .kvsAboutEyebrow {
+  margin: 0 0 12px;
 }
 
 .kvsAboutStoryCopy {
@@ -6999,10 +7261,27 @@
   font-family: var(--uni-section-title-font);
   font-size: clamp(0.92rem, 1.25vw, 1.05rem);
   font-weight: 700;
-  line-height: 1.45;
+  line-height: 1.35;
   letter-spacing: 0.01em;
   color: #fff !important;
   white-space: normal;
+}
+
+.uniHomeCtaTitle:has(.uniHomeCtaTitleEmphasis) {
+  font-size: clamp(0.8rem, 0.98vw, 0.96rem);
+  white-space: nowrap;
+}
+
+.uniHomeCtaTitleLead {
+  display: inline;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.uniHomeCtaTitleEmphasis {
+  display: inline;
+  font-weight: 800;
+  color: #fff;
 }
 
 .uniHomeCtaEnd {
@@ -7261,7 +7540,7 @@
 }
 
 .kvsAboutCoreValuePoint:hover .kvsAboutCoreValueLabel {
-  color: rgba(255, 255, 255, 0.96);
+  color: rgba(255, 255, 255, 0.95);
 }
 
 @media (max-width: 900px) {
@@ -7356,6 +7635,84 @@
   font-size: 14px;
   color: var(--uni-navy);
   font-weight: 500;
+}
+
+.productCatalogMobilePicker {
+  display: none;
+}
+
+.productCatalogMobilePickerTrack {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 2px 2px 12px;
+  margin: 0 0 4px;
+}
+
+.productCatalogMobilePickerTrack::-webkit-scrollbar {
+  display: none;
+}
+
+.productCatalogMobilePickerItem {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: clamp(108px, 28vw, 132px);
+  padding: 10px 8px 12px;
+  border: 1px solid rgba(26, 54, 93, 0.1);
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 6px 18px rgba(26, 54, 93, 0.05);
+  cursor: pointer;
+  text-align: center;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.productCatalogMobilePickerItem--active {
+  border-color: rgba(255, 107, 53, 0.55);
+  box-shadow: 0 8px 22px rgba(255, 107, 53, 0.14);
+  background: linear-gradient(180deg, #fff8f4 0%, #fff 100%);
+}
+
+.productCatalogMobilePickerThumb {
+  width: 52px;
+  height: 52px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #eef2f7;
+}
+
+.productCatalogMobilePickerThumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.productCatalogMobilePickerTitle {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  font-size: 11px;
+  line-height: 1.35;
+  font-weight: 600;
+  color: var(--uni-navy);
+}
+
+.productCatalogMobilePickerItem--active .productCatalogMobilePickerTitle {
+  color: var(--uni-orange);
+}
+
+.productCatalogMobileCta {
+  display: none;
 }
 
 /* ── CONTACT (KVS) ── */
@@ -7827,6 +8184,92 @@
 
 /* ── CAREERS PAGE ── */
 
+.kvsCareers.kvsContact {
+  padding-top: 0;
+}
+
+.kvsCareersHero {
+  position: relative;
+  margin-top: 0;
+  min-height: clamp(400px, 54vh, 600px);
+  padding-top: 84px;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: #eef1f5;
+}
+
+.kvsCareersHeroMedia {
+  position: absolute;
+  inset: 84px 0 0;
+  overflow: hidden;
+  z-index: 0;
+  background: #d8dee8;
+}
+
+.kvsCareersHeroImg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: clamp(280px, 42vh, 480px);
+  object-fit: cover;
+  object-position: center 35%;
+}
+
+.kvsCareersHeroOverlay {
+  position: absolute;
+  inset: 84px 0 0;
+  z-index: 1;
+  background: linear-gradient(180deg,
+      rgba(26, 54, 93, 0.06) 0%,
+      transparent 38%,
+      transparent 100%);
+  pointer-events: none;
+}
+
+.kvsCareersHeroFade {
+  position: absolute;
+  inset: 84px 0 0;
+  z-index: 2;
+  background: linear-gradient(to bottom,
+      transparent 0%,
+      transparent 48%,
+      rgba(255, 255, 255, 0.22) 68%,
+      rgba(255, 255, 255, 0.82) 88%,
+      #fff 100%);
+  pointer-events: none;
+}
+
+.kvsCareersHero .productCatalogHeroContainer,
+.kvsCareersHero .sectorDetailHeroContent {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: clamp(8px, 2vh, 20px);
+  z-index: 3;
+}
+
+.kvsCareersHero .productCatalogHeroCopy .kvsContactEyebrow {
+  margin: 0 0 8px;
+  color: var(--uni-navy);
+}
+
+.kvsCareersHero .productCatalogHeroCopy h1 {
+  margin: 0 0 10px;
+  font-size: clamp(1.75rem, 3.4vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--uni-text);
+}
+
+.kvsCareersIntro {
+  margin-bottom: 0;
+}
+
+.kvsCareersIntro .kvsContactLead:first-child {
+  font-weight: 600;
+  color: rgba(26, 54, 93, 0.88);
+}
+
 .kvsCareersFileField {
   display: flex;
   align-items: center;
@@ -8025,6 +8468,8 @@
 }
 
 .uniPage:not(:has(.uniHeroShell)) .kvsAboutHero h1,
+.uniPage:not(:has(.uniHeroShell)) .kvsAboutStoryTitle,
+.uniPage:not(:has(.uniHeroShell)) .kvsAboutStoryContent h2,
 .uniPage:not(:has(.uniHeroShell)) .kvsContactHero h1,
 .uniPage:not(:has(.uniHeroShell)) .kvsContactPageHead h1,
 .uniPage:not(:has(.uniHeroShell)) .kvsLegalHero h1,
@@ -8035,6 +8480,7 @@
 }
 
 .uniPage:not(:has(.uniHeroShell)) .kvsAboutEyebrow,
+.uniPage:not(:has(.uniHeroShell)) .kvsAboutStoryContent .kvsAboutEyebrow,
 .uniPage:not(:has(.uniHeroShell)) .kvsContactEyebrow,
 .uniPage:not(:has(.uniHeroShell)) .kvsLegalEyebrow,
 .uniPage:not(:has(.uniHeroShell)) .sectorDetailStatementLabel,
@@ -8153,30 +8599,78 @@
     display: flex;
   }
 
+  .uniMobileNav {
+    margin: 10px var(--uni-chrome-gutter) 0;
+    max-width: none;
+  }
+
   .uniHero {
     height: auto;
     max-height: none;
-    min-height: 100svh;
+    min-height: 0;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 6px 24px rgba(8, 20, 38, 0.1);
+  }
+
+  .uniHeroShell {
+    padding: 10px var(--uni-chrome-gutter) 6px;
+  }
+
+  .uniSkills {
+    padding: clamp(24px, 4vw, 40px) 0 clamp(56px, 8vw, 72px);
+  }
+
+  .uniHeroInner {
+    height: auto;
+    border-radius: inherit;
+    overflow: hidden;
   }
 
   .uniHeroSplit {
-    grid-template-columns: 1fr;
-    grid-template-rows: minmax(44vh, 1fr) auto;
-    height: auto;
-    min-height: 100%;
+    --hero-point: 0px;
+    position: relative;
+    display: block;
+    height: clamp(300px, 54vh, 400px);
+    min-height: 300px;
+    overflow: hidden;
+    border-radius: 14px;
   }
 
   .uniHeroVideoCol {
-    min-height: 44vh;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    flex-shrink: 0;
     clip-path: none;
+    pointer-events: auto;
+  }
+
+  .uniHeroVideoCol .uniHeroSlides::after {
+    background: linear-gradient(
+      180deg,
+      rgba(8, 20, 38, 0.42) 0%,
+      transparent 28%,
+      transparent 40%,
+      rgba(8, 20, 38, 0.82) 100%
+    );
   }
 
   .uniHeroContentCol {
-    margin-left: 0;
-    padding: 28px 20px 24px;
-    padding-left: 20px;
-    padding-right: 20px;
-    background: #ffffff;
+    position: relative;
+    z-index: 2;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    min-height: clamp(300px, 54vh, 400px);
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    pointer-events: none;
   }
 
   .uniHeroContentCol::before,
@@ -8184,144 +8678,248 @@
     display: none;
   }
 
-  .uniHeroStatsBar {
-    left: 14px;
-    right: 14px;
-    bottom: 14px;
-    width: auto;
-    padding: 0;
+  .uniHeroStatsBar,
+  .uniHeroSliderUi,
+  .uniHeroReadMore,
+  .uniHeroSideTab,
+  .uniHeroGhostTitle,
+  .uniHeroVideoGraphics,
+  .uniHeroGraphics,
+  .uniHeroInset,
+  .uniHeroHighlights,
+  .uniHeroPanelCardAccent,
+  .uniHeroPanelEdgeBorder,
+  .uniHeroPanelCardShape,
+  .uniHeroDesc {
+    display: none !important;
   }
 
-  .uniHeroStatsBar .uniHeroStat {
-    min-width: 0;
-    flex: 1 1 calc(33.33% - 10px);
-  }
-
-  .uniHeroHighlights {
+  .uniHeroMuteBtn {
+    display: flex !important;
     top: auto;
-    bottom: clamp(88px, 12vh, 110px);
-    left: 16px;
-    right: 16px;
-    max-width: none;
-    gap: 8px;
+    bottom: 12px;
+    left: auto;
+    right: 10px;
+    transform: none;
+    width: 28px;
+    height: 28px;
   }
 
-  .uniHeroHighlights li {
-    font-size: 12px;
-    padding: 8px 12px;
+  .uniHeroMuteBtn svg {
+    width: 12px;
+    height: 12px;
   }
 
   .uniHeroPanelShape {
     height: auto;
     min-height: 0;
-    max-height: none;
+    padding: 0;
     overflow: visible;
-  }
-
-  .uniHeroVideoCol {
-    clip-path: none;
-  }
-
-  .uniHeroContentCol {
-    margin-left: 0;
-  }
-
-  .uniHeroPanelCard,
-  .uniHeroPanelCardAccent,
-  .uniHeroPanelCardShape {
-    clip-path: none;
-  }
-
-  .uniHeroPanelCardAccent,
-  .uniHeroPanelEdgeBorder {
-    display: none;
+    pointer-events: none;
   }
 
   .uniHeroPanelCard {
-    border-radius: 20px;
-    overflow: hidden;
-  }
-
-  .uniHeroPanelCardShape {
-    border-radius: 20px;
+    clip-path: none;
+    border-radius: 0;
+    height: auto;
+    overflow: visible;
+    box-shadow: none;
+    background: transparent;
+    pointer-events: none;
   }
 
   .uniHeroPanelContent {
-    max-width: none;
     height: auto;
-    justify-content: flex-start;
+    max-width: none;
+    justify-content: flex-end;
     gap: 0;
     overflow: visible;
-    padding: 28px 20px 12px;
-    padding-left: 32px;
-    padding-top: 32px;
-    transform: none;
+    padding: calc(var(--uni-nav-stack) - 18px) 0 0;
     text-align: left;
-    align-items: flex-start;
+    align-items: stretch;
+    background: transparent;
+    pointer-events: none;
   }
 
   .uniHeroPanelMain {
-    flex: none;
-    padding-top: 0;
-    padding-bottom: 16px;
-    align-items: flex-start;
+    flex: 0 0 auto;
+    padding: 0 14px 16px;
+    gap: 12px;
+    align-items: stretch;
+    justify-content: flex-end;
+    min-height: 0;
+    overflow: visible;
+    width: 100%;
+    pointer-events: none;
   }
 
-  .uniHeroSliderUi {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
-    padding: 14px 18px 16px;
-    padding-left: 24px;
-    transform: none;
+  .uniHeroTitleBlock {
+    padding: 0;
+    align-self: flex-end;
+    max-width: 78%;
+    text-align: right;
+    pointer-events: auto;
   }
 
   .uniHeroPanelContent h1 {
-    font-size: clamp(1.5rem, 7vw, 2rem);
-    overflow: visible;
+    font-size: clamp(1rem, 4.6vw, 1.28rem);
+    letter-spacing: 0.035em;
+    line-height: 1.08;
+    gap: 0.05em;
+    align-items: flex-end;
   }
 
-  .uniHeroGhostTitle {
-    font-size: clamp(3.2rem, 24vw, 5rem);
-    left: 0;
-    top: 48%;
+  .uniHeroPanelContent h1 .uniHeroTitleLine--navy {
+    background: linear-gradient(125deg, #e8f6ff 0%, #ffffff 52%, #c5e4ff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.35));
   }
 
-  .uniHeroSliderTrack {
+  .uniHeroPanelContent h1 .uniHeroTitleLine--orange {
+    filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.4));
+  }
+
+  .uniHeroTitleRule {
+    width: 36px;
+    height: 2px;
+    margin-top: 6px;
+    margin-left: auto;
+    margin-right: 0;
+  }
+
+  .uniHeroActions {
+    display: flex !important;
+    flex-direction: row;
+    gap: 8px;
+    width: 100%;
+    max-width: min(100%, 300px);
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    pointer-events: auto;
+    align-self: flex-start;
+  }
+
+  .uniHeroBtn,
+  .uniHeroBtnGhost {
+    width: auto;
+    flex: 1;
+    justify-content: center;
+    padding: 8px 12px;
+    font-size: 10px;
+  }
+
+  .uniHeroBtn {
+    box-shadow: 0 4px 16px rgba(255, 107, 53, 0.35);
+  }
+
+  .uniHeroBtnGhost {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.5);
+    color: #fff;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  }
+
+  .uniHeroBtnGhost:hover {
+    background: rgba(255, 255, 255, 0.22);
+    border-color: #fff;
+    color: #fff;
+  }
+
+  .uniPage:has(.uniHeroShell) .uniHeroPanelShape,
+  .uniPage:has(.uniHeroShell) .uniHeroSideTab {
+    animation: none !important;
+  }
+
+  .uniHomeCta {
+    padding: 6px 0;
+  }
+
+  .uniHomeCtaInner {
+    --uni-home-cta-h: 76px;
+    grid-template-columns: minmax(0, 1fr) clamp(72px, 12vw, 96px);
+    grid-template-rows: var(--uni-home-cta-h);
+    height: var(--uni-home-cta-h);
+    min-height: var(--uni-home-cta-h);
+    border-radius: 10px;
+  }
+
+  .uniHomeCtaInner:has(.uniHomeCtaPhone) {
+    --uni-home-cta-h: 96px;
+  }
+
+  .uniHomeCtaContent {
+    padding: 0 14px;
+    align-items: center;
+  }
+
+  .uniHomeCtaTitle {
+    font-size: clamp(0.74rem, 2.1vw, 0.9rem);
+    white-space: normal;
+    line-height: 1.34;
+    text-align: left;
+  }
+
+  .uniHomeCtaTitle:has(.uniHomeCtaTitleEmphasis) {
+    white-space: normal;
+    font-size: clamp(0.72rem, 2vw, 0.86rem);
+  }
+
+  .uniHomeCtaRow {
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 10px;
     width: 100%;
   }
 
-  .uniHeroSideTab {
-    display: none;
+  .uniHomeCtaInner:has(.uniHomeCtaPhone) .uniHomeCtaRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 7px;
   }
 
-  .uniHeroMuteBtn {
-    top: 50%;
-    bottom: auto;
-    left: 16px;
-    transform: translateY(-50%);
+  .uniHomeCtaEnd {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 10px;
+    width: auto;
+    flex-shrink: 0;
   }
 
-  .uniHeroMuteBtn:hover {
-    transform: translateY(-50%) scale(1.06);
+  .uniHomeCtaBtn {
+    padding: 9px 14px;
+    font-size: 11px;
+    white-space: nowrap;
+    width: auto;
+    flex-shrink: 0;
+    border-radius: 6px;
   }
 
-  .uniHeroSlide::after {
-    background: linear-gradient(180deg,
-        rgba(8, 20, 38, 0.1) 0%,
-        rgba(26, 54, 93, 0.28) 55%,
-        rgba(8, 20, 38, 0.5) 100%);
+  .uniHomeCtaPhone {
+    font-size: 10px;
+    white-space: nowrap;
+    text-align: left;
+    line-height: 1.3;
   }
 
-  .uniHeroVideoGraphics,
-  .uniHeroGraphics {
-    display: none;
+  .uniHomeCtaMedia {
+    order: 0;
+    min-height: 0;
+    max-height: none;
+    height: 100%;
   }
 
-  .uniHeroInset {
-    right: 24px;
-    width: 180px;
-    bottom: 60px;
+  .uniTestimonials {
+    padding-top: clamp(40px, 6vw, 56px);
   }
 
   .uniSkillsTop,
@@ -8435,12 +9033,6 @@
     letter-spacing: 0.04em;
   }
 
-  .uniSectorsDiamondGrid {
-    --diamond-side: clamp(132px, 30vw, 168px);
-    --diamond-gutter: 16px;
-    --diamond-accent-offset: 7px;
-  }
-
   .sectorDetailGrid {
     grid-template-columns: 1fr;
     gap: 40px;
@@ -8469,44 +9061,146 @@
     --diamond-side: clamp(116px, 24vw, 152px);
     --diamond-gutter: 10px;
     --diamond-accent-offset: 6px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: auto;
+    row-gap: 8px;
+    width: 100%;
+    max-width: 420px;
     margin-inline: auto;
+    padding: 0;
+    justify-items: center;
   }
 
-  .uniSectorsDiamondGrid .uniSectorsDiamondCard:hover .uniSectorsDiamondLabel,
-  .uniSectorsDiamondGrid .uniSectorsDiamondCard:focus-visible .uniSectorsDiamondLabel,
-  .uniSectorsDiamondGrid .uniSectorsDiamondCard:active .uniSectorsDiamondLabel {
-    font-size: 12px;
+  .uniProductsDiamondGrid > .uniProductsDiamondReveal,
+  .uniProductsDiamondGrid > .uniSkeletonDiamondCard {
+    grid-column: auto !important;
+    grid-row: auto !important;
+    width: 100%;
+    max-width: 190px;
   }
 
-  .uniProductsDiamondGrid .uniSectorsDiamondLabel {
-    font-size: 10px;
+  .uniSectorsDiamondGrid {
+    --diamond-side: clamp(132px, 30vw, 168px);
+    --diamond-gutter: 16px;
+    --diamond-accent-offset: 7px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: auto;
+    row-gap: 8px;
+    transform: none;
+    width: 100%;
+    max-width: 420px;
+    padding: 0;
+    justify-items: center;
   }
 
-  .uniProductsDiamondGrid .uniSectorsDiamondCard:hover .uniSectorsDiamondLabel,
-  .uniProductsDiamondGrid .uniSectorsDiamondCard:focus-visible .uniSectorsDiamondLabel,
-  .uniProductsDiamondGrid .uniSectorsDiamondCard:active .uniSectorsDiamondLabel {
+  .uniSectorsDiamondReveal:nth-child(n) {
+    grid-column: auto !important;
+    grid-row: auto !important;
+  }
+
+  .kvsAboutHeroGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .kvsAboutHeroMedia {
+    order: -1;
+  }
+
+  .kvsAboutStoryGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .kvsAboutStatsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .kvsContactFormRow {
+    grid-template-columns: 1fr;
+  }
+
+  .uniSectorsDiamondLabel--in {
+    display: none;
+  }
+
+  .uniSectorsDiamondLabel--below {
+    display: block;
+    position: static;
+    opacity: 1;
+    transform: none;
+    max-width: calc(var(--diamond-bounds) + 8px);
+    padding: 0 4px;
     font-size: 11px;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--uni-navy);
+    white-space: normal;
+    text-align: center;
+    text-shadow: none;
+  }
+
+  .uniProductsDiamondGrid .uniSectorsDiamondLabel--below {
+    font-size: 10px;
   }
 
   .productCatalogLayout {
     grid-template-columns: 1fr;
-    gap: 32px;
+    gap: 18px;
   }
 
-  .productCatalogSidebarCol {
-    position: static;
-    top: auto;
-    max-height: none;
+  .productCatalogSidebarCol--desktop {
+    display: none;
   }
 
-  .productCatalogSidebar {
-    min-height: 0;
-    max-height: none;
+  .productCatalogMobilePicker {
+    display: block;
   }
 
-  .productCatalogNav {
-    max-height: none;
-    overflow: visible;
+  .productCatalogMobileCta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-top: 20px;
+    padding: 16px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #13243a 0%, #1a365d 100%);
+    color: #fff;
+  }
+
+  .productCatalogMobileCta strong {
+    display: block;
+    font-size: 15px;
+    margin-bottom: 4px;
+  }
+
+  .productCatalogMobileCta p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.45;
+    color: rgba(255, 255, 255, 0.82);
+  }
+
+  .productCatalogMobileCta .productCatalogSidebarBtn {
+    flex-shrink: 0;
+    padding: 10px 14px;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  .productCatalogBody {
+    padding-top: 12px;
+  }
+
+  .productCatalogProducts {
+    padding-top: 0;
+  }
+
+  .productCatalogProductsHead {
+    margin-bottom: 14px;
+    padding-bottom: 0;
+    border-bottom: 0;
   }
 
   .productCatalogGrid {
@@ -8559,6 +9253,68 @@
     gap: 10px;
   }
 
+  .uniFooterTopbar {
+    padding: 12px 16px;
+  }
+
+  .uniFooterTopbarText {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 6px;
+    font-size: clamp(14px, 1.8vw, 17px);
+    width: 100%;
+  }
+
+  .uniFooterTopbarMessage {
+    display: block;
+    width: 100%;
+    text-align: center;
+    line-height: 1.45;
+    white-space: normal;
+  }
+
+  .uniFooterTopbarContact {
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 8px 10px;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .uniFooterTopbarSep {
+    display: inline;
+    opacity: 0.75;
+    flex-shrink: 0;
+  }
+
+  .uniFooterTopbarLink {
+    display: inline;
+    font-size: inherit;
+    line-height: 1.4;
+    white-space: nowrap;
+    flex-shrink: 0;
+    text-align: center;
+  }
+
+  .uniFloatActions {
+    top: auto;
+    bottom: max(20px, env(safe-area-inset-bottom, 20px));
+    right: max(16px, env(safe-area-inset-right, 16px));
+    left: auto;
+    transform: none;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .uniFloatIcon {
+    width: 46px;
+    height: 46px;
+  }
+
   .kvsContactPanel,
   .kvsContactPanel--contentForm {
     grid-template-columns: 1fr;
@@ -8566,6 +9322,10 @@
 }
 
 @media (max-width: 640px) {
+  :root {
+    --uni-chrome-gutter: 14px;
+  }
+
   .uniSkillsBrand {
     width: clamp(210px, 54vw, 280px);
     height: clamp(210px, 54vw, 280px);
@@ -8640,20 +9400,131 @@
     display: none;
   }
 
-  .uniHeroStats {
-    gap: 20px;
+  .uniHeroShell {
+    padding: 8px 12px 4px;
   }
 
-  .uniHeroStat strong {
-    font-size: 1.35rem;
+  .uniHero {
+    border-radius: 12px;
   }
 
-  .uniHeroSliderUi {
-    min-width: 140px;
+  .uniHeroSplit {
+    height: clamp(280px, 50vh, 360px);
+    min-height: 280px;
+    border-radius: 12px;
   }
 
-  .uniHeroSliderProgress {
-    width: 140px;
+  .uniHeroContentCol {
+    min-height: clamp(280px, 50vh, 360px);
+  }
+
+  .uniHeroPanelContent h1 {
+    font-size: clamp(0.92rem, 4.2vw, 1.15rem);
+  }
+
+  .uniHeroTitleBlock {
+    max-width: 82%;
+  }
+
+  .uniHeroMuteBtn {
+    bottom: 10px;
+    right: 8px;
+  }
+
+  .uniHeroPanelMain {
+    padding: 0 12px 12px;
+    gap: 8px;
+  }
+
+  .uniHeroActions {
+    max-width: min(100%, 260px);
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .uniHeroBtn,
+  .uniHeroBtnGhost {
+    padding: 7px 10px;
+    font-size: 9px;
+  }
+
+  .uniHomeCtaInner {
+    --uni-home-cta-h: 74px;
+    grid-template-columns: minmax(0, 1fr) 70px;
+    grid-template-rows: var(--uni-home-cta-h);
+    height: var(--uni-home-cta-h);
+    min-height: var(--uni-home-cta-h);
+    border-radius: 9px;
+  }
+
+  .uniHomeCtaInner:has(.uniHomeCtaPhone) {
+    --uni-home-cta-h: 94px;
+  }
+
+  .uniHomeCtaContent {
+    padding: 0 12px;
+  }
+
+  .uniHomeCtaRow {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .uniHomeCtaInner:has(.uniHomeCtaPhone) .uniHomeCtaRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 7px;
+  }
+
+  .uniHomeCtaTitle {
+    font-size: 0.72rem;
+    line-height: 1.32;
+    text-align: left;
+  }
+
+  .uniHomeCtaTitle:has(.uniHomeCtaTitleEmphasis) {
+    white-space: normal;
+  }
+
+  .uniHomeCtaEnd {
+    flex-direction: row;
+    align-items: center;
+    gap: 9px;
+    width: auto;
+    flex-shrink: 0;
+  }
+
+  .uniHomeCtaBtn {
+    width: auto;
+    padding: 8px 12px;
+    font-size: 10px;
+    border-radius: 5px;
+  }
+
+  .uniHomeCtaPhone {
+    text-align: left;
+    font-size: 10px;
+    line-height: 1.25;
+  }
+
+  .uniHomeCtaPhone a {
+    font-size: 1em;
+  }
+
+  .uniHomeCtaMedia {
+    order: 0;
+    min-height: 0;
+    max-height: none;
+    height: 100%;
+  }
+
+  .uniTestimonials {
+    padding-top: 36px;
   }
 
   .kvsAboutHeroGrid {
@@ -8710,61 +9581,48 @@
     padding-bottom: 0;
   }
 
-  .uniHomeCtaInner {
-    --uni-home-cta-h: 68px;
-    grid-template-columns: minmax(0, 1fr) 76px;
-    grid-template-rows: var(--uni-home-cta-h);
-    height: var(--uni-home-cta-h);
-  }
-
-  .uniHomeCtaInner:has(.uniHomeCtaPhone) {
-    --uni-home-cta-h: 76px;
-  }
-
-  .uniHomeCtaMedia {
-    order: 0;
-    min-height: 0;
-    max-height: none;
-  }
-
-  .uniHomeCtaContent {
-    padding: 0 12px;
-  }
-
-  .uniHomeCtaTitle {
-    font-size: 0.88rem;
-    white-space: normal;
-    overflow: visible;
-    display: block;
-  }
-
-  .uniHomeCtaRow {
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .uniHomeCtaEnd {
-    gap: 10px;
-  }
-
-  .uniHomeCtaBtn {
-    padding: 9px 14px;
-    font-size: 12px;
-  }
-
-  .uniHomeCtaPhone {
-    font-size: 12px;
-    white-space: normal;
-    line-height: 1.3;
-  }
-
   .sectorDetailHero {
     min-height: clamp(380px, 54vh, 500px);
   }
 
   .productCatalogHero {
-    min-height: clamp(180px, 26vh, 240px);
+    min-height: clamp(160px, 22vh, 210px);
+  }
+
+  .productCatalogMobilePickerItem {
+    width: clamp(100px, 26vw, 120px);
+    padding: 8px 6px 10px;
+  }
+
+  .productCatalogMobilePickerThumb {
+    width: 46px;
+    height: 46px;
+  }
+
+  .productCatalogMobilePickerTitle {
+    font-size: 10px;
+  }
+
+  .productCatalogMobileCta {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .productCatalogMobileCta .productCatalogSidebarBtn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .kvsCareersHero {
+    min-height: clamp(340px, 48vh, 460px);
+    padding-top: 72px;
+  }
+
+  .kvsCareersHeroMedia,
+  .kvsCareersHeroOverlay,
+  .kvsCareersHeroFade {
+    inset: 72px 0 0;
   }
 
   .productCatalogHero .sectorDetailPageTitle h1 {
@@ -8800,7 +9658,7 @@
   }
 
   .productCatalogSubnav {
-    padding-left: 72px;
+    padding-left: 16px;
   }
 
   .uniProductDetail {
@@ -8822,7 +9680,11 @@
   }
 
   .uniProductRelatedGrid.productCatalogGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
+  }
+
+  .kvsAboutStatsGrid {
+    grid-template-columns: 1fr;
   }
 
   .uniProductActions {
@@ -8844,8 +9706,9 @@
   }
 
   .uniFloatActions {
-    right: 12px;
-    gap: 8px;
+    bottom: max(18px, env(safe-area-inset-bottom, 18px));
+    right: max(14px, env(safe-area-inset-right, 14px));
+    gap: 10px;
   }
 
   .uniFloatIcon {
@@ -8853,27 +9716,44 @@
     height: 44px;
   }
 
+  .uniFloatIcon svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .uniMobileNav {
+    margin: 8px 12px 0;
+    padding: 16px 14px 18px;
+  }
+
+  .uniMobileNav .uniNavLink,
+  .uniMobileNav .uniMobileNavGroupToggle {
+    font-size: 15px;
+    padding: 12px 12px;
+  }
+
   .uniSectorsDiamondGrid {
-    --diamond-side: 116px;
+    --diamond-side: clamp(108px, 28vw, 136px);
     --diamond-gutter: 12px;
     --diamond-accent-offset: 6px;
+    max-width: 100%;
   }
 
-  .uniSectorsDiamondLabel {
-    font-size: 9px;
-    letter-spacing: 0.08em;
-  }
-
-  .uniSectorsDiamondGrid .uniSectorsDiamondCard:hover .uniSectorsDiamondLabel,
-  .uniSectorsDiamondGrid .uniSectorsDiamondCard:focus-visible .uniSectorsDiamondLabel,
-  .uniSectorsDiamondGrid .uniSectorsDiamondCard:active .uniSectorsDiamondLabel {
-    font-size: 11px;
+  .uniSectorsDiamondLabel--below {
+    font-size: 10px;
+    letter-spacing: 0.05em;
   }
 
   .uniProductsDiamondGrid {
-    --diamond-side: 100px;
+    --diamond-side: clamp(108px, 28vw, 136px);
     --diamond-gutter: 10px;
     --diamond-accent-offset: 5px;
+    max-width: 100%;
+  }
+
+  .uniProductsDiamondGrid > .uniProductsDiamondReveal,
+  .uniProductsDiamondGrid > .uniSkeletonDiamondCard {
+    max-width: 168px;
   }
 
   .sectorCard {
@@ -8888,6 +9768,11 @@
     padding: 16px 10px 18px;
   }
 
+  .uniFooterGrid--noProducts,
+  .uniFooterGrid--withProducts {
+    grid-template-columns: 1fr;
+  }
+
   .uniFooterBrand {
     max-width: none;
   }
@@ -8895,6 +9780,20 @@
   .uniFooterColList--grid,
   .uniFooterProductsSplit {
     grid-template-columns: 1fr;
+  }
+
+  .uniFooterTopbar {
+    padding: 11px 12px;
+  }
+
+  .uniFooterTopbarText {
+    gap: 5px;
+    font-size: clamp(13px, 3.4vw, 15px);
+  }
+
+  .uniFooterTopbarContact {
+    gap: 6px 8px;
+    font-size: clamp(12px, 3.1vw, 14px);
   }
 
   .uniFooterBottom {
@@ -8932,9 +9831,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  width: var(--diamond-bounds);
-  height: var(--diamond-bounds);
+  justify-content: flex-start;
+  width: auto;
+  height: auto;
   gap: 10px;
 }
 

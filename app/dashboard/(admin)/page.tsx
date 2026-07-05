@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { DashboardDrawer } from '@/components/DashboardDrawer'
 import { DashboardImageGalleryField } from '@/components/DashboardImageGalleryField'
+import { BulkImportPanel } from '@/components/superadmin/BulkImportPanel'
 import { readDashboardStore, writeDashboardStore } from '@/lib/dashboard-store'
 import type { CategoryDto, ProductDto } from '@/lib/serializers'
 
@@ -269,6 +270,8 @@ export default function DashboardProductsPage() {
           Add product
         </button>
       </div>
+
+      <BulkImportPanel type="products" onComplete={() => void loadProducts()} />
 
       <div className="dashCard">
         <table className="dashTable">

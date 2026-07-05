@@ -3,9 +3,9 @@ import { Suspense } from 'react'
 import KvsContactPage from './KvsContactPage'
 
 export const metadata: Metadata = {
-  title: 'Contact Us - KVS Metal',
+  title: 'Contact Us | KVS Metals — Steel Enquiries Dubai, UAE',
   description:
-    'Contact KVS Metal for steel product enquiries, bulk supply, and custom fabrication quotes.',
+    'Contact KVS Metals for steel product enquiries, bulk supply quotes, and project coordination. Call, email, or send your grade, quantity, and delivery requirements.',
 }
 
 export default function Page() {

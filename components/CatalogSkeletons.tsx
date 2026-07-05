@@ -1,5 +1,7 @@
 'use client'
 
+import { useMaxWidthMedia } from '@/lib/use-compact-layout'
+
 function getDiamondPlacement(index: number) {
   const row = Math.floor(index / 3) + 1
   const pos = index % 3
@@ -13,13 +15,15 @@ function getDiamondPlacement(index: number) {
 }
 
 export function HomeProductsDiamondSkeleton({ count = 6 }: { count?: number }) {
+  const compactGrid = useMaxWidthMedia(1024)
+
   return (
     <div className="uniProductsDiamondGrid" aria-busy="true" aria-label="Loading products">
       {Array.from({ length: count }, (_, index) => (
         <div
           key={index}
           className="uniSkeletonDiamondCard"
-          style={getDiamondPlacement(index)}
+          style={compactGrid ? undefined : getDiamondPlacement(index)}
         >
           <span className="uniSkeletonDiamondFrame uniSkeleton" />
           <span className="uniSkeleton uniSkeleton--label" />

@@ -104,6 +104,16 @@ export default function KvsProductsPage() {
     return categories
   }, [material, categories])
 
+  useEffect(() => {
+    if (!catalogReady || categorySlug || searchQuery.trim() || sidebarCategories.length === 0) return
+
+    if (!window.matchMedia('(max-width: 1024px)').matches) return
+
+    const first = sidebarCategories[0]
+    if (!first) return
+    router.replace(getProductsPageHref(first.slug, material?.slug), { scroll: false })
+  }, [catalogReady, categorySlug, searchQuery, sidebarCategories, material?.slug, router])
+
   const scopedCatalogProducts = useMemo(() => {
     if (!material) return catalogProducts
     const allowed = new Set(sidebarCategories.map((item) => item.title))

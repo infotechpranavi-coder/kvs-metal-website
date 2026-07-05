@@ -17,6 +17,7 @@ import { sectors } from '@/lib/sectors'
 import { testimonials, testimonialsSection } from '@/lib/testimonials'
 import { MaterialSuppliesSection } from '@/components/MaterialSuppliesSection'
 import { HomeProductsSection } from '@/components/HomeProductsSection'
+import { HomePartnersSection } from '@/components/HomePartnersSection'
 import { HomeCtaSection } from '@/components/HomeCtaSection'
 import {
   CompetitivePricingIcon,
@@ -24,6 +25,7 @@ import {
   GlobalSourcingIcon,
   StarIcon,
   TimelyDeliveryIcon,
+  UserIcon,
 } from '@/components/UniIcons'
 
 const features = aboutUsHome.features.map((item, index) => {
@@ -39,15 +41,6 @@ const features = aboutUsHome.features.map((item, index) => {
     desc: item.desc,
   }
 })
-
-const partners = [
-  { name: 'TATA', className: 'uniPartnerLogo--sny' },
-  { name: 'JSW', className: '' },
-  { name: 'SAIL', className: '' },
-  { name: 'Jindal', className: 'uniPartnerLogo--moodle' },
-  { name: 'Hindalco', className: '' },
-  { name: 'Essar', className: 'uniPartnerLogo--orfit' },
-]
 
 const HERO_VIDEO = '/hero/Precise-Quality-1080p.mp4'
 
@@ -356,39 +349,29 @@ function MarketSectorsSection() {
                 delay={0.05 + index * 0.08}
                 className="uniSectorsDiamondReveal"
               >
-                <Link href={`/sectors/${sector.slug}`} className="uniSectorsDiamondCard">
-                  <span className="uniSectorsDiamondAccent" aria-hidden />
-                  <span className="uniSectorsDiamondFrame">
-                    <span className="uniSectorsDiamondMedia">
-                      <img src={sector.img} alt={sector.name} />
-                      <span className="uniSectorsDiamondOverlay" aria-hidden />
+                <Link
+                  href={`/sectors/${sector.slug}`}
+                  className={`uniSectorsDiamondCard${sector.slug === 'marine' ? ' uniSectorsDiamondCard--marine' : ''}`}
+                  aria-label={sector.name}
+                >
+                  <span className="uniSectorsDiamondVisual">
+                    <span className="uniSectorsDiamondAccent" aria-hidden />
+                    <span className="uniSectorsDiamondFrame">
+                      <span className="uniSectorsDiamondMedia">
+                        <img src={sector.img} alt={sector.name} />
+                        <span className="uniSectorsDiamondOverlay" aria-hidden />
+                      </span>
+                      <span className="uniSectorsDiamondLabel uniSectorsDiamondLabel--in" aria-hidden="true">
+                        {sector.name}
+                      </span>
                     </span>
-                    <span className="uniSectorsDiamondLabel">{sector.name}</span>
+                  </span>
+                  <span className="uniSectorsDiamondLabel uniSectorsDiamondLabel--below" aria-hidden="true">
+                    {sector.name}
                   </span>
                 </Link>
               </ScrollReveal>
             ))}
-        </div>
-      </div>
-    </ScrollReveal>
-  )
-}
-
-function PartnersSection() {
-  const marqueeItems = [...partners, ...partners]
-
-  return (
-    <ScrollReveal as="section" className="uniPartners" aria-label="Trusted by leading firms">
-      <div className="uniPartnersMarquee">
-        <div className="uniPartnersTrack">
-          {marqueeItems.map((partner, index) => (
-            <span
-              key={`${partner.name}-${index}`}
-              className={`uniPartnerLogo ${partner.className}`}
-            >
-              {partner.name}
-            </span>
-          ))}
         </div>
       </div>
     </ScrollReveal>
@@ -486,7 +469,9 @@ function TestimonialsSection() {
                       <footer className="uniTestimonialCardFooter">
                         <div className="uniTestimonialCardPortrait">
                           <span className="uniTestimonialCardPortraitAccent" aria-hidden />
-                          <img src={item.image} alt="" className="uniTestimonialCardAvatar" />
+                          <span className="uniTestimonialCardAvatar" aria-hidden>
+                            <UserIcon />
+                          </span>
                         </div>
                         <div className="uniTestimonialCardAuthor">
                           <strong>{item.name}</strong>
@@ -549,10 +534,11 @@ export default function KvsMetalPage() {
         />
         <MarketSectorsSection />
         <MaterialSuppliesSection />
-        <PartnersSection />
+        <HomePartnersSection />
         <HomeProductsSection />
         <HomeCtaSection
           title={productsCta.title}
+          titleEmphasis={productsCta.titleEmphasis}
           ctaLabel={productsCta.ctaLabel}
           ctaHref={productsCta.ctaHref}
           image={productsCta.image}

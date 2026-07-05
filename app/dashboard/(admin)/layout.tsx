@@ -13,7 +13,9 @@ export default function DashboardAdminLayout({ children }: { children: React.Rea
           <Link href="/dashboard">Products</Link>
           <Link href="/dashboard/categories">Categories</Link>
           <Link href="/dashboard/materials">Materials</Link>
+          <Link href="/dashboard/partners">Client logos</Link>
           <Link href="/dashboard/enquiries">Enquiries</Link>
+          <Link href="/dashboard/enquiries?tab=careers">Careers</Link>
         </nav>
         <DashboardLogout />
       </aside>

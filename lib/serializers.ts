@@ -1,6 +1,7 @@
 import type { CategoryDocument } from '@/models/Category'
 import type { EnquiryDocument } from '@/models/Enquiry'
 import type { MaterialDocument } from '@/models/Material'
+import type { PartnerDocument } from '@/models/Partner'
 import type { ProductDocument } from '@/models/Product'
 import type mongoose from 'mongoose'
 
@@ -33,6 +34,15 @@ export type MaterialDto = {
   updatedAt: string
 }
 
+export type PartnerDto = {
+  id: string
+  name: string
+  img: string
+  sortOrder: number
+  createdAt: string
+  updatedAt: string
+}
+
 export type EnquiryDto = {
   id: string
   name: string
@@ -42,6 +52,10 @@ export type EnquiryDto = {
   subject: string | null
   message: string
   productSku: string | null
+  cvUrl: string | null
+  cvPublicId: string | null
+  cvFilename: string | null
+  cvMimeType: string | null
   status: string
   createdAt: string
   updatedAt: string
@@ -139,9 +153,24 @@ export function serializeEnquiry(enquiry: EnquiryDocument): EnquiryDto {
     subject: enquiry.subject || null,
     message: enquiry.message,
     productSku: enquiry.productSku || null,
+    cvUrl: enquiry.cvUrl || null,
+    cvPublicId: enquiry.cvPublicId || null,
+    cvFilename: enquiry.cvFilename || null,
+    cvMimeType: enquiry.cvMimeType || null,
     status: enquiry.status || 'new',
     createdAt: enquiry.createdAt.toISOString(),
     updatedAt: enquiry.updatedAt.toISOString(),
+  }
+}
+
+export function serializePartner(partner: PartnerDocument): PartnerDto {
+  return {
+    id: partner._id.toString(),
+    name: partner.name,
+    img: partner.img || '',
+    sortOrder: partner.sortOrder ?? 0,
+    createdAt: partner.createdAt.toISOString(),
+    updatedAt: partner.updatedAt.toISOString(),
   }
 }
 

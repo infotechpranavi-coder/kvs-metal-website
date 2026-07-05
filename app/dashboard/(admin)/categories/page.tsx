@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { DashboardDrawer } from '@/components/DashboardDrawer'
 import { DashboardImageField } from '@/components/DashboardImageField'
+import { BulkImportPanel } from '@/components/superadmin/BulkImportPanel'
 import type { CategoryDto, MaterialDto } from '@/lib/serializers'
 
 type CategoryRow = CategoryDto & { materialId?: string | null; materialTitle?: string | null }
@@ -132,6 +133,8 @@ export default function DashboardCategoriesPage() {
           Add category
         </button>
       </div>
+
+      <BulkImportPanel type="categories" onComplete={() => void loadData()} />
 
       <div className="dashCard">
         <table className="dashTable">

@@ -172,8 +172,10 @@ export function UniNavbar({ lightMode = false }: { lightMode?: boolean; glass?: 
   const isHome = pathname === '/'
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [heroNavWhiteLogo, setHeroNavWhiteLogo] = useState(true)
   const showSolid = lightMode || scrolled || !isHome
   const isLight = lightMode || scrolled || !isHome
+  const logoVariant = heroNavWhiteLogo && !isLight ? 'white' : 'default'
 
   useEffect(() => {
     if (lightMode || !isHome) return
@@ -183,6 +185,24 @@ export function UniNavbar({ lightMode = false }: { lightMode?: boolean; glass?: 
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [isHome, lightMode])
+
+  useEffect(() => {
+    let cancelled = false
+
+    fetch('/api/site-settings')
+      .then((response) => response.json())
+      .then((data: { settings?: { heroNavWhiteLogo?: boolean } }) => {
+        if (cancelled) return
+        if (typeof data.settings?.heroNavWhiteLogo === 'boolean') {
+          setHeroNavWhiteLogo(data.settings.heroNavWhiteLogo)
+        }
+      })
+      .catch(() => {})
+
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : ''
@@ -208,7 +228,7 @@ export function UniNavbar({ lightMode = false }: { lightMode?: boolean; glass?: 
       <div className={`uniNav${showSolid ? ' uniNav--scrolled' : ''}${menuOpen ? ' uniNav--open' : ''}`}>
         <div className="uniNavInner">
           <Link href="/" className="uniLogo" onClick={closeMenu}>
-            <KvsLogo size="nav" priority variant={isLight ? 'default' : 'white'} />
+            <KvsLogo size="nav" priority variant={logoVariant} />
           </Link>
 
           <UniNavSearch light={isLight} onNavigate={closeMenu} />
@@ -246,9 +266,6 @@ export function UniNavbar({ lightMode = false }: { lightMode?: boolean; glass?: 
                 <DownloadIcon size={16} />
                 Download Brochure
               </Link>
-              <Link href="/contact" className="uniNavCta" onClick={closeMenu}>
-                Get in Touch
-              </Link>
               <button
                 type="button"
                 className="uniMenuToggle"
@@ -263,7 +280,7 @@ export function UniNavbar({ lightMode = false }: { lightMode?: boolean; glass?: 
         </div>
 
         <nav className={`uniMobileNav${menuOpen ? ' uniMobileNav--open' : ''}`} aria-label="Mobile navigation">
-          <UniNavSearch light={isLight} onNavigate={closeMenu} className="uniNavSearchWrap--mobile" />
+          <UniNavSearch light onNavigate={closeMenu} className="uniNavSearchWrap--mobile" />
           {navItems.map((item) =>
             item.type === 'industries' ? (
               <MobileIndustriesGroup
@@ -287,9 +304,6 @@ export function UniNavbar({ lightMode = false }: { lightMode?: boolean; glass?: 
             <PhoneIcon size={18} color="#fff" />
             <span>{PHONE_DISPLAY}</span>
           </a>
-          <Link href="/contact" className="uniNavCta" onClick={closeMenu}>
-            Get in Touch
-          </Link>
           <Link href={BROCHURE_DOWNLOAD_HREF} className="uniNavBrochure uniNavBrochure--mobile" onClick={handleBrochureClick}>
             <DownloadIcon size={18} />
             Download Product Brochure

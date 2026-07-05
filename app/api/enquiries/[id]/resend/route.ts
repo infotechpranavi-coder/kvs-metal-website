@@ -1,10 +1,16 @@
 import { NextResponse } from 'next/server'
 import { requireDashboardAuth } from '@/lib/api-auth'
+import {
+  fetchCareerCvBuffer,
+  getCareerApplicantMessage,
+  getCareerCvFilename,
+} from '@/lib/career-cv'
 import { connectDB } from '@/lib/mongodb'
 import {
   isEmailConfigured,
   sendBrochureEmail,
   sendCareerConfirmation,
+  sendCareerNotification,
   sendEnquiryConfirmation,
   sendEnquiryNotification,
 } from '@/lib/email'
@@ -48,7 +54,24 @@ export async function POST(request: Request, { params }: RouteContext) {
     }
 
     if (parsed.data.target === 'admin') {
-      await sendEnquiryNotification(payload)
+      if (enquiry.type === 'careers') {
+        const [firstName, ...rest] = enquiry.name.split(' ')
+        const cvBuffer = enquiry.cvUrl ? await fetchCareerCvBuffer(enquiry) : Buffer.alloc(0)
+
+        await sendCareerNotification({
+          firstName: firstName || enquiry.name,
+          lastName: rest.join(' '),
+          email: enquiry.email,
+          message: getCareerApplicantMessage(enquiry.message),
+          cvFilename: getCareerCvFilename(enquiry),
+          cvContent: cvBuffer,
+          cvContentType: enquiry.cvMimeType || 'application/pdf',
+          cvUrl: enquiry.cvUrl || undefined,
+        })
+      } else {
+        await sendEnquiryNotification(payload)
+      }
+
       return NextResponse.json({ ok: true, sentTo: 'admin', enquiry: serializeEnquiry(enquiry) })
     }
 
@@ -64,10 +87,10 @@ export async function POST(request: Request, { params }: RouteContext) {
         firstName: firstName || enquiry.name,
         lastName: rest.join(' '),
         email: enquiry.email,
-        message: enquiry.message,
-        cvFilename: enquiry.productSku || 'cv.pdf',
+        message: getCareerApplicantMessage(enquiry.message),
+        cvFilename: getCareerCvFilename(enquiry),
         cvContent: Buffer.alloc(0),
-        cvContentType: 'application/pdf',
+        cvContentType: enquiry.cvMimeType || 'application/pdf',
       })
     } else {
       await sendEnquiryConfirmation(payload)
@@ -77,6 +100,9 @@ export async function POST(request: Request, { params }: RouteContext) {
   } catch (error) {
     if (error instanceof Error && error.message === 'BROCHURE_FILE_MISSING') {
       return NextResponse.json({ error: 'Brochure PDF file is missing on the server' }, { status: 503 })
+    }
+    if (error instanceof Error && error.message === 'CV_DOWNLOAD_FAILED') {
+      return NextResponse.json({ error: 'Could not fetch CV from cloud storage for email attachment' }, { status: 502 })
     }
     console.error('Enquiry resend failed:', error)
     return NextResponse.json({ error: 'Failed to send email' }, { status: 500 })

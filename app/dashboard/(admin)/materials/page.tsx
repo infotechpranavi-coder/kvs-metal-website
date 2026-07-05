@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { DashboardDrawer } from '@/components/DashboardDrawer'
 import { DashboardImageField } from '@/components/DashboardImageField'
+import { BulkImportPanel } from '@/components/superadmin/BulkImportPanel'
 import type { MaterialDto } from '@/lib/serializers'
 
 const emptyForm = {
@@ -115,6 +116,8 @@ export default function DashboardMaterialsPage() {
           Add material
         </button>
       </div>
+
+      <BulkImportPanel type="materials" onComplete={() => void loadMaterials()} />
 
       <div className="dashCard">
         <table className="dashTable">

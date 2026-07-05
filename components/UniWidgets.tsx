@@ -96,6 +96,16 @@ export function UniWidgets({ hideUntilPastHero = false }: UniWidgetsProps) {
         aria-label="Quick contact"
         aria-hidden={!showFloats}
       >
+        {showTop && (
+          <button
+            type="button"
+            className="uniFloatIcon uniFloatIcon--backTop"
+            onClick={scrollTop}
+            aria-label="Back to top"
+          >
+            <ChevronUpIcon />
+          </button>
+        )}
         <Link href="/contact" className="uniFloatIcon uniFloatIcon--quote" aria-label="Get a quote — contact form">
           <FloatQuoteIcon />
         </Link>
@@ -121,12 +131,6 @@ export function UniWidgets({ hideUntilPastHero = false }: UniWidgetsProps) {
           <DownloadIcon size={20} />
         </Link>
       </div>
-
-      {showTop && (
-        <button type="button" className="uniBackTop" onClick={scrollTop} aria-label="Back to top">
-          <ChevronUpIcon />
-        </button>
-      )}
     </>
   )
 }

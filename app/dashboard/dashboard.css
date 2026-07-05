@@ -158,6 +158,43 @@
   accent-color: var(--uni-orange, #ff6b35);
 }
 
+.dashSettingsToggle {
+  align-items: flex-start;
+  gap: 12px;
+  max-width: 560px;
+  padding: 16px 18px;
+  border: 1px solid rgba(26, 54, 93, 0.12);
+  border-radius: 12px;
+  background: #f8fafc;
+}
+
+.dashSettingsToggle input {
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.dashSettingsToggle span {
+  display: grid;
+  gap: 6px;
+}
+
+.dashSettingsToggle strong {
+  font-size: 14px;
+  color: #1a365d;
+}
+
+.dashSettingsToggle small {
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba(26, 54, 93, 0.72);
+}
+
+.dashSuccess {
+  margin: 0;
+  color: #2f9e44;
+  font-size: 13px;
+}
+
 .dashForm {
   display: grid;
   gap: 18px;
@@ -326,6 +363,22 @@
   justify-content: center;
   font-size: 12px;
   color: rgba(26, 54, 93, 0.45);
+}
+
+.dashTableThumb--logo {
+  width: auto;
+  max-width: 120px;
+  height: 40px;
+  object-fit: contain;
+  padding: 4px 8px;
+  background: #fff;
+}
+
+.dashFieldHint {
+  margin: -4px 0 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: rgba(26, 54, 93, 0.65);
 }
 
 .dashTableCategoryCell {
@@ -791,4 +844,69 @@
   .dashSplit {
     grid-template-columns: 1fr;
   }
+}
+
+.dashSidebarNote {
+  margin: -8px 8px 0;
+  font-size: 12px;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.dashShell--superadmin .dashSidebar {
+  border-color: rgba(255, 107, 53, 0.35);
+  box-shadow:
+    0 24px 60px rgba(15, 28, 46, 0.28),
+    0 0 0 1px rgba(255, 107, 53, 0.18);
+}
+
+.dashBulkImport {
+  margin-bottom: 18px;
+  padding: 18px 20px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 107, 53, 0.35);
+  background: linear-gradient(180deg, #fff7f2 0%, #fff 100%);
+  box-shadow: 0 10px 28px rgba(255, 107, 53, 0.08);
+}
+
+.dashBulkImportHead strong {
+  display: block;
+  font-size: 16px;
+  color: #c2410c;
+  margin-bottom: 6px;
+}
+
+.dashBulkImportHead p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #4a5568;
+}
+
+.dashBulkImportHead code {
+  font-size: 0.92em;
+  background: rgba(255, 107, 53, 0.1);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.dashBulkImportActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.dashBulkImportMessage {
+  margin: 12px 0 0;
+  font-size: 14px;
+  color: #2d3748;
+}
+
+.dashBulkImportErrors {
+  margin: 12px 0 0;
+  padding-left: 18px;
+  color: #c53030;
+  font-size: 13px;
+  line-height: 1.45;
 }

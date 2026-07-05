@@ -3,9 +3,9 @@ import { Suspense } from 'react'
 import KvsProductsPage from './KvsProductsPage'
 
 export const metadata: Metadata = {
-  title: 'Products - KVS Metal',
+  title: 'Products | KVS Metals — Structural & Industrial Steel Dubai',
   description:
-    'Browse KVS Metal products — steel sheets, pipes, structural steel, roofing, TMT bars, and custom fabrication.',
+    'Browse KVS Metals steel products — coils, sheets, plates, pipes, structural sections, bars, channels, and foundation materials across grades and international standards in Dubai, UAE.',
 }
 
 export default function Page() {

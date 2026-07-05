@@ -11,10 +11,10 @@ export function generateStaticParams() {
 
 export function generateMetadata({ params }: Props): Metadata {
   const sector = getSectorBySlug(params.slug)
-  if (!sector) return { title: 'Sector Not Found' }
+  if (!sector) return { title: 'Sector Not Found | KVS Metals' }
   return {
-    title: `${sector.name} - KVS Metal`,
-    description: sector.paragraphs[0],
+    title: `${sector.name} Steel Supply | KVS Metals Dubai, UAE`,
+    description: `${sector.tagline}. KVS Metals supplies structural and industrial steel for ${sector.name.toLowerCase()} projects across Dubai and the UAE.`,
   }
 }
 

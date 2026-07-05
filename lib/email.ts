@@ -26,6 +26,7 @@ export type CareerEmailPayload = {
   cvFilename: string
   cvContent: Buffer
   cvContentType: string
+  cvUrl?: string
 }
 
 export type SendMailOptions = {
@@ -230,12 +231,13 @@ export async function sendCareerNotification(payload: CareerEmailPayload) {
     `Name: ${fullName}`,
     `Email: ${payload.email}`,
     `CV file: ${payload.cvFilename}`,
+    payload.cvUrl ? `CV link: ${payload.cvUrl}` : '',
     '',
     'Message:',
     payload.message || '—',
     '',
-    `View enquiries: ${siteUrl}/dashboard/enquiries`,
-  ]
+    `View applications: ${siteUrl}/dashboard/enquiries?tab=careers`,
+  ].filter(Boolean)
 
   const text = lines.join('\n')
 
@@ -245,13 +247,16 @@ export async function sendCareerNotification(payload: CareerEmailPayload) {
     subject: `[${COMPANY_NAME}] Career application — ${fullName}`,
     text,
     html: text.replace(/\n/g, '<br>'),
-    attachments: [
-      {
-        filename: payload.cvFilename,
-        content: payload.cvContent,
-        contentType: payload.cvContentType,
-      },
-    ],
+    attachments:
+      payload.cvContent.length > 0
+        ? [
+            {
+              filename: payload.cvFilename,
+              content: payload.cvContent,
+              contentType: payload.cvContentType,
+            },
+          ]
+        : undefined,
   })
 }
 

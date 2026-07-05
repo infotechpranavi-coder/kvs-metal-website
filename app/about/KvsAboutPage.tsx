@@ -37,19 +37,21 @@ export default function KvsAboutPage() {
               <h1>{aboutPage.title}</h1>
               <p className="kvsAboutLead uniSectionText">{aboutPage.lead}</p>
               <div className="kvsAboutHeroActions">
-                <Link href="/products" className="uniHeroBtn">Explore products</Link>
-                <Link href="/contact" className="kvsAboutHeroGhost">Contact us</Link>
+                <Link href="/products" className="kvsAboutHeroBtn">Explore products</Link>
+                <Link href="/contact" className="kvsAboutHeroBtn kvsAboutHeroBtn--navy">Contact us</Link>
               </div>
             </div>
             <div className="kvsAboutHeroMedia">
-              <img
-                src={aboutPage.heroImage}
-                alt={aboutPage.heroImageAlt}
-                fetchPriority="high"
-              />
-              <div className="kvsAboutHeroBadge">
-                <strong>25+</strong>
-                <span>Years of excellence</span>
+              <div className="kvsAboutHeroMediaFrame">
+                <img
+                  src={aboutPage.heroImage}
+                  alt={aboutPage.heroImageAlt}
+                  fetchPriority="high"
+                />
+                <div className="kvsAboutHeroBadge">
+                  <strong>25+</strong>
+                  <span>Years of excellence</span>
+                </div>
               </div>
               <p className="kvsAboutImageCaption">{aboutPage.heroImageCaption}</p>
             </div>
@@ -74,6 +76,7 @@ export default function KvsAboutPage() {
               <p className="kvsAboutImageCaption">{aboutPage.storyImageCaption}</p>
             </div>
             <div className="kvsAboutStoryContent">
+              <h2 className="kvsAboutStoryTitle">{aboutPage.storyTitle}</h2>
               <div className="kvsAboutStoryCopy">
                 {aboutPage.paragraphs.map((paragraph) => (
                   <p key={paragraph.slice(0, 48)} className="uniSectionText">{paragraph}</p>

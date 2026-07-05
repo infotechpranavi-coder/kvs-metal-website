@@ -15,7 +15,11 @@ export default function SectorDetailPage({ sector }: { sector: Sector }) {
       <UniNavbar />
       <main className="sectorDetail">
         <section className="sectorDetailHero">
-          <img src={sector.img} alt="" className="sectorDetailBannerImg" />
+          <img
+            src={sector.img}
+            alt=""
+            className={`sectorDetailBannerImg${sector.slug === 'marine' ? ' sectorDetailBannerImg--marine' : ''}`}
+          />
           <div className="sectorDetailBannerOverlay" aria-hidden />
           <div className="sectorDetailHeroFade" aria-hidden />
 

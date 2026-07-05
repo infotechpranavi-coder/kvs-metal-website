@@ -3,6 +3,7 @@ import { PHONE_DISPLAY, PHONE_E164 } from '@/lib/content'
 
 type HomeCtaSectionProps = {
   title: string
+  titleEmphasis?: string
   ctaLabel: string
   ctaHref: string
   image: string
@@ -13,6 +14,7 @@ type HomeCtaSectionProps = {
 
 export function HomeCtaSection({
   title,
+  titleEmphasis,
   ctaLabel,
   ctaHref,
   image,
@@ -20,13 +22,23 @@ export function HomeCtaSection({
   phoneLabel = 'Call Us',
   showPhone = false,
 }: HomeCtaSectionProps) {
+  const ctaIsPhoneLink = ctaHref.startsWith('tel:')
+
   return (
     <section className="uniHomeCta">
       <div className="uniContainer">
         <div className="uniHomeCtaInner">
           <div className="uniHomeCtaContent">
             <div className="uniHomeCtaRow">
-              <h2 className="uniHomeCtaTitle">{title}</h2>
+              <h2 className="uniHomeCtaTitle">
+                <span className="uniHomeCtaTitleLead">{title}</span>
+                {titleEmphasis ? (
+                  <>
+                    {' '}
+                    <span className="uniHomeCtaTitleEmphasis">{titleEmphasis}</span>
+                  </>
+                ) : null}
+              </h2>
               <div className="uniHomeCtaEnd">
                 {showPhone && (
                   <p className="uniHomeCtaPhone">
@@ -34,9 +46,15 @@ export function HomeCtaSection({
                     <a href={`tel:${PHONE_E164}`}>{PHONE_DISPLAY}</a>
                   </p>
                 )}
-                <Link href={ctaHref} className="uniHomeCtaBtn">
-                  {ctaLabel}
-                </Link>
+                {ctaIsPhoneLink ? (
+                  <a href={ctaHref} className="uniHomeCtaBtn">
+                    {ctaLabel}
+                  </a>
+                ) : (
+                  <Link href={ctaHref} className="uniHomeCtaBtn">
+                    {ctaLabel}
+                  </Link>
+                )}
               </div>
             </div>
           </div>

@@ -217,3 +217,40 @@ export function getRelatedHomepageProducts(slug: string): Product[] {
   }
   return getHomepageProducts().filter((product) => product.slug !== slug)
 }
+
+const PRODUCT_TEXT_ACRONYMS = [
+  'KVS',
+  'HR',
+  'CR',
+  'UAE',
+  'EPC',
+  'JIS',
+  'ASTM',
+  'EN',
+  'BS',
+  'API',
+  'IS',
+  'DIN',
+  'SAE',
+  'SS',
+  'MS',
+] as const
+
+export function toReadableProductText(text: string): string {
+  const trimmed = text.trim()
+  if (!trimmed) return trimmed
+
+  const lettersOnly = trimmed.replace(/[^A-Za-z]/g, '')
+  const isAllCaps = lettersOnly.length > 3 && trimmed === trimmed.toUpperCase()
+  if (!isAllCaps) return trimmed
+
+  let result = trimmed.toLowerCase()
+  result = result.replace(/(^|[.!?]\s+)([a-z])/g, (_, prefix, letter) => prefix + letter.toUpperCase())
+
+  for (const acronym of PRODUCT_TEXT_ACRONYMS) {
+    const pattern = new RegExp(`\\b${acronym.toLowerCase()}\\b`, 'gi')
+    result = result.replace(pattern, acronym)
+  }
+
+  return result
+}

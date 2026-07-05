@@ -2,6 +2,7 @@ export const COMPANY_NAME = 'KVS Metals'
 
 export const PHONE_E164 = '+971503646193'
 export const PHONE_DISPLAY = '+971 503646193'
+export const PHONE_TEL_HREF = `tel:${PHONE_E164}`
 export const WHATSAPP_URL = 'https://wa.me/971503646193'
 export const EMAIL = 'gsamyani@kvsmetals.com'
 
@@ -55,22 +56,28 @@ export const aboutUsHome = {
   ],
 }
 
-import { kvsProcurementCtaImage, kvsProductsCtaImage } from './product-images'
+import {
+  kvsAboutCtaImage,
+  kvsAboutStoryImage,
+  kvsProcurementCtaImage,
+  kvsProductsCtaImage,
+} from './product-images'
 
 export const procurementCta = {
   title: 'Looking for smoother steel procurement? Contact KVS Metals to simplify your sourcing.',
   phoneLabel: 'Call Us',
   ctaLabel: 'Request A Call',
-  ctaHref: '/contact',
+  ctaHref: PHONE_TEL_HREF,
   image: kvsProcurementCtaImage,
   imageAlt: 'KVS Metals steel products',
 }
 
 export const productsCta = {
-  title: 'Looking for smoother steel procurement? Contact KVS Metals to simplify your sourcing.',
+  title: 'Need premium steel products delivered with speed and reliable service?',
+  titleEmphasis: 'Count on KVS Metals.',
   phoneLabel: 'Call Us',
   ctaLabel: 'Request A Call',
-  ctaHref: '/contact',
+  ctaHref: PHONE_TEL_HREF,
   image: kvsProductsCtaImage,
   imageAlt: 'KVS Metals structural steel supply',
 }
@@ -104,6 +111,7 @@ export const testimonialsSection = {
 }
 
 export const footerContent = {
+  topbarMessage: 'Any kind of steel requirement? We are just a call away!',
   tagline:
     'KVS Metals — Your trusted steel supplier in Dubai, powering project developments through reliable supply, seamless coordination, and long-term partnerships.',
   standardsTitle: 'International Standards We Support',
@@ -130,21 +138,22 @@ export const aboutPage = {
   title: 'Building Strength. Delivering Trust.',
   lead:
     'KVS Metals is recognised among leading steel suppliers and steel traders in Dubai, UAE, serving businesses with a comprehensive range of steel materials across multiple grades, specifications, and international standards.',
+  storyTitle: 'Right Grade. On-Time Delivery.',
   paragraphs: [
-    'With an extensive steel supply network and 25+ years’ industry expertise, we help businesses procure the right materials at the right quality and competitive pricing. We aim to simplify steel procurement through dependable supply and practical solutions designed around customer needs.',
-    'We supply structural steel sections, pipes, tubes, flat products, tubular materials, and long steel products suitable for a wide range of industrial and commercial applications. Whether your requirement is for infrastructure, fabrication, construction, marine, engineering, oil & gas, or industrial projects, KVS Metals ensures smooth delivery at every stage.',
-    'Our focus goes beyond steel trading. We believe in building long-term relationships through reliability, transparent business practices, and customer-first service. Every order we deliver reflects our commitment to helping clients build lasting business relationships.',
-    'We continue to strengthen our product portfolio and capabilities to meet the growing demands of modern industries.',
+    'Contractors, fabricators, EPC teams, and industrial buyers across the UAE come to us when schedules are tight and specifications are non-negotiable. We act as a single point of coordination — clarifying grades, checking availability, and aligning dispatch with the way your project actually runs.',
+    'Each requirement is reviewed against the right standard — ASTM, EN, JIS, BS, or a project-specific brief — before material is released. That means fewer surprises at site: correct sizes, documented grades, and stock matched to the application, not just the purchase order.',
+    'Whether the job calls for long products, tubulars, flats, or structural sections, we consolidate sourcing so your team spends less time chasing vendors and more time executing. Our Dubai base keeps communication direct and turnaround practical for UAE deliveries.',
+    'As project scopes evolve, we adjust supply plans with you — phased deliveries, alternate sizes where suitable, and responsive updates when site needs shift. The goal is steady material flow that supports the build, not paperwork that slows it down.',
   ],
   stats: [
-    { value: '25+', label: 'Years' },
+    { value: '6+', label: 'International standards' },
     { value: '98%', label: 'On-time' },
     { value: '1K+', label: 'Clients' },
   ],
   whyChooseTitle: 'Why Choose KVS Metals',
   whyChoose: [
     {
-      title: 'Reliable Product Availability',
+      title: 'Reliable Supply Approach',
       desc: 'A wide range of steel materials available across multiple grades, sizes, and specifications to support urgent and ongoing project requirements.',
     },
     {
@@ -160,7 +169,7 @@ export const aboutPage = {
       desc: 'Well-established procurement partnerships ensure access to globally sourced materials across multiple specifications.',
     },
     {
-      title: 'Customer-Focused Approach',
+      title: 'Customer-First Approach',
       desc: 'Every requirement is handled with attention, responsiveness, and practical solutions tailored to specific project needs.',
     },
     {
@@ -188,17 +197,16 @@ export const aboutPage = {
   ctaTitle: 'Ready to discuss your steel requirements?',
   ctaText: 'Share grade, quantity, and delivery location — our team will respond with a tailored quote.',
   ctaLabel: 'Request A Call',
-  ctaHref: '/contact',
+  ctaHref: PHONE_TEL_HREF,
   ctaPhoneLabel: 'Call Us',
   heroImage: '/images/about/hero.jpg',
   heroImageAlt: 'Rows of steel coils stored in an industrial warehouse',
   heroImageCaption: 'Steel coils & sheet stock — the materials we supply across grades and specifications',
-  storyImage: '/images/about/story.jpg',
-  storyImageAlt: 'Structural steel beams and sections stacked in a metal supply yard',
-  storyImageCaption: 'Structural sections, pipes & long products — ready for project delivery',
-  ctaImage:
-    'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1200&q=85&auto=format&fit=crop',
-  ctaImageAlt: 'Business team discussing steel procurement and project requirements',
+  storyImage: kvsAboutStoryImage,
+  storyImageAlt: 'Structural steel I-beams and universal beams for construction and industrial projects',
+  storyImageCaption: 'Structural beams & long products — supplied across grades and project specifications',
+  ctaImage: kvsAboutCtaImage,
+  ctaImageAlt: 'Structural steel beams and long products supplied by KVS Metals',
 }
 
 export const brochurePage = {
@@ -227,6 +235,8 @@ export const careersPage = {
   eyebrow: 'Careers',
   title: 'Build Your Career with KVS Metals',
   subheading: 'Be part of a workplace that values professionalism, commitment, and integrity.',
+  heroImage: '/images/career.avif',
+  heroImageAlt: 'Professional team at KVS Metals workplace',
   intro: [
     'At KVS Metals, we value practical industry knowledge, dedication, and a professional approach to work. We welcome motivated individuals looking to grow in the steel trading and industrial sector.',
     'If you wish to explore career opportunities with KVS Metals, please submit your details and upload your CV below.',

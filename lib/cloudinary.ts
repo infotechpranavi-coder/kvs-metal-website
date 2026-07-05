@@ -55,4 +55,54 @@ export async function uploadImageBuffer(
   })
 }
 
+function getRawFileFormat(filename: string) {
+  const ext = filename.split('.').pop()?.toLowerCase()
+  if (ext === 'pdf' || ext === 'doc' || ext === 'docx') return ext
+  return 'pdf'
+}
+
+function buildRawPublicId(filename: string) {
+  const ext = getRawFileFormat(filename)
+  const base = filename
+    .replace(/\.[^.]+$/, '')
+    .replace(/[^a-zA-Z0-9_-]/g, '_')
+    .slice(0, 72)
+  return `${base || 'cv'}_${Date.now()}.${ext}`
+}
+
+export async function uploadRawBuffer(
+  buffer: Buffer,
+  options?: { folder?: string; filename?: string },
+) {
+  if (!configureCloudinary()) {
+    throw new Error('Cloudinary is not configured')
+  }
+
+  const folder = options?.folder || getCloudinaryFolder('careers-cvs')
+  const originalName = options?.filename || 'cv.pdf'
+  const publicId = buildRawPublicId(originalName)
+
+  return new Promise<{ url: string; publicId: string }>((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(
+      {
+        folder,
+        public_id: publicId,
+        resource_type: 'raw',
+      },
+      (error, result) => {
+        if (error || !result?.secure_url) {
+          reject(error || new Error('Upload failed'))
+          return
+        }
+        resolve({
+          url: result.secure_url,
+          publicId: result.public_id,
+        })
+      },
+    )
+
+    stream.end(buffer)
+  })
+}
+
 export { cloudinary }
