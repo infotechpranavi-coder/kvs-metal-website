@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from 'react'
 import type { SiteSettingsDto } from '@/lib/site-settings'
+import { defaultSiteSettings } from '@/lib/site-settings'
 
 export default function SuperAdminSettingsPage() {
-  const [settings, setSettings] = useState<SiteSettingsDto>({ heroNavWhiteLogo: true })
+  const [settings, setSettings] = useState<SiteSettingsDto>(defaultSiteSettings)
   const [loading, setLoading] = useState(true)
-  const [saving, setSaving] = useState(false)
+  const [savingKey, setSavingKey] = useState<keyof SiteSettingsDto | null>(null)
   const [error, setError] = useState('')
   const [saved, setSaved] = useState(false)
 
@@ -33,8 +34,8 @@ export default function SuperAdminSettingsPage() {
     load()
   }, [])
 
-  const handleToggle = async (heroNavWhiteLogo: boolean) => {
-    setSaving(true)
+  const handleSettingChange = async (key: keyof SiteSettingsDto, value: boolean) => {
+    setSavingKey(key)
     setError('')
     setSaved(false)
 
@@ -42,7 +43,7 @@ export default function SuperAdminSettingsPage() {
       const response = await fetch('/api/site-settings', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ heroNavWhiteLogo }),
+        body: JSON.stringify({ [key]: value }),
       })
       const data = (await response.json()) as { settings?: SiteSettingsDto; error?: string }
 
@@ -58,7 +59,7 @@ export default function SuperAdminSettingsPage() {
     } catch {
       setError('Failed to save settings')
     } finally {
-      setSaving(false)
+      setSavingKey(null)
     }
   }
 
@@ -68,7 +69,7 @@ export default function SuperAdminSettingsPage() {
         <div>
           <h1>Settings</h1>
           <p className="dashPageLead">
-            Control how the website navbar behaves on the homepage hero section.
+            Control homepage layout and how the navbar behaves on the hero section.
           </p>
         </div>
       </header>
@@ -87,8 +88,8 @@ export default function SuperAdminSettingsPage() {
             <input
               type="checkbox"
               checked={settings.heroNavWhiteLogo}
-              disabled={saving}
-              onChange={(event) => handleToggle(event.target.checked)}
+              disabled={savingKey !== null}
+              onChange={(event) => handleSettingChange('heroNavWhiteLogo', event.target.checked)}
             />
             <span>
               <strong>White logo on homepage hero</strong>
@@ -96,6 +97,37 @@ export default function SuperAdminSettingsPage() {
                 {settings.heroNavWhiteLogo
                   ? 'Enabled — white logo shows over the hero video. Colored logo appears after scroll.'
                   : 'Disabled — colored logo always shows in the navbar, including on the hero.'}
+              </small>
+            </span>
+          </label>
+        )}
+      </section>
+
+      <section className="dashCard dashForm">
+        <h2>Homepage client logo slider</h2>
+        <p className="dashHint" style={{ marginTop: 0 }}>
+          The scrolling logo strip appears on the homepage just above the Our Products section.
+          Disable it here without removing the logos from the Client logos manager.
+        </p>
+
+        {loading ? (
+          <p className="dashHint">Loading settings…</p>
+        ) : (
+          <label className="dashCheckboxLabel dashSettingsToggle">
+            <input
+              type="checkbox"
+              checked={settings.showHomePartnersSlider}
+              disabled={savingKey !== null}
+              onChange={(event) =>
+                handleSettingChange('showHomePartnersSlider', event.target.checked)
+              }
+            />
+            <span>
+              <strong>Show client logo slider on homepage</strong>
+              <small>
+                {settings.showHomePartnersSlider
+                  ? 'Enabled — the logo strip is visible above Our Products.'
+                  : 'Disabled — the logo strip is hidden on the homepage.'}
               </small>
             </span>
           </label>

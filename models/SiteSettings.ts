@@ -4,6 +4,7 @@ const SiteSettingsSchema = new Schema(
   {
     key: { type: String, required: true, unique: true, default: 'global' },
     heroNavWhiteLogo: { type: Boolean, default: true },
+    showHomePartnersSlider: { type: Boolean, default: true },
   },
   { timestamps: true },
 )

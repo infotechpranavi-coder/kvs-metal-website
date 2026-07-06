@@ -30,7 +30,8 @@ export const partnerInputSchema = z.object({
 })
 
 export const siteSettingsInputSchema = z.object({
-  heroNavWhiteLogo: z.boolean(),
+  heroNavWhiteLogo: z.boolean().optional(),
+  showHomePartnersSlider: z.boolean().optional(),
 })
 
 export const enquiryInputSchema = z.object({

@@ -53,7 +53,6 @@ export default function KvsAboutPage() {
                   <span>Years of excellence</span>
                 </div>
               </div>
-              <p className="kvsAboutImageCaption">{aboutPage.heroImageCaption}</p>
             </div>
           </div>
         </section>
@@ -73,7 +72,6 @@ export default function KvsAboutPage() {
           <div className="uniContainer kvsAboutStoryGrid">
             <div className="kvsAboutStoryMedia">
               <img src={aboutPage.storyImage} alt={aboutPage.storyImageAlt} loading="lazy" />
-              <p className="kvsAboutImageCaption">{aboutPage.storyImageCaption}</p>
             </div>
             <div className="kvsAboutStoryContent">
               <h2 className="kvsAboutStoryTitle">{aboutPage.storyTitle}</h2>

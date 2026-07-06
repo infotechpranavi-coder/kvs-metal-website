@@ -60,7 +60,6 @@ export const aboutUsHome = {
 
 import {
   kvsAboutCtaImage,
-  kvsAboutStoryImage,
   kvsProcurementCtaImage,
   kvsProductsCtaImage,
 } from './product-images'
@@ -102,7 +101,7 @@ export const sectorsSection = {
 }
 
 export const materialsSection = {
-  title: 'Material Supplies',
+  title: 'Materials Supplied',
   tagline:
     'Procure, stock, and supply structural and industrial metals across grades, sizes, and specifications for projects across the UAE.',
 }
@@ -201,11 +200,11 @@ export const aboutPage = {
   ctaLabel: 'Request A Call',
   ctaHref: PHONE_TEL_HREF,
   ctaPhoneLabel: 'Call Us',
-  heroImage: '/images/about/hero.jpg',
-  heroImageAlt: 'Rows of steel coils stored in an industrial warehouse',
+  heroImage: '/about%20us/about%20us%203.webp',
+  heroImageAlt: 'Steel products and materials supplied by KVS Metals',
   heroImageCaption: 'Steel coils & sheet stock — the materials we supply across grades and specifications',
-  storyImage: kvsAboutStoryImage,
-  storyImageAlt: 'Structural steel I-beams and universal beams for construction and industrial projects',
+  storyImage: '/about%20us/about%20us%204.webp',
+  storyImageAlt: 'Structural steel products for construction and industrial projects',
   storyImageCaption: 'Structural beams & long products — supplied across grades and project specifications',
   ctaImage: kvsAboutCtaImage,
   ctaImageAlt: 'Structural steel beams and long products supplied by KVS Metals',

@@ -16,6 +16,8 @@ export async function getSiteSettings(): Promise<SiteSettingsDto> {
 
   return {
     heroNavWhiteLogo: doc.heroNavWhiteLogo ?? defaultSiteSettings.heroNavWhiteLogo,
+    showHomePartnersSlider:
+      doc.showHomePartnersSlider ?? defaultSiteSettings.showHomePartnersSlider,
   }
 }
 
@@ -31,5 +33,7 @@ export async function updateSiteSettings(
 
   return {
     heroNavWhiteLogo: doc?.heroNavWhiteLogo ?? defaultSiteSettings.heroNavWhiteLogo,
+    showHomePartnersSlider:
+      doc?.showHomePartnersSlider ?? defaultSiteSettings.showHomePartnersSlider,
   }
 }

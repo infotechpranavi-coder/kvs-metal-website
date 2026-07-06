@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { ScrollReveal } from '@/components/ScrollReveal'
 import { fallbackPartners } from '@/lib/partners-fallback'
+import { defaultSiteSettings } from '@/lib/site-settings'
 import type { PartnerDto } from '@/lib/serializers'
 
 type MarqueeItem =
@@ -11,22 +12,46 @@ type MarqueeItem =
 
 export function HomePartnersSection() {
   const [partners, setPartners] = useState<PartnerDto[]>([])
+  const [sliderEnabled, setSliderEnabled] = useState(true)
   const [ready, setReady] = useState(false)
 
   useEffect(() => {
     let cancelled = false
 
-    fetch('/api/partners')
-      .then((response) => response.json())
-      .then((data) => {
-        if (!cancelled) setPartners(Array.isArray(data.partners) ? data.partners : [])
-      })
-      .catch(() => {
-        if (!cancelled) setPartners([])
-      })
-      .finally(() => {
-        if (!cancelled) setReady(true)
-      })
+    const load = async () => {
+      try {
+        const settingsResponse = await fetch('/api/site-settings')
+        const settingsData = (await settingsResponse.json()) as {
+          settings?: { showHomePartnersSlider?: boolean }
+        }
+        const enabled =
+          settingsData.settings?.showHomePartnersSlider ??
+          defaultSiteSettings.showHomePartnersSlider
+
+        if (cancelled) return
+
+        setSliderEnabled(enabled)
+
+        if (!enabled) {
+          setReady(true)
+          return
+        }
+
+        const partnersResponse = await fetch('/api/partners')
+        const partnersData = (await partnersResponse.json()) as { partners?: PartnerDto[] }
+        if (!cancelled) {
+          setPartners(Array.isArray(partnersData.partners) ? partnersData.partners : [])
+          setReady(true)
+        }
+      } catch {
+        if (!cancelled) {
+          setPartners([])
+          setReady(true)
+        }
+      }
+    }
+
+    void load()
 
     return () => {
       cancelled = true
@@ -56,7 +81,7 @@ export function HomePartnersSection() {
 
   const marqueeItems = [...items, ...items]
 
-  if (!ready) return null
+  if (!ready || !sliderEnabled) return null
 
   return (
     <ScrollReveal as="section" className="uniPartners" aria-label="Trusted by leading firms">
