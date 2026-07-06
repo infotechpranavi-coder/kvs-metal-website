@@ -5,6 +5,7 @@ import { DashboardDrawer } from '@/components/DashboardDrawer'
 import { DashboardImageGalleryField } from '@/components/DashboardImageGalleryField'
 import { BulkImportPanel } from '@/components/superadmin/BulkImportPanel'
 import { readDashboardStore, writeDashboardStore } from '@/lib/dashboard-store'
+import { sortProductsBySku } from '@/lib/product-sku'
 import type { CategoryDto, ProductDto } from '@/lib/serializers'
 
 const emptyProductForm = {
@@ -111,8 +112,9 @@ export default function DashboardProductsPage() {
 
   const loadProducts = useCallback(async () => {
     const products = await fetchDashboardProducts()
-    setRows(products)
-    return products
+    const sorted = sortProductsBySku(products)
+    setRows(sorted)
+    return sorted
   }, [])
 
   useEffect(() => {

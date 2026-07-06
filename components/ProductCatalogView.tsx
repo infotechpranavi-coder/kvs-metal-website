@@ -16,7 +16,6 @@ import {
   ProductCatalogHeroSkeleton,
   ProductCatalogSidebarSkeleton,
 } from '@/components/CatalogSkeletons'
-import { ProductCatalogCardSpecs } from '@/components/ProductCatalogCardSpecs'
 import { catalogCardImageUrl, catalogHeroImageUrl } from '@/lib/image-url'
 import { kvsCatalogHeroImage } from '@/lib/product-images'
 
@@ -285,7 +284,6 @@ export function ProductCatalogView({
                         </div>
                         <div className="productCatalogCardBody">
                           <h4>{product.title}</h4>
-                          <ProductCatalogCardSpecs product={product} />
                           <span className="productCatalogCardLink">
                             View details
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>

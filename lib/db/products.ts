@@ -1,11 +1,12 @@
 import { connectDB } from '@/lib/mongodb'
+import { sortProductsBySku } from '@/lib/product-sku'
 import { ProductModel } from '@/models/Product'
 import { serializeProduct, type ProductDto } from '@/lib/serializers'
 
 export async function getProductsForApi(): Promise<ProductDto[]> {
   await connectDB()
-  const rows = await ProductModel.find().sort({ sortOrder: 1, sku: 1, title: 1 }).lean()
-  return rows.map((row) => serializeProduct(row as never))
+  const rows = await ProductModel.find().lean()
+  return sortProductsBySku(rows.map((row) => serializeProduct(row as never)))
 }
 
 export async function getFooterProductsForApi(): Promise<ProductDto[]> {

@@ -6,7 +6,6 @@ import type { Product } from '@/lib/products'
 import { getProductCategoryForProduct, getProductsPageHref, getRelatedHomepageProducts, toReadableProductText } from '@/lib/products'
 import { getProductEnquiryHref } from '@/lib/contact'
 import { getProductDetailSpecs } from '@/lib/product-specs'
-import { ProductCatalogCardSpecs } from '@/components/ProductCatalogCardSpecs'
 import { UniNavbar } from '@/components/UniNavbar'
 import { UniFooter } from '@/components/UniFooter'
 import { UniWidgets } from '@/components/UniWidgets'
@@ -197,7 +196,6 @@ export default function KvsProductDetailPage({ product }: { product: Product }) 
                     </div>
                     <div className="productCatalogCardBody">
                       <h4>{item.title}</h4>
-                      <ProductCatalogCardSpecs product={item} />
                       <span className="productCatalogCardLink">
                         View details
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
