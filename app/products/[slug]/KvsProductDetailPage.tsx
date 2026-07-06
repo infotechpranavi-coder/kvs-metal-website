@@ -5,6 +5,8 @@ import Link from 'next/link'
 import type { Product } from '@/lib/products'
 import { getProductCategoryForProduct, getProductsPageHref, getRelatedHomepageProducts, toReadableProductText } from '@/lib/products'
 import { getProductEnquiryHref } from '@/lib/contact'
+import { getProductDetailSpecs } from '@/lib/product-specs'
+import { ProductCatalogCardSpecs } from '@/components/ProductCatalogCardSpecs'
 import { UniNavbar } from '@/components/UniNavbar'
 import { UniFooter } from '@/components/UniFooter'
 import { UniWidgets } from '@/components/UniWidgets'
@@ -42,18 +44,7 @@ export default function KvsProductDetailPage({ product }: { product: Product }) 
     '--gallery-zoom-y': `${imageZoom.y}%`,
   } as CSSProperties
 
-  const specs = [
-    { label: 'Category', value: product.category },
-    product.material ? { label: 'Type / Grade', value: product.material } : null,
-    product.dimensions ? { label: 'Size', value: product.dimensions } : null,
-    product.standard ? { label: 'Standard', value: product.standard } : null,
-    product.thickness ? { label: 'Thickness', value: product.thickness } : null,
-    product.warranty ? { label: 'Warranty', value: product.warranty } : null,
-    {
-      label: 'Availability',
-      value: product.inStock ? 'In stock — ready to supply' : 'Made to order',
-    },
-  ].filter(Boolean) as { label: string; value: string }[]
+  const specs = getProductDetailSpecs(product)
 
   const backHref = parentCategory
     ? getProductsPageHref(parentCategory.slug)
@@ -206,6 +197,7 @@ export default function KvsProductDetailPage({ product }: { product: Product }) 
                     </div>
                     <div className="productCatalogCardBody">
                       <h4>{item.title}</h4>
+                      <ProductCatalogCardSpecs product={item} />
                       <span className="productCatalogCardLink">
                         View details
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>

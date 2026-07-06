@@ -16,7 +16,9 @@ const emptyProductForm = {
   typeGrade: '',
   size: '',
   standard: '',
+  schedule: '',
   thickness: '',
+  colors: '',
   warranty: '',
   features: [] as string[],
   featureDraft: '',
@@ -79,7 +81,9 @@ async function migrateLocalProductsIfNeeded(): Promise<boolean> {
         material: product.material,
         dimensions: product.dimensions,
         standard: product.standard,
+        schedule: product.schedule,
         thickness: product.thickness,
+        colors: product.colors,
         warranty: product.warranty,
         badge: product.badge,
         price: product.price,
@@ -161,7 +165,9 @@ export default function DashboardProductsPage() {
       typeGrade: row.material ?? '',
       size: row.dimensions ?? '',
       standard: row.standard ?? '',
+      schedule: row.schedule ?? '',
       thickness: row.thickness ?? '',
+      colors: row.colors ?? '',
       warranty: row.warranty ?? '',
       features: [...row.features],
       featureDraft: '',
@@ -232,7 +238,9 @@ export default function DashboardProductsPage() {
       material: form.typeGrade.trim() || undefined,
       dimensions: form.size.trim() || undefined,
       standard: form.standard.trim() || undefined,
+      schedule: form.schedule.trim() || undefined,
       thickness: form.thickness.trim() || undefined,
+      colors: form.colors.trim() || undefined,
       warranty: form.warranty.trim() || undefined,
       reviewCount: 0,
       inStock: form.inStock,
@@ -262,7 +270,7 @@ export default function DashboardProductsPage() {
         <div>
           <h1>Products</h1>
           <p>
-            Add products with category, type/grade, size, standard, overview, features, and images —
+            Add products with category, type/grade, size, schedule, standard, colors, overview, features, and images —
             matching the product listing layout on the website.
           </p>
         </div>
@@ -428,6 +436,20 @@ export default function DashboardProductsPage() {
           </div>
 
           <div className="dashField">
+            <label htmlFor="product-schedule">Schedule (optional)</label>
+            <input
+              id="product-schedule"
+              value={form.schedule}
+              onChange={(event) =>
+                setForm((current) => ({ ...current, schedule: event.target.value }))
+              }
+              placeholder="e.g. SCH 40 / SCH 80 / SCH 160"
+            />
+            <p className="dashHint">Separate values with / — only shown on the website if filled in.</p>
+            <TagPreview value={form.schedule} />
+          </div>
+
+          <div className="dashField">
             <label htmlFor="product-standard">Standard (optional)</label>
             <input
               id="product-standard"
@@ -453,6 +475,20 @@ export default function DashboardProductsPage() {
             />
             <p className="dashHint">Separate values with / — only shown on the website if filled in.</p>
             <TagPreview value={form.thickness} />
+          </div>
+
+          <div className="dashField">
+            <label htmlFor="product-colors">Colors (optional)</label>
+            <input
+              id="product-colors"
+              value={form.colors}
+              onChange={(event) =>
+                setForm((current) => ({ ...current, colors: event.target.value }))
+              }
+              placeholder="e.g. Black / Galvanized / Custom RAL"
+            />
+            <p className="dashHint">Separate values with / — only shown on the website if filled in.</p>
+            <TagPreview value={form.colors} />
           </div>
 
           <div className="dashField">

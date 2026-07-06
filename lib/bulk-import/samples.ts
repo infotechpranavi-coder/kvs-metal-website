@@ -14,7 +14,7 @@ const INSTRUCTIONS = [
   [''],
   ['Categories columns: slug, title, img, hero_img, description, headline, paragraphs, product_slugs, sort_order, show_on_homepage, material_slug'],
   ['Materials columns: slug, title, description, img, category_slugs, sort_order'],
-  ['Products columns: slug, title, sku, category_slug, category, img, images, short_description, description, features, material, dimensions, standard, thickness, warranty, badge, in_stock, show_in_footer, sort_order'],
+  ['Products columns: slug, title, sku, category_slug, category, img, images, short_description, description, features, material, dimensions, standard, schedule, thickness, colors, warranty, badge, in_stock, show_in_footer, sort_order'],
 ]
 
 const SAMPLE_ROWS: Record<BulkImportType, Record<string, string>[]> = {
@@ -58,7 +58,9 @@ const SAMPLE_ROWS: Record<BulkImportType, Record<string, string>[]> = {
       material: 'Mild Steel',
       dimensions: 'Per specification',
       standard: 'ASTM / EN',
+      schedule: 'SCH 40 / SCH 80',
       thickness: '',
+      colors: '',
       warranty: '',
       badge: '',
       in_stock: 'yes',

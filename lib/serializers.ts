@@ -76,7 +76,9 @@ export type ProductDto = {
   material: string
   dimensions: string
   standard: string
+  schedule: string
   thickness: string
+  colors: string
   warranty: string
   badge: string
   price: string
@@ -190,7 +192,9 @@ export function serializeProduct(product: ProductDocument): ProductDto {
     material: product.material || '',
     dimensions: product.dimensions || '',
     standard: product.standard || '',
+    schedule: product.schedule || '',
     thickness: product.thickness || '',
+    colors: product.colors || '',
     warranty: product.warranty || '',
     badge: product.badge || '',
     price: product.price || '',

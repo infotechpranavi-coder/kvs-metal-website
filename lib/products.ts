@@ -20,7 +20,9 @@ export type Product = {
   stockCount?: number
   warranty?: string
   standard?: string
+  schedule?: string
   thickness?: string
+  colors?: string
   isNew?: boolean
   isLimited?: boolean
   showInFooter?: boolean
