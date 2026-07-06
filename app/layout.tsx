@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from 'next'
 import { dmSans, syne } from '@/lib/fonts'
 import { KVS_LOGO_SRC } from '@/components/KvsLogo'
+import { SiteSettingsProvider } from '@/components/SiteSettingsProvider'
+import { getSiteSettings } from '@/lib/db/site-settings'
 import './globals.css'
 import './uni.css'
 
@@ -28,11 +30,13 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const settings = await getSiteSettings()
+
   return (
     <html lang="en" className={`${dmSans.variable} ${syne.variable}`}>
       <body className={dmSans.className} suppressHydrationWarning>
-        {children}
+        <SiteSettingsProvider settings={settings}>{children}</SiteSettingsProvider>
       </body>
     </html>
   )

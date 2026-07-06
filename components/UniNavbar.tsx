@@ -8,6 +8,7 @@ import { KvsLogo } from './KvsLogo'
 import { UniNavSearch } from './UniNavSearch'
 import { BROCHURE_DOWNLOAD_HREF, BROCHURE_PAGE_PATH } from '@/lib/site'
 import { PHONE_DISPLAY, PHONE_E164 } from '@/lib/content'
+import { useSiteSettings } from '@/components/SiteSettingsProvider'
 import { sectors } from '@/lib/sectors'
 
 type NavLinkItem = {
@@ -170,9 +171,9 @@ function MobileIndustriesGroup({
 export function UniNavbar({ lightMode = false }: { lightMode?: boolean; glass?: boolean }) {
   const pathname = usePathname()
   const isHome = pathname === '/'
+  const { heroNavWhiteLogo } = useSiteSettings()
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
-  const [heroNavWhiteLogo, setHeroNavWhiteLogo] = useState(true)
   const showSolid = lightMode || scrolled || !isHome
   const isLight = lightMode || scrolled || !isHome
   const logoVariant = heroNavWhiteLogo && !isLight ? 'white' : 'default'
@@ -185,24 +186,6 @@ export function UniNavbar({ lightMode = false }: { lightMode?: boolean; glass?: 
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [isHome, lightMode])
-
-  useEffect(() => {
-    let cancelled = false
-
-    fetch('/api/site-settings')
-      .then((response) => response.json())
-      .then((data: { settings?: { heroNavWhiteLogo?: boolean } }) => {
-        if (cancelled) return
-        if (typeof data.settings?.heroNavWhiteLogo === 'boolean') {
-          setHeroNavWhiteLogo(data.settings.heroNavWhiteLogo)
-        }
-      })
-      .catch(() => {})
-
-    return () => {
-      cancelled = true
-    }
-  }, [])
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : ''

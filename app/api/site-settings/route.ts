@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { revalidatePath } from 'next/cache'
 import { requireSuperAdminAuth } from '@/lib/api-auth'
 import { getSiteSettings, updateSiteSettings } from '@/lib/db/site-settings'
 import { siteSettingsInputSchema } from '@/lib/validation'
@@ -28,6 +29,7 @@ export async function PATCH(request: Request) {
     }
 
     const settings = await updateSiteSettings(parsed.data)
+    revalidatePath('/', 'layout')
     return NextResponse.json({ settings })
   } catch {
     return NextResponse.json({ error: 'Failed to update site settings' }, { status: 500 })

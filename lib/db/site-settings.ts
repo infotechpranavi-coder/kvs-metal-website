@@ -1,3 +1,4 @@
+import { unstable_noStore as noStore } from 'next/cache'
 import { connectDB } from '@/lib/mongodb'
 import { SiteSettingsModel } from '@/models/SiteSettings'
 import {
@@ -7,6 +8,7 @@ import {
 } from '@/lib/site-settings'
 
 export async function getSiteSettings(): Promise<SiteSettingsDto> {
+  noStore()
   await connectDB()
   const doc = await SiteSettingsModel.findOne({ key: SITE_SETTINGS_KEY }).lean()
 
