@@ -3,7 +3,9 @@ export const COMPANY_NAME = 'KVS Metals'
 export const PHONE_E164 = '+971503646193'
 export const PHONE_DISPLAY = '+971 503646193'
 export const PHONE_TEL_HREF = `tel:${PHONE_E164}`
-export const WHATSAPP_URL = 'https://wa.me/971503646193'
+const WHATSAPP_PREFILL =
+  'Hello, I would like to inquire about your steel products and services. Please share more details.'
+export const WHATSAPP_URL = `https://wa.me/971503646193?text=${encodeURIComponent(WHATSAPP_PREFILL)}`
 export const EMAIL = 'gsamyani@kvsmetals.com'
 
 export const heroContent = {
