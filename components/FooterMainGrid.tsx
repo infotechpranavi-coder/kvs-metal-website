@@ -97,9 +97,6 @@ export function FooterMainGrid() {
             <span className="uniFooterContactValue">{footerContent.address}</span>
           </div>
         </div>
-        <Link href="/contact" className="uniFooterContactCta">
-          Get in touch
-        </Link>
       </div>
     </div>
   )
