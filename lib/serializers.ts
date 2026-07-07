@@ -203,7 +203,7 @@ export function serializeProduct(product: ProductDocument): ProductDto {
     inStock: product.inStock !== false,
     showInFooter: product.showInFooter === true,
     sortOrder: product.sortOrder ?? 0,
-    createdAt: product.createdAt.toISOString(),
-    updatedAt: product.updatedAt.toISOString(),
+    createdAt: product.createdAt ? new Date(product.createdAt).toISOString() : new Date(0).toISOString(),
+    updatedAt: product.updatedAt ? new Date(product.updatedAt).toISOString() : new Date(0).toISOString(),
   }
 }

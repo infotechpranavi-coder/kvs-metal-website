@@ -1,29 +1,33 @@
 import type { Metadata } from 'next'
-import { getAllSlugs, getProductBySlug } from '@/lib/products'
-import { ProductDetailResolver } from './ProductDetailResolver'
+import { notFound } from 'next/navigation'
+import { getProductBySlugForApi } from '@/lib/db/products'
+import { productDtoToProduct } from '@/lib/product-api'
+import KvsProductDetailPage from './KvsProductDetailPage'
+
+export const dynamic = 'force-dynamic'
 
 type Props = { params: { slug: string } }
 
-export function generateStaticParams() {
-  return getAllSlugs().map((slug) => ({ slug }))
-}
-
-export function generateMetadata({ params }: Props): Metadata {
-  const product = getProductBySlug(params.slug)
-  if (!product) {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const dto = await getProductBySlugForApi(params.slug).catch(() => null)
+  if (!dto) {
     return {
       title: 'Product | KVS Metals',
-      description: 'View steel product details, specifications, and enquiry options from KVS Metals in Dubai, UAE.',
+      description:
+        'View steel product details, specifications, and enquiry options from KVS Metals in Dubai, UAE.',
     }
   }
   return {
-    title: `${product.title} | KVS Metals Dubai, UAE`,
+    title: `${dto.title} | KVS Metals Dubai, UAE`,
     description:
-      product.shortDescription ||
-      `Supply and enquiry for ${product.title} from KVS Metals — structural and industrial steel in Dubai, UAE.`,
+      dto.shortDescription ||
+      `Supply and enquiry for ${dto.title} from KVS Metals — structural and industrial steel in Dubai, UAE.`,
   }
 }
 
-export default function Page({ params }: Props) {
-  return <ProductDetailResolver slug={params.slug} />
+export default async function Page({ params }: Props) {
+  const dto = await getProductBySlugForApi(params.slug).catch(() => null)
+  if (!dto) notFound()
+
+  return <KvsProductDetailPage product={productDtoToProduct(dto)} />
 }
