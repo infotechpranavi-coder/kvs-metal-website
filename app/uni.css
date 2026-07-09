@@ -4617,7 +4617,7 @@
     calc(var(--diamond-bounds) * 0.06) calc(var(--diamond-bounds) * 0.04) calc(var(--diamond-bounds) * 0.06) calc(var(--diamond-bounds) * 0.04 + var(--diamond-accent-offset) * 1.4);
 }
 
-.uniProductsDiamondGrid > .uniProductsDiamondReveal {
+.uniProductsDiamondGrid>.uniProductsDiamondReveal {
   position: relative;
   z-index: 1;
   min-width: 0;
@@ -4628,7 +4628,7 @@
   align-self: start;
 }
 
-.uniProductsDiamondGrid > .uniProductsDiamondReveal:hover {
+.uniProductsDiamondGrid>.uniProductsDiamondReveal:hover {
   z-index: 2;
 }
 
@@ -4640,16 +4640,16 @@
   transform: translateY(0);
 }
 
-.uniProductsDiamondGrid > .uniSectorsDiamondCard,
-.uniProductsDiamondGrid > .uniProductsDiamondReveal .uniSectorsDiamondCard {
+.uniProductsDiamondGrid>.uniSectorsDiamondCard,
+.uniProductsDiamondGrid>.uniProductsDiamondReveal .uniSectorsDiamondCard {
   position: relative;
   z-index: 1;
   justify-self: center;
   align-self: center;
 }
 
-.uniProductsDiamondGrid > .uniProductsDiamondReveal:hover .uniSectorsDiamondCard,
-.uniProductsDiamondGrid > .uniSectorsDiamondCard:hover {
+.uniProductsDiamondGrid>.uniProductsDiamondReveal:hover .uniSectorsDiamondCard,
+.uniProductsDiamondGrid>.uniSectorsDiamondCard:hover {
   z-index: 2;
 }
 
@@ -5095,6 +5095,36 @@
   min-height: clamp(200px, 28vh, 300px);
 }
 
+.productCatalogHero--solid {
+  min-height: 0;
+  overflow: visible;
+  margin-top: clamp(92px, 11vw, 108px);
+  background: #fff;
+  padding: clamp(28px, 3.5vw, 40px) 0 clamp(16px, 2vw, 24px);
+  border-bottom: 1px solid #e8e4dd;
+}
+
+.productCatalogHero--solid .sectorDetailHeroContent {
+  position: relative;
+  bottom: auto;
+}
+
+.productCatalogHero--solid .sectorDetailPageTitle {
+  align-items: flex-start;
+}
+
+.productCatalogHero--solid .productCatalogHeroCopy {
+  align-self: flex-start;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.productCatalogHero--solid .productCatalogHeroCopy h1 {
+  align-self: flex-start;
+  text-align: left;
+  width: 100%;
+}
+
 .productCatalogHero .sectorDetailBannerImg {
   object-position: center 40%;
   filter: blur(2px) saturate(1.04);
@@ -5233,7 +5263,7 @@
 
 .productCatalogNavGroup {
   position: relative;
-  border-bottom: 1px solid #eef1f5;
+  border-bottom: 1px solid #e8e4dd;
   transition: background 0.2s ease;
 }
 
@@ -5241,8 +5271,19 @@
   border-bottom: 0;
 }
 
-.productCatalogNavGroup--active {
-  background: #f7f9fc;
+.productCatalogNavGroup--expanded {
+  background: #fff;
+}
+
+.productCatalogNavGroup--expanded .productCatalogNavRow {
+  background: #eceef2;
+  border-radius: 8px 8px 0 0;
+  margin: 0 6px;
+  padding: 0 8px 0 10px;
+}
+
+.productCatalogNavGroup--active.productCatalogNavGroup--expanded .productCatalogNavRow {
+  background: #e4e8ef;
 }
 
 .productCatalogNavGroup--active::before {
@@ -5253,40 +5294,42 @@
   bottom: 0;
   width: 3px;
   background: var(--uni-orange);
+  border-radius: 3px 0 0 3px;
 }
 
 .productCatalogNavRow {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   padding: 0 10px 0 12px;
+  transition: background 0.2s ease;
 }
 
 .productCatalogNavMain {
   flex: 1;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   min-width: 0;
-  padding: 13px 4px;
+  padding: 10px 2px;
   border: 0;
   background: transparent;
   cursor: pointer;
   text-align: left;
-  transition: background 0.2s ease;
 }
 
-.productCatalogNavMain:hover {
-  background: transparent;
+.productCatalogNavMain:hover .productCatalogNavTitle {
+  color: var(--uni-orange);
 }
 
 .productCatalogNavThumb {
   flex-shrink: 0;
-  width: 44px;
-  height: 44px;
-  border-radius: 8px;
+  width: 38px;
+  height: 38px;
+  border-radius: 6px;
   overflow: hidden;
-  background: #eef2f7;
+  background: #fff;
+  border: 1px solid rgba(26, 54, 93, 0.08);
 }
 
 .productCatalogNavThumb img {
@@ -5303,92 +5346,111 @@
 }
 
 .productCatalogNavTitle {
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 1.4;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.35;
   color: var(--uni-navy);
   transition: color 0.2s ease;
 }
 
 .productCatalogNavGroup--active .productCatalogNavTitle {
-  font-weight: 700;
   color: var(--uni-navy);
-}
-
-.productCatalogNavMain:hover .productCatalogNavTitle {
-  color: var(--uni-orange);
 }
 
 .productCatalogNavToggle {
   flex-shrink: 0;
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
+  padding: 0;
   border: 0;
-  border-radius: 6px;
-  background: transparent;
-  color: rgba(26, 54, 93, 0.45);
+  border-radius: 50%;
+  background: var(--uni-navy);
+  color: #fff;
   cursor: pointer;
   display: grid;
   place-items: center;
-  transition: color 0.2s ease, background 0.2s ease;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
-.productCatalogNavChevron {
-  transition: transform 0.25s ease;
-}
-
-.productCatalogNavGroup--expanded .productCatalogNavChevron {
-  transform: rotate(180deg);
+.productCatalogNavToggleIcon {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1;
+  margin-top: -1px;
 }
 
 .productCatalogNavGroup--expanded .productCatalogNavToggle {
-  color: var(--uni-navy);
+  background: var(--uni-navy);
 }
 
 .productCatalogNavToggle:hover {
-  background: rgba(26, 54, 93, 0.06);
-  color: var(--uni-orange);
+  background: var(--uni-orange);
+}
+
+.productCatalogSubnavWrap {
+  margin: 0 6px 8px;
+  padding: 6px 0 4px 8px;
+  border-left: 2px solid #e8e4dd;
+  margin-left: 22px;
 }
 
 .productCatalogSubnav {
   list-style: none;
   margin: 0;
-  padding: 0 12px 12px 68px;
+  padding: 0;
+  display: grid;
+  gap: 2px;
 }
 
 .productCatalogSubnav li {
   position: relative;
 }
 
-.productCatalogSubnav li::before {
-  content: '';
-  position: absolute;
-  left: -12px;
-  top: 0.82em;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: rgba(26, 54, 93, 0.22);
-}
-
-.productCatalogSubnav a {
-  display: block;
-  padding: 6px 0;
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 1.45;
-  color: rgba(26, 54, 93, 0.7);
+.productCatalogSubnavLink {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 8px 5px 4px;
+  border-radius: 6px;
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: background 0.2s ease;
 }
 
-.productCatalogSubnav a:hover {
+.productCatalogSubnavLink:hover {
+  background: rgba(255, 107, 53, 0.08);
+}
+
+.productCatalogSubnavThumb {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 5px;
+  overflow: hidden;
+  background: #f7f7f7;
+  border: 1px solid #e8e4dd;
+}
+
+.productCatalogSubnavThumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.productCatalogSubnavTitle {
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: rgba(26, 54, 93, 0.78);
+}
+
+.productCatalogSubnavLink:hover .productCatalogSubnavTitle {
   color: var(--uni-orange);
 }
 
 .productCatalogSubnavEmpty {
   margin: 0;
-  padding: 4px 12px 14px 68px;
+  padding: 6px 8px 10px 14px;
   font-size: 12px;
   line-height: 1.45;
   color: rgba(26, 54, 93, 0.48);
@@ -6078,14 +6140,12 @@
   padding: clamp(26px, 3.5vw, 32px);
   border-radius: 14px;
   box-shadow: 0 18px 44px rgba(26, 54, 93, 0.2);
-  clip-path: polygon(
-    0 12px,
-    12px 0,
-    100% 0,
-    100% calc(100% - 12px),
-    calc(100% - 12px) 100%,
-    0 100%
-  );
+  clip-path: polygon(0 12px,
+      12px 0,
+      100% 0,
+      100% calc(100% - 12px),
+      calc(100% - 12px) 100%,
+      0 100%);
 }
 
 .uniProductSpecsCard .uniProductSectionTitle {
@@ -6263,20 +6323,13 @@
 /* Brand | Links | Materials | Contact — full width when no footer products */
 .uniFooterGrid--noProducts {
   grid-template-columns:
-    minmax(200px, 1.15fr)
-    minmax(100px, 0.62fr)
-    minmax(220px, 1.15fr)
-    minmax(210px, 1fr);
+    minmax(200px, 1.15fr) minmax(100px, 0.62fr) minmax(220px, 1.15fr) minmax(210px, 1fr);
 }
 
 /* Brand | Links | Products | Materials | Contact */
 .uniFooterGrid--withProducts {
   grid-template-columns:
-    minmax(180px, 1.05fr)
-    minmax(88px, 0.5fr)
-    minmax(200px, 1fr)
-    minmax(108px, 0.52fr)
-    minmax(200px, 0.95fr);
+    minmax(180px, 1.05fr) minmax(88px, 0.5fr) minmax(200px, 1fr) minmax(108px, 0.52fr) minmax(200px, 0.95fr);
 }
 
 .uniFooterBrand {
@@ -7233,6 +7286,23 @@
   --uni-home-cta-h: 84px;
 }
 
+.uniHomeCtaInner--noMedia {
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  height: auto;
+  min-height: var(--uni-home-cta-h);
+}
+
+.uniHomeCtaInner--noMedia:has(.uniHomeCtaPhone) {
+  --uni-home-cta-h: auto;
+  min-height: 84px;
+}
+
+.uniHomeCtaInner--noMedia .uniHomeCtaContent {
+  height: auto;
+  padding: clamp(16px, 2vw, 20px) clamp(16px, 2vw, 24px);
+}
+
 .uniHomeCtaContent {
   position: relative;
   z-index: 2;
@@ -7761,7 +7831,7 @@
   color: rgba(26, 54, 93, 0.72);
 }
 
-.kvsContactPageHead .kvsContactLead + .kvsContactLead {
+.kvsContactPageHead .kvsContactLead+.kvsContactLead {
   margin-top: 12px;
 }
 
@@ -7842,7 +7912,7 @@
   max-width: 760px;
 }
 
-.kvsLegalSection + .kvsLegalSection {
+.kvsLegalSection+.kvsLegalSection {
   margin-top: 28px;
 }
 
@@ -8462,9 +8532,18 @@
   text-shadow: 0 2px 18px rgba(255, 255, 255, 0.72);
 }
 
+.uniPage:not(:has(.uniHeroShell)) .productCatalogHero--solid h1 {
+  text-shadow: none;
+}
+
 .uniPage:not(:has(.uniHeroShell)) .productCatalogHeroLead {
   color: rgba(26, 54, 93, 0.88);
   text-shadow: 0 1px 12px rgba(255, 255, 255, 0.65);
+}
+
+.uniPage:not(:has(.uniHeroShell)) .productCatalogHero--solid .productCatalogHeroLead {
+  color: rgba(26, 54, 93, 0.9);
+  text-shadow: none;
 }
 
 .uniPage:not(:has(.uniHeroShell)) .kvsAboutHero h1,
@@ -8649,13 +8728,11 @@
   }
 
   .uniHeroVideoCol .uniHeroSlides::after {
-    background: linear-gradient(
-      180deg,
-      rgba(8, 20, 38, 0.42) 0%,
-      transparent 28%,
-      transparent 40%,
-      rgba(8, 20, 38, 0.82) 100%
-    );
+    background: linear-gradient(180deg,
+        rgba(8, 20, 38, 0.42) 0%,
+        transparent 28%,
+        transparent 40%,
+        rgba(8, 20, 38, 0.82) 100%);
   }
 
   .uniHeroContentCol {
@@ -9071,8 +9148,8 @@
     justify-items: center;
   }
 
-  .uniProductsDiamondGrid > .uniProductsDiamondReveal,
-  .uniProductsDiamondGrid > .uniSkeletonDiamondCard {
+  .uniProductsDiamondGrid>.uniProductsDiamondReveal,
+  .uniProductsDiamondGrid>.uniSkeletonDiamondCard {
     grid-column: auto !important;
     grid-row: auto !important;
     width: 100%;
@@ -9149,12 +9226,39 @@
     gap: 18px;
   }
 
-  .productCatalogSidebarCol--desktop {
-    display: none;
+  .productCatalogSidebarCol {
+    position: static;
+    top: auto;
+    max-height: none;
+    z-index: auto;
   }
 
-  .productCatalogMobilePicker {
-    display: block;
+  .productCatalogSidebar {
+    min-height: 0;
+    max-height: none;
+    overflow: visible;
+    flex: none;
+  }
+
+  .productCatalogNav {
+    flex: none;
+    min-height: auto;
+    max-height: none;
+    overflow: visible;
+    overscroll-behavior: auto;
+  }
+
+  .productCatalogPage .sectorDetailHero.productCatalogHero--solid {
+    min-height: 0;
+    overflow: visible;
+  }
+
+  #productCatalogProducts {
+    scroll-margin-top: 88px;
+  }
+
+  .productCatalogSidebarCta {
+    display: none;
   }
 
   .productCatalogMobileCta {
@@ -9205,6 +9309,18 @@
 
   .productCatalogGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .productCatalogCardMedia {
+    aspect-ratio: 4 / 3;
+  }
+
+  .productCatalogCardBody {
+    padding: 12px 12px 14px;
+  }
+
+  .productCatalogCardBody h4 {
+    font-size: 14px;
   }
 
   .sectorDetailHero {
@@ -9586,21 +9702,13 @@
   }
 
   .productCatalogHero {
-    min-height: clamp(160px, 22vh, 210px);
+    min-height: 0;
   }
 
-  .productCatalogMobilePickerItem {
-    width: clamp(100px, 26vw, 120px);
-    padding: 8px 6px 10px;
-  }
-
-  .productCatalogMobilePickerThumb {
-    width: 46px;
-    height: 46px;
-  }
-
-  .productCatalogMobilePickerTitle {
-    font-size: 10px;
+  .productCatalogHero--solid {
+    margin-top: 84px;
+    padding-top: 20px;
+    padding-bottom: 14px;
   }
 
   .productCatalogMobileCta {
@@ -9652,13 +9760,32 @@
     gap: 20px;
   }
 
-  .productCatalogNavThumb {
-    width: 44px;
-    height: 44px;
+  .productCatalogCardMedia {
+    aspect-ratio: 16 / 10;
   }
 
-  .productCatalogSubnav {
-    padding-left: 16px;
+  .productCatalogCardBody {
+    padding: 12px 14px 14px;
+    gap: 4px;
+  }
+
+  .productCatalogCardBody h4 {
+    font-size: 14px;
+    line-height: 1.35;
+  }
+
+  .productCatalogCardLink {
+    padding-top: 4px;
+    font-size: 12px;
+  }
+
+  .productCatalogSubnavWrap {
+    margin-left: 18px;
+  }
+
+  .productCatalogNavThumb {
+    width: 36px;
+    height: 36px;
   }
 
   .uniProductDetail {
@@ -9751,8 +9878,8 @@
     max-width: 100%;
   }
 
-  .uniProductsDiamondGrid > .uniProductsDiamondReveal,
-  .uniProductsDiamondGrid > .uniSkeletonDiamondCard {
+  .uniProductsDiamondGrid>.uniProductsDiamondReveal,
+  .uniProductsDiamondGrid>.uniSkeletonDiamondCard {
     max-width: 168px;
   }
 

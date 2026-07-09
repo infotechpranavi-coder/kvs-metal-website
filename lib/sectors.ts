@@ -16,7 +16,8 @@ export const sectors: Sector[] = [
     tagline: 'Steel Solutions for Modern Construction & Infrastructure',
     headline: 'Steel Solutions for Modern Construction & Infrastructure',
     paragraphs: [
-      'As a leading steel supplier in Dubai, UAE, KVS Metals supplies structural and industrial steel materials for commercial buildings, civil engineering, warehouses, fabrication units, and infrastructure developments. From steel sections and pipes to coils, sheets, and reinforcement materials, we help businesses maintain continuity with timely material flow and practical procurement coordination.',
+      'As a leading steel supplier in Dubai, UAE, KVS Metals supplies structural and industrial steel materials for commercial buildings, civil engineering, warehouses, fabrication units, and infrastructure developments.',
+      'From steel sections and pipes to coils, sheets, and reinforcement materials, we help businesses maintain continuity with timely material flow and practical procurement coordination.',
     ],
     bullets: [
       'Structural & industrial steel materials',
@@ -32,7 +33,8 @@ export const sectors: Sector[] = [
     tagline: 'Steel Materials for Critical Oil & Gas Applications',
     headline: 'Steel Materials for Critical Oil & Gas Applications',
     paragraphs: [
-      'KVS Metals supplies industrial steel materials for demanding oil and gas environments across Dubai and the UAE. Our corrosion-resistant and high-tensile steel products are suitable for pipelines, storage systems, processing facilities, and offshore or onshore applications where precision, compliance, and operational performance are essential.',
+      'KVS Metals supplies industrial steel materials for demanding oil and gas environments across Dubai and the UAE.',
+      'Our corrosion-resistant and high-tensile steel products are suitable for pipelines, storage systems, processing facilities, and offshore or onshore applications where precision, compliance, and operational performance are essential.',
     ],
     bullets: [
       'Corrosion-resistant steel options',
@@ -48,7 +50,8 @@ export const sectors: Sector[] = [
     tagline: 'Engineered Materials for Foundation Systems',
     headline: 'Engineered Materials for Foundation Systems',
     paragraphs: [
-      'KVS Metals supplies steel materials for foundation engineering, precast concrete systems, and heavy construction projects across Dubai, UAE. From PC strand coils to structural steel products, we cater to applications requiring dimensional accuracy, tensile capability, and long-term structural stability in demanding construction environments.',
+      'KVS Metals supplies steel materials for foundation engineering, precast concrete systems, and heavy construction projects across Dubai, UAE.',
+      'From PC strand coils to structural steel products, we cater to applications requiring dimensional accuracy, tensile capability, and long-term structural stability in demanding construction environments.',
     ],
     bullets: [
       'PC strand & foundation materials',
@@ -64,7 +67,8 @@ export const sectors: Sector[] = [
     tagline: 'Built for Demanding Marine Environments',
     headline: 'Built for Demanding Marine Environments',
     paragraphs: [
-      'As a steel supplier in UAE serving marine and coastal industries, KVS Metals supplies steel and aluminium materials for shipbuilding, fabrication, coastal infrastructure, and marine engineering requirements. Our range is suited for challenging environments requiring corrosion resistance, durability, and consistent operational performance.',
+      'As a steel supplier in UAE serving marine and coastal industries, KVS Metals supplies steel and aluminium materials for shipbuilding, fabrication, coastal infrastructure, and marine engineering requirements.',
+      'Our range is suited for challenging environments requiring corrosion resistance, durability, and consistent operational performance.',
     ],
     bullets: [
       'Steel & aluminium for marine use',

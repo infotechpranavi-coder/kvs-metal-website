@@ -16,10 +16,7 @@ import {
   ProductCatalogHeroSkeleton,
   ProductCatalogSidebarSkeleton,
 } from '@/components/CatalogSkeletons'
-import { catalogCardImageUrl, catalogHeroImageUrl } from '@/lib/image-url'
-import { kvsCatalogHeroImage } from '@/lib/product-images'
-
-const CATALOG_HERO_IMG = kvsCatalogHeroImage
+import { catalogCardImageUrl } from '@/lib/image-url'
 
 type ProductCatalogViewProps = {
   loading?: boolean
@@ -55,12 +52,19 @@ export function ProductCatalogView({
   const openCategory = (slug: string | null) => {
     if (slug) setExpandedSlug(slug)
     onSelectCategory(slug)
+
+    if (typeof window !== 'undefined' && window.matchMedia('(max-width: 1024px)').matches && slug) {
+      requestAnimationFrame(() => {
+        document.getElementById('productCatalogProducts')?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        })
+      })
+    }
   }
 
   const navCategories = sidebarCategories ?? homepageProductCategories
 
-  const heroImg = category?.heroImg ?? category?.img ?? material?.img ?? CATALOG_HERO_IMG
-  const heroImgSrc = catalogHeroImageUrl(heroImg)
   const heroTitle = category?.title ?? material?.title ?? 'Our Products'
   const heroDescription = category?.description?.trim() || material?.description?.trim() || ''
   const gridTitle = searchQuery.trim()
@@ -78,17 +82,7 @@ export function ProductCatalogView({
         {loading ? (
           <ProductCatalogHeroSkeleton />
         ) : (
-          <section className="sectorDetailHero productCatalogHero">
-            <img
-              src={heroImgSrc}
-              alt=""
-              className="sectorDetailBannerImg"
-              fetchPriority="high"
-              decoding="async"
-            />
-            <div className="sectorDetailBannerOverlay" aria-hidden />
-            <div className="sectorDetailHeroFade" aria-hidden />
-
+          <section className="sectorDetailHero productCatalogHero productCatalogHero--solid">
             <div className="uniContainer productCatalogHeroContainer sectorDetailHeroContent">
               <header className="sectorDetailPageTitle">
                 <div className="sectorDetailAccent" aria-hidden>
@@ -115,10 +109,7 @@ export function ProductCatalogView({
 
         <section className="productCatalogBody">
           <div className="uniContainer productCatalogContainer productCatalogLayout">
-            <aside
-              className="productCatalogSidebarCol productCatalogSidebarCol--desktop"
-              aria-label="Product categories"
-            >
+            <aside className="productCatalogSidebarCol" aria-label="Product categories">
               <div className="productCatalogSidebar">
                 <nav
                   className="productCatalogNav"
@@ -163,34 +154,36 @@ export function ProductCatalogView({
                               aria-expanded={isExpanded}
                               aria-label={`${isExpanded ? 'Collapse' : 'Expand'} ${item.title} products`}
                             >
-                              <svg
-                                className="productCatalogNavChevron"
-                                width="14"
-                                height="14"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                aria-hidden
-                              >
-                                <path
-                                  d="M6 9L12 15L18 9"
-                                  stroke="currentColor"
-                                  strokeWidth="2"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
+                              <span className="productCatalogNavToggleIcon" aria-hidden>
+                                {isExpanded ? '−' : '+'}
+                              </span>
                             </button>
                           </div>
 
                           {isExpanded ? (
                             subProducts.length > 0 ? (
-                              <ul className="productCatalogSubnav">
+                              <div className="productCatalogSubnavWrap">
+                                <ul className="productCatalogSubnav">
                                 {subProducts.map((product) => (
                                   <li key={product.slug}>
-                                    <Link href={`/products/${product.slug}`}>{product.title}</Link>
+                                    <Link
+                                      href={`/products/${product.slug}`}
+                                      className="productCatalogSubnavLink"
+                                    >
+                                      <span className="productCatalogSubnavThumb">
+                                        <img
+                                          src={catalogCardImageUrl(product.img, 84)}
+                                          alt=""
+                                          loading="lazy"
+                                          decoding="async"
+                                        />
+                                      </span>
+                                      <span className="productCatalogSubnavTitle">{product.title}</span>
+                                    </Link>
                                   </li>
                                 ))}
-                              </ul>
+                                </ul>
+                              </div>
                             ) : (
                               <p className="productCatalogSubnavEmpty">No products listed yet</p>
                             )
@@ -212,36 +205,8 @@ export function ProductCatalogView({
             </aside>
 
             <div className="productCatalogMain">
-              {!loading && navCategories.length > 0 ? (
-                <div className="productCatalogMobilePicker" role="navigation" aria-label="Browse categories">
-                  <div className="productCatalogMobilePickerTrack">
-                    {navCategories.map((item) => {
-                      const isActive = category?.slug === item.slug
-                      return (
-                        <button
-                          key={item.slug}
-                          type="button"
-                          className={`productCatalogMobilePickerItem${isActive ? ' productCatalogMobilePickerItem--active' : ''}`}
-                          onClick={() => openCategory(item.slug)}
-                          aria-current={isActive ? 'page' : undefined}
-                        >
-                          <span className="productCatalogMobilePickerThumb">
-                            <img
-                              src={catalogCardImageUrl(item.img, 72)}
-                              alt=""
-                              loading="lazy"
-                              decoding="async"
-                            />
-                          </span>
-                          <span className="productCatalogMobilePickerTitle">{item.title}</span>
-                        </button>
-                      )
-                    })}
-                  </div>
-                </div>
-              ) : null}
-
               <section
+                id="productCatalogProducts"
                 className="productCatalogProducts"
                 aria-label={category ? `${category.title} products` : 'All products'}
               >

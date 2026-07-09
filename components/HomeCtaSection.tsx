@@ -6,10 +6,11 @@ type HomeCtaSectionProps = {
   titleEmphasis?: string
   ctaLabel: string
   ctaHref: string
-  image: string
-  imageAlt: string
+  image?: string
+  imageAlt?: string
   phoneLabel?: string
   showPhone?: boolean
+  hideImage?: boolean
 }
 
 export function HomeCtaSection({
@@ -17,17 +18,18 @@ export function HomeCtaSection({
   titleEmphasis,
   ctaLabel,
   ctaHref,
-  image,
-  imageAlt,
+  image = '',
+  imageAlt = '',
   phoneLabel = 'Call Us',
   showPhone = false,
+  hideImage = false,
 }: HomeCtaSectionProps) {
   const ctaIsPhoneLink = ctaHref.startsWith('tel:')
 
   return (
     <section className="uniHomeCta">
       <div className="uniContainer">
-        <div className="uniHomeCtaInner">
+        <div className={`uniHomeCtaInner${hideImage ? ' uniHomeCtaInner--noMedia' : ''}`}>
           <div className="uniHomeCtaContent">
             <div className="uniHomeCtaRow">
               <h2 className="uniHomeCtaTitle">
@@ -58,10 +60,12 @@ export function HomeCtaSection({
               </div>
             </div>
           </div>
-          <div className="uniHomeCtaMedia">
-            <img src={image} alt={imageAlt} loading="lazy" />
-            <span className="uniHomeCtaMediaOverlay" aria-hidden />
-          </div>
+          {!hideImage && image ? (
+            <div className="uniHomeCtaMedia">
+              <img src={image} alt={imageAlt} loading="lazy" />
+              <span className="uniHomeCtaMediaOverlay" aria-hidden />
+            </div>
+          ) : null}
         </div>
       </div>
     </section>

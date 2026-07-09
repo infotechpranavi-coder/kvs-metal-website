@@ -43,7 +43,6 @@ export default function SectorDetailPage({ sector }: { sector: Sector }) {
 
         <section className="sectorDetailStatement">
           <div className="uniContainer sectorDetailStatementInner">
-            <p className="sectorDetailStatementLabel">Our commitment</p>
             <h2>{sector.headline}</h2>
           </div>
         </section>

@@ -153,10 +153,9 @@ export default function KvsAboutPage() {
             title={`${aboutPage.ctaTitle} ${aboutPage.ctaText}`}
             ctaLabel={aboutPage.ctaLabel}
             ctaHref={aboutPage.ctaHref}
-            image={aboutPage.ctaImage}
-            imageAlt={aboutPage.ctaImageAlt}
             phoneLabel={aboutPage.ctaPhoneLabel}
             showPhone
+            hideImage
           />
         </ScrollReveal>
       </main>

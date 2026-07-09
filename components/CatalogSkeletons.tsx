@@ -35,9 +35,7 @@ export function HomeProductsDiamondSkeleton({ count = 6 }: { count?: number }) {
 
 export function ProductCatalogHeroSkeleton() {
   return (
-    <section className="sectorDetailHero productCatalogHero" aria-busy="true">
-      <div className="uniSkeleton uniSkeleton--catalogHero" />
-      <div className="sectorDetailHeroFade" aria-hidden />
+    <section className="sectorDetailHero productCatalogHero productCatalogHero--solid" aria-busy="true">
       <div className="uniContainer productCatalogHeroContainer sectorDetailHeroContent">
         <div className="productCatalogHeroCopy">
           <div className="uniSkeleton uniSkeleton--title" />

@@ -35,8 +35,10 @@ export const aboutUsHome = {
   tagline: 'Trusted',
   title: 'steel supplier in Dubai, UAE',
   paragraphs: [
-    'KVS Metals is a trusted steel supplier and steel trading company in Dubai, UAE. We are committed to delivering steel solutions backed by quality, consistency, industry expertise and professionalism. Our structural and industrial steel products support applications requiring performance, durability, and precision.',
-    'From construction and infrastructure to fabrication, marine, and industrial sectors, we supply an extensive range of steel materials in different grades meeting international standards. We understand that every project depends on materials arriving on time. That is why contractors, fabricators, EPC companies, stockists, and industrial buyers trust KVS Metals for consistent quality, fast product availability, and prompt coordination.',
+    'KVS Metals is a trusted steel supplier and steel trading company in Dubai, UAE. We are committed to delivering steel solutions backed by quality, consistency, industry expertise and professionalism.',
+    'Our structural and industrial steel products support applications requiring performance, durability, and precision.',
+    'From construction and infrastructure to fabrication, marine, and industrial sectors, we supply an extensive range of steel materials in different grades meeting international standards.',
+    'We understand that every project depends on materials arriving on time. That is why contractors, fabricators, EPC companies, stockists, and industrial buyers trust KVS Metals for consistent quality, fast product availability, and prompt coordination.',
   ],
   features: [
     {
@@ -196,7 +198,7 @@ export const aboutPage = {
     'Transparent Dealings',
   ],
   ctaTitle: 'Ready to discuss your steel requirements?',
-  ctaText: 'Share grade, quantity, and delivery location — our team will respond with a tailored quote.',
+  ctaText: 'Share requirements — we will respond with a tailored quote.',
   ctaLabel: 'Request A Call',
   ctaHref: PHONE_TEL_HREF,
   ctaPhoneLabel: 'Call Us',
