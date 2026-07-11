@@ -156,7 +156,7 @@ export default function DashboardCategoriesPage() {
           <p>
             Create categories for your products. Use &quot;Show on homepage&quot; when adding or
             editing a category to feature it in the Our Products section. Set the sequence number to
-            control card order on the homepage — lower numbers appear first.
+            control card order on the homepage and products page — lower numbers appear first.
           </p>
         </div>
         <button type="button" className="dashBtn" onClick={openAddDrawer}>
@@ -355,7 +355,7 @@ export default function DashboardCategoriesPage() {
               }
             />
             <p className="dashHint">
-              Lower numbers appear first in Our Products cards on the homepage.
+              Lower numbers appear first in Our Products cards and in the products page sidebar.
             </p>
           </div>
           <p className="dashHint">

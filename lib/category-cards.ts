@@ -1,6 +1,14 @@
 import type { CategoryDto, MaterialDto } from '@/lib/serializers'
 import type { HomepageProductCategory } from '@/lib/products'
 
+export function sortCategoriesByOrder<T extends { sortOrder?: number; title: string }>(
+  categories: T[],
+): T[] {
+  return [...categories].sort(
+    (a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0) || a.title.localeCompare(b.title),
+  )
+}
+
 export function categoryDtoToHomepageCategory(category: CategoryDto): HomepageProductCategory {
   return {
     slug: category.slug,
@@ -24,10 +32,8 @@ export function categoryToProductCard(category: CategoryDto) {
 }
 
 export async function fetchHomepageCategories(): Promise<CategoryDto[]> {
-  const response = await fetch('/api/categories/homepage')
-  if (!response.ok) return []
-  const data = await response.json()
-  return Array.isArray(data.categories) ? data.categories : []
+  const { categories } = await fetchProductsCatalog()
+  return sortCategoriesByOrder(categories.filter((category) => category.showOnHomepage))
 }
 
 export async function fetchProductsCatalog(): Promise<{
@@ -38,7 +44,9 @@ export async function fetchProductsCatalog(): Promise<{
   if (!response.ok) return { categories: [], materials: [] }
   const data = await response.json()
   return {
-    categories: Array.isArray(data.categories) ? data.categories : [],
+    categories: sortCategoriesByOrder(
+      Array.isArray(data.categories) ? data.categories : [],
+    ),
     materials: Array.isArray(data.materials) ? data.materials : [],
   }
 }
