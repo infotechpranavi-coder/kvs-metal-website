@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { DashboardDrawer } from '@/components/DashboardDrawer'
 import { DashboardImageField } from '@/components/DashboardImageField'
 import { BulkImportPanel } from '@/components/superadmin/BulkImportPanel'
@@ -16,6 +16,7 @@ const emptyForm = {
   headline: '',
   materialId: '',
   showOnHomepage: false,
+  sortOrder: 0,
 }
 
 export default function DashboardCategoriesPage() {
@@ -45,9 +46,22 @@ export default function DashboardCategoriesPage() {
     loadData()
   }, [])
 
+  const sortedCategories = useMemo(
+    () =>
+      [...categories].sort(
+        (a, b) => a.sortOrder - b.sortOrder || a.title.localeCompare(b.title),
+      ),
+    [categories],
+  )
+
+  const nextSortOrder = useMemo(() => {
+    if (categories.length === 0) return 1
+    return Math.max(...categories.map((category) => category.sortOrder)) + 1
+  }, [categories])
+
   const openAddDrawer = () => {
     setEditingId(null)
-    setForm({ ...emptyForm })
+    setForm({ ...emptyForm, sortOrder: nextSortOrder })
     setError('')
     setDrawerOpen(true)
   }
@@ -62,6 +76,7 @@ export default function DashboardCategoriesPage() {
       headline: category.headline,
       materialId: category.materialId ?? '',
       showOnHomepage: category.showOnHomepage ?? false,
+      sortOrder: category.sortOrder ?? 0,
     })
     setError('')
     setDrawerOpen(true)
@@ -87,6 +102,7 @@ export default function DashboardCategoriesPage() {
       headline: form.headline,
       materialId: form.materialId.trim() ? form.materialId : editingId ? null : undefined,
       showOnHomepage: form.showOnHomepage,
+      sortOrder: form.sortOrder,
     }
 
     const response = editingId
@@ -119,6 +135,19 @@ export default function DashboardCategoriesPage() {
     await loadData()
   }
 
+  const updateSortOrder = async (category: CategoryRow, rawValue: string) => {
+    const parsed = Number.parseInt(rawValue, 10)
+    const sortOrder = Number.isFinite(parsed) && parsed >= 0 ? parsed : 0
+    if (sortOrder === category.sortOrder) return
+
+    await fetch(`/api/categories/${category.id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sortOrder }),
+    })
+    await loadData()
+  }
+
   return (
     <div className="dashPage">
       <div className="dashPageHeader">
@@ -126,7 +155,8 @@ export default function DashboardCategoriesPage() {
           <h1>Product categories</h1>
           <p>
             Create categories for your products. Use &quot;Show on homepage&quot; when adding or
-            editing a category to feature it in the Our Products section.
+            editing a category to feature it in the Our Products section. Set the sequence number to
+            control card order on the homepage — lower numbers appear first.
           </p>
         </div>
         <button type="button" className="dashBtn" onClick={openAddDrawer}>
@@ -140,6 +170,7 @@ export default function DashboardCategoriesPage() {
         <table className="dashTable">
           <thead>
             <tr>
+              <th>Seq</th>
               <th>Image</th>
               <th>Category</th>
               <th>Material</th>
@@ -151,15 +182,31 @@ export default function DashboardCategoriesPage() {
           <tbody>
             {loading ? (
               <tr>
-                <td colSpan={6}>Loading…</td>
+                <td colSpan={7}>Loading…</td>
               </tr>
-            ) : categories.length === 0 ? (
+            ) : sortedCategories.length === 0 ? (
               <tr>
-                <td colSpan={6}>No categories yet.</td>
+                <td colSpan={7}>No categories yet.</td>
               </tr>
             ) : (
-              categories.map((category) => (
+              sortedCategories.map((category) => (
                 <tr key={category.id}>
+                  <td>
+                    <input
+                      type="number"
+                      min={0}
+                      className="dashTableSeqInput"
+                      defaultValue={category.sortOrder}
+                      key={`${category.id}-${category.sortOrder}`}
+                      onBlur={(event) => void updateSortOrder(category, event.target.value)}
+                      onKeyDown={(event) => {
+                        if (event.key === 'Enter') {
+                          event.currentTarget.blur()
+                        }
+                      }}
+                      aria-label={`Sequence for ${category.title}`}
+                    />
+                  </td>
                   <td>
                     {category.img ? (
                       <img
@@ -293,6 +340,24 @@ export default function DashboardCategoriesPage() {
             />
             <span>Show on homepage (Our Products section)</span>
           </label>
+          <div className="dashField">
+            <label htmlFor="category-sort-order">Homepage sequence</label>
+            <input
+              id="category-sort-order"
+              type="number"
+              min={0}
+              value={form.sortOrder}
+              onChange={(event) =>
+                setForm((current) => ({
+                  ...current,
+                  sortOrder: Number.parseInt(event.target.value, 10) || 0,
+                }))
+              }
+            />
+            <p className="dashHint">
+              Lower numbers appear first in Our Products cards on the homepage.
+            </p>
+          </div>
           <p className="dashHint">
             Only checked categories appear on the homepage. All categories remain on the products
             page sidebar.

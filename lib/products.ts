@@ -47,6 +47,7 @@ export type LimitedProduct = {
 }
 
 import { kvsProductCategories } from './kvs-catalog'
+import { sortProductsBySku } from './product-sku'
 
 const homepageProductSlugs = kvsProductCategories.flatMap((category) => category.productSlugs)
 
@@ -137,6 +138,38 @@ export function getProductsPageHref(categorySlug?: string, materialSlug?: string
   return qs ? `/products?${qs}` : '/products'
 }
 
+export function getProductDetailHref(
+  productSlug: string,
+  options?: { categorySlug?: string; materialSlug?: string },
+): string {
+  const params = new URLSearchParams()
+  if (options?.categorySlug) params.set('category', options.categorySlug)
+  if (options?.materialSlug) params.set('material', options.materialSlug)
+  const qs = params.toString()
+  return qs ? `/products/${productSlug}?${qs}` : `/products/${productSlug}`
+}
+
+export function resolveProductCategorySlug(
+  product: Pick<Product, 'slug' | 'category'>,
+): string | undefined {
+  const fromCatalog = getProductCategoryForProduct(product.slug)
+  if (fromCatalog) return fromCatalog.slug
+
+  return homepageProductCategories.find((item) => item.title === product.category)?.slug
+}
+
+export function getProductDetailBackHref(options: {
+  categorySlug?: string | null
+  materialSlug?: string | null
+  product: Pick<Product, 'slug' | 'category'>
+}): string {
+  const categorySlug = options.categorySlug || resolveProductCategorySlug(options.product)
+  if (categorySlug) {
+    return getProductsPageHref(categorySlug, options.materialSlug ?? undefined)
+  }
+  return '/products'
+}
+
 export function getProductCategoryBySlug(slug: string): HomepageProductCategory | undefined {
   return homepageProductCategories.find((category) => category.slug === slug)
 }
@@ -146,9 +179,11 @@ export function getAllProductCategorySlugs(): string[] {
 }
 
 export function getCategoryProducts(category: HomepageProductCategory): Product[] {
-  return category.productSlugs
-    .map((slug) => getProductBySlug(slug))
-    .filter((product): product is Product => Boolean(product))
+  return sortProductsBySku(
+    category.productSlugs
+      .map((slug) => getProductBySlug(slug))
+      .filter((product): product is Product => Boolean(product)),
+  )
 }
 
 /** Products for sidebar subnav — matches grid filtering by category title. */
@@ -158,7 +193,7 @@ export function getProductsForCategory(
 ): Product[] {
   const byTitle = catalogProducts.filter((product) => product.category === category.title)
   if (byTitle.length > 0) {
-    return byTitle.sort((a, b) => a.title.localeCompare(b.title))
+    return sortProductsBySku(byTitle)
   }
 
   return getCategoryProducts(category)
@@ -215,9 +250,12 @@ export function getHomepageProducts(): Product[] {
 export function getRelatedHomepageProducts(slug: string): Product[] {
   const category = getProductCategoryForProduct(slug)
   if (category) {
-    return getCategoryProducts(category).filter((product) => product.slug !== slug).slice(0, 4)
+    return sortProductsBySku(getCategoryProducts(category).filter((product) => product.slug !== slug)).slice(
+      0,
+      4,
+    )
   }
-  return getHomepageProducts().filter((product) => product.slug !== slug)
+  return sortProductsBySku(getHomepageProducts().filter((product) => product.slug !== slug)).slice(0, 4)
 }
 
 const PRODUCT_TEXT_ACRONYMS = [

@@ -5,12 +5,8 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { categoryDtoToHomepageCategory, fetchProductsCatalog } from '@/lib/category-cards'
 import { fetchProducts } from '@/lib/product-api'
 import type { MaterialSupply } from '@/lib/materials'
-import {
-  filterProductsByQuery,
-  getProductsPageHref,
-  type HomepageProductCategory,
-  type Product,
-} from '@/lib/products'
+import { filterProductsByQuery, getProductsPageHref, type HomepageProductCategory, type Product } from '@/lib/products'
+import { sortProductsBySku } from '@/lib/product-sku'
 import { ProductCatalogView } from '@/components/ProductCatalogView'
 
 function materialDtoToSupply(material: {
@@ -125,7 +121,7 @@ export default function KvsProductsPage() {
       ? scopedCatalogProducts.filter((product) => product.category === category.title)
       : scopedCatalogProducts
 
-    return filterProductsByQuery(scoped, searchQuery)
+    return sortProductsBySku(filterProductsByQuery(scoped, searchQuery))
   }, [category, scopedCatalogProducts, searchQuery])
 
   const onSelectCategory = useCallback(

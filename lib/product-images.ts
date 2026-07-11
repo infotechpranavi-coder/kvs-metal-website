@@ -49,7 +49,7 @@ export function kvsProductImage(file: (typeof kvsProductImageFiles)[number] | st
 
 /** Homepage CTA strip images — diverse picks from the product photo library. */
 export const kvsProcurementCtaImage = kvsProductImage('IMG_20260508_041442.jpg')
-export const kvsProductsCtaImage = kvsProductImage('IMG-20260610-WA0028.jpg')
+export const kvsProductsCtaImage = kvsProductImage('IMG-20260610-WA0026.jpg')
 export const kvsAboutCtaImage = kvsProductImage('IMG-20260610-WA0027.jpg')
 export const kvsAboutStoryImage = kvsProductImage('IMG-20260610-WA0016.jpg')
 

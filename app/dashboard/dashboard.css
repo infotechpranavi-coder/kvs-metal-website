@@ -395,6 +395,23 @@
   line-height: 1.35;
 }
 
+.dashTableSeqInput {
+  width: 64px;
+  padding: 6px 8px;
+  border: 1px solid rgba(26, 54, 93, 0.16);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a365d;
+  background: #fff;
+}
+
+.dashTableSeqInput:focus {
+  outline: none;
+  border-color: var(--uni-orange);
+  box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.15);
+}
+
 .dashSidebarLogout {
   margin-top: auto;
   width: 100%;

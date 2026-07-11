@@ -96,7 +96,7 @@ export function HomeProductsSection() {
                           </span>
                         </span>
                       </span>
-                      <span className="uniSectorsDiamondLabel uniSectorsDiamondLabel--below" aria-hidden="true">
+                      <span className="uniSectorsDiamondLabel uniSectorsDiamondLabel--below">
                         {card.title}
                       </span>
                     </Link>

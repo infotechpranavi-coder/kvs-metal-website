@@ -6,6 +6,7 @@ import type { MaterialSupply } from '@/lib/materials'
 import type { HomepageProductCategory, Product } from '@/lib/products'
 import {
   getProductsForCategory,
+  getProductDetailHref,
   homepageProductCategories,
 } from '@/lib/products'
 import { UniNavbar } from '@/components/UniNavbar'
@@ -84,7 +85,7 @@ export function ProductCatalogView({
         ) : (
           <section className="sectorDetailHero productCatalogHero productCatalogHero--solid">
             <div className="uniContainer productCatalogHeroContainer sectorDetailHeroContent">
-              <header className="sectorDetailPageTitle">
+              <header className="sectorDetailPageTitle productCatalogHeroTitleBlock">
                 <div className="sectorDetailAccent" aria-hidden>
                   <span className="sectorDetailAccentBadge" />
                   <span className="sectorDetailAccentRail">
@@ -96,11 +97,22 @@ export function ProductCatalogView({
                     <span className="sectorDetailAccentFootCap" />
                   </span>
                 </div>
-                <div className="productCatalogHeroCopy">
-                  <h1>{heroTitle}</h1>
-                  {heroDescription ? (
-                    <p className="productCatalogHeroLead">{heroDescription}</p>
-                  ) : null}
+                <div className="productCatalogHeroMain">
+                  <div className="productCatalogHeroHeadRow">
+                    <div className="productCatalogHeroCopy">
+                      <h1>{heroTitle}</h1>
+                      {heroDescription ? (
+                        <p className="productCatalogHeroLead">{heroDescription}</p>
+                      ) : null}
+                    </div>
+                    <div className="productCatalogBulkCta">
+                      <h4>Bulk pricing</h4>
+                      <p>Need pricing or bulk supply for your project?</p>
+                      <Link href="/contact" className="productCatalogSidebarBtn">
+                        Get a Quote
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               </header>
             </div>
@@ -167,7 +179,10 @@ export function ProductCatalogView({
                                 {subProducts.map((product) => (
                                   <li key={product.slug}>
                                     <Link
-                                      href={`/products/${product.slug}`}
+                                      href={getProductDetailHref(product.slug, {
+                                        categorySlug: item.slug,
+                                        materialSlug: material?.slug,
+                                      })}
                                       className="productCatalogSubnavLink"
                                     >
                                       <span className="productCatalogSubnavThumb">
@@ -194,14 +209,6 @@ export function ProductCatalogView({
                   )}
                 </nav>
               </div>
-
-              <div className="productCatalogSidebarCta">
-                <h3>Bulk pricing</h3>
-                <p>Need pricing or bulk supply for your project?</p>
-                <Link href="/contact" className="productCatalogSidebarBtn">
-                  Get a Quote
-                </Link>
-              </div>
             </aside>
 
             <div className="productCatalogMain">
@@ -211,21 +218,19 @@ export function ProductCatalogView({
                 aria-label={category ? `${category.title} products` : 'All products'}
               >
                 <div className="productCatalogProductsHead">
-                  <div className="productCatalogProductsHeadCopy">
-                    {loading ? (
-                      <>
-                        <div className="uniSkeleton uniSkeleton--gridTitle" />
-                        <div className="uniSkeleton uniSkeleton--gridCount" />
-                      </>
-                    ) : (
-                      <>
-                        <h3>{gridTitle}</h3>
-                        <p className="productCatalogProductsCount">
-                          {products.length} product{products.length === 1 ? '' : 's'}
-                        </p>
-                      </>
-                    )}
-                  </div>
+                  {loading ? (
+                    <>
+                      <div className="uniSkeleton uniSkeleton--gridTitle" />
+                      <div className="uniSkeleton uniSkeleton--gridCount" />
+                    </>
+                  ) : (
+                    <>
+                      <h3>{gridTitle}</h3>
+                      <p className="productCatalogProductsCount">
+                        {products.length} product{products.length === 1 ? '' : 's'}
+                      </p>
+                    </>
+                  )}
                 </div>
 
                 <div className="productCatalogGrid">
@@ -235,7 +240,10 @@ export function ProductCatalogView({
                     products.map((product) => (
                       <Link
                         key={product.slug}
-                        href={`/products/${product.slug}`}
+                        href={getProductDetailHref(product.slug, {
+                          categorySlug: category?.slug,
+                          materialSlug: material?.slug,
+                        })}
                         className="productCatalogCard"
                         aria-label={`View details for ${product.title}`}
                       >
@@ -267,18 +275,6 @@ export function ProductCatalogView({
                   )}
                 </div>
               </section>
-
-              {!loading ? (
-                <div className="productCatalogMobileCta">
-                  <div>
-                    <strong>Bulk pricing</strong>
-                    <p>Need pricing or bulk supply for your project?</p>
-                  </div>
-                  <Link href="/contact" className="productCatalogSidebarBtn">
-                    Get a Quote
-                  </Link>
-                </div>
-              ) : null}
             </div>
           </div>
         </section>

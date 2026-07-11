@@ -25,7 +25,6 @@ import {
   GlobalSourcingIcon,
   StarIcon,
   TimelyDeliveryIcon,
-  UserIcon,
 } from '@/components/UniIcons'
 
 const features = aboutUsHome.features.map((item, index) => {
@@ -253,15 +252,6 @@ function HeroSection() {
                         </Link>
                       </div>
                     </div>
-
-                    <Link href="/about" className="uniHeroReadMore">
-                      <span className="uniHeroReadMoreDots" aria-hidden>
-                        <span />
-                        <span />
-                        <span />
-                      </span>
-                      Read more
-                    </Link>
                   </div>
 
                   <div className="uniHeroSliderUi">
@@ -356,19 +346,19 @@ function MarketSectorsSection() {
                 >
                   <span className="uniSectorsDiamondVisual">
                     <span className="uniSectorsDiamondAccent" aria-hidden />
-                    <span className="uniSectorsDiamondFrame">
-                      <span className="uniSectorsDiamondMedia">
-                        <img src={sector.img} alt={sector.name} />
-                        <span className="uniSectorsDiamondOverlay" aria-hidden />
-                      </span>
-                      <span className="uniSectorsDiamondLabel uniSectorsDiamondLabel--in" aria-hidden="true">
-                        {sector.name}
+                      <span className="uniSectorsDiamondFrame">
+                        <span className="uniSectorsDiamondMedia">
+                          <img src={sector.img} alt={sector.name} />
+                          <span className="uniSectorsDiamondOverlay" aria-hidden />
+                        </span>
+                        <span className="uniSectorsDiamondLabel uniSectorsDiamondLabel--in" aria-hidden="true">
+                          {sector.name}
+                        </span>
                       </span>
                     </span>
-                  </span>
-                  <span className="uniSectorsDiamondLabel uniSectorsDiamondLabel--below" aria-hidden="true">
-                    {sector.name}
-                  </span>
+                    <span className="uniSectorsDiamondLabel uniSectorsDiamondLabel--below">
+                      {sector.name}
+                    </span>
                 </Link>
               </ScrollReveal>
             ))}
@@ -457,27 +447,12 @@ function TestimonialsSection() {
                             </div>
                             <span className="uniTestimonialCardRatingLabel">5.0 rating</span>
                           </div>
-                          <span className="uniTestimonialCardIndex" aria-hidden>
-                            {String(index + 1).padStart(2, '0')}
-                          </span>
                         </div>
                         <div className="uniTestimonialCardQuoteWrap">
                           <span className="uniTestimonialCardMark" aria-hidden>&ldquo;</span>
                           <blockquote className="uniTestimonialCardQuote">{item.quote}</blockquote>
                         </div>
                       </div>
-                      <footer className="uniTestimonialCardFooter">
-                        <div className="uniTestimonialCardPortrait">
-                          <span className="uniTestimonialCardPortraitAccent" aria-hidden />
-                          <span className="uniTestimonialCardAvatar" aria-hidden>
-                            <UserIcon />
-                          </span>
-                        </div>
-                        <div className="uniTestimonialCardAuthor">
-                          <strong>{item.name}</strong>
-                          <span>{item.role}</span>
-                        </div>
-                      </footer>
                     </div>
                   </div>
                 </article>
@@ -502,7 +477,7 @@ function TestimonialsSection() {
               type="button"
               role="tab"
               aria-selected={active === index}
-              aria-label={`Testimonial from ${item.name}`}
+              aria-label={`Testimonial ${index + 1}`}
               className={`uniTestimonialsDot${active === index ? ' uniTestimonialsDot--active' : ''}`}
               onClick={() => setActive(index)}
             />

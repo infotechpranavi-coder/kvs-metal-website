@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 import { notFound } from 'next/navigation'
 import { getProductBySlugForApi } from '@/lib/db/products'
 import { productDtoToProduct } from '@/lib/product-api'
@@ -29,5 +30,9 @@ export default async function Page({ params }: Props) {
   const dto = await getProductBySlugForApi(params.slug).catch(() => null)
   if (!dto) notFound()
 
-  return <KvsProductDetailPage product={productDtoToProduct(dto)} />
+  return (
+    <Suspense fallback={null}>
+      <KvsProductDetailPage product={productDtoToProduct(dto)} />
+    </Suspense>
+  )
 }

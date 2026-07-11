@@ -2,8 +2,15 @@
 
 import { useState, type CSSProperties, type MouseEvent } from 'react'
 import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
 import type { Product } from '@/lib/products'
-import { getProductCategoryForProduct, getProductsPageHref, getRelatedHomepageProducts, toReadableProductText } from '@/lib/products'
+import {
+  getProductCategoryForProduct,
+  getProductDetailBackHref,
+  getProductDetailHref,
+  getRelatedHomepageProducts,
+  toReadableProductText,
+} from '@/lib/products'
 import { getProductEnquiryHref } from '@/lib/contact'
 import { getProductDetailSpecs } from '@/lib/product-specs'
 import { UniNavbar } from '@/components/UniNavbar'
@@ -25,8 +32,11 @@ function BackArrowIcon() {
 }
 
 export default function KvsProductDetailPage({ product }: { product: Product }) {
+  const searchParams = useSearchParams()
   const related = getRelatedHomepageProducts(product.slug)
   const parentCategory = getProductCategoryForProduct(product.slug)
+  const categorySlug = searchParams.get('category')
+  const materialSlug = searchParams.get('material')
   const [activeImage, setActiveImage] = useState(0)
   const [imageZoom, setImageZoom] = useState({ active: false, x: 50, y: 50 })
   const images = product.images.length > 0 ? product.images : [product.img]
@@ -45,9 +55,16 @@ export default function KvsProductDetailPage({ product }: { product: Product }) 
 
   const specs = getProductDetailSpecs(product)
 
-  const backHref = parentCategory
-    ? getProductsPageHref(parentCategory.slug)
-    : '/products'
+  const backHref = getProductDetailBackHref({
+    categorySlug,
+    materialSlug,
+    product,
+  })
+
+  const detailContext = {
+    categorySlug: categorySlug ?? parentCategory?.slug,
+    materialSlug: materialSlug ?? undefined,
+  }
 
   return (
     <div className="uniPage">
@@ -118,26 +135,44 @@ export default function KvsProductDetailPage({ product }: { product: Product }) 
           </div>
         </section>
 
-        {product.features.length > 0 ? (
-          <section className="uniProductFeaturesBand">
-            <div className="uniContainer">
-              <div className="uniProductFeaturesHead">
-                <h2 className="uniProductSectionTitle">Key features</h2>
-                <p className="uniProductFeaturesSub">
-                  Quality and supply you can rely on for {product.title}.
-                </p>
-              </div>
-              <ul className="uniProductFeaturesGrid">
-                {product.features.map((feature) => (
-                  <li key={feature} className="uniProductFeatureCard">
-                    <span className="uniProductFeatureText">{feature}</span>
-                  </li>
-                ))}
-              </ul>
+        {product.features.length > 0 || specs.length > 0 ? (
+          <section className="uniProductDetails">
+            <div
+              className={`uniContainer uniProductDetailsGrid${
+                product.features.length === 0 ? ' uniProductDetailsGrid--specsOnly' : ''
+              }`}
+            >
+              {product.features.length > 0 ? (
+                <div className="uniProductFeaturesCol">
+                  <h2 className="uniProductSectionTitle">Key features</h2>
+                  <ul className="uniProductFeaturesGrid uniProductFeaturesGrid--compact">
+                    {product.features.map((feature) => (
+                      <li key={feature} className="uniProductFeatureCard">
+                        <span className="uniProductFeatureText">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+
+              {specs.length > 0 ? (
+                <div className="uniProductSpecsCard">
+                  <h2 className="uniProductSectionTitle">Specifications</h2>
+                  <dl className="uniProductSpecsList">
+                    {specs.map((item) => (
+                      <div key={item.label} className="uniProductSpecRow">
+                        <dt>{item.label}</dt>
+                        <dd>{item.value}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </div>
+              ) : null}
             </div>
           </section>
         ) : null}
 
+        {/* Product overview — hidden per layout request
         <section className="uniProductDetails">
           <div className="uniContainer uniProductDetailsGrid">
             <div className="uniProductDescription">
@@ -149,20 +184,9 @@ export default function KvsProductDetailPage({ product }: { product: Product }) 
                 {product.description.trim() || product.shortDescription}
               </p>
             </div>
-
-            <div className="uniProductSpecsCard">
-              <h2 className="uniProductSectionTitle">Specifications</h2>
-              <dl className="uniProductSpecsList">
-                {specs.map((item) => (
-                  <div key={item.label} className="uniProductSpecRow">
-                    <dt>{item.label}</dt>
-                    <dd>{item.value}</dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
           </div>
         </section>
+        */}
 
         {related.length > 0 && (
           <section className="uniProductRelated">
@@ -172,14 +196,7 @@ export default function KvsProductDetailPage({ product }: { product: Product }) 
                   <p className="uniEyebrow">Explore more</p>
                   <h2>Related metal products</h2>
                 </div>
-                <Link
-                  href={
-                    parentCategory
-                      ? getProductsPageHref(parentCategory.slug)
-                      : '/products'
-                  }
-                  className="uniProductRelatedLink"
-                >
+                <Link href={backHref} className="uniProductRelatedLink">
                   View category
                 </Link>
               </div>
@@ -187,7 +204,7 @@ export default function KvsProductDetailPage({ product }: { product: Product }) 
                 {related.map((item) => (
                   <Link
                     key={item.slug}
-                    href={`/products/${item.slug}`}
+                    href={getProductDetailHref(item.slug, detailContext)}
                     className="productCatalogCard"
                     aria-label={`View details for ${item.title}`}
                   >

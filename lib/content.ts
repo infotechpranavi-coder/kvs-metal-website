@@ -33,7 +33,7 @@ export const heroContent = {
 export const aboutUsHome = {
   eyebrow: 'About Us',
   tagline: 'Trusted',
-  title: 'steel supplier in Dubai, UAE',
+  title: 'Steel Supplier in Dubai, UAE',
   paragraphs: [
     'KVS Metals is a trusted steel supplier and steel trading company in Dubai, UAE. We are committed to delivering steel solutions backed by quality, consistency, industry expertise and professionalism.',
     'Our structural and industrial steel products support applications requiring performance, durability, and precision.',
@@ -91,6 +91,8 @@ export const productsHome = {
   paragraphs: [
     'KVS Metals supplies a comprehensive range of structural and industrial steel materials designed to meet the demands of modern construction, fabrication, engineering, and industrial projects.',
     'Available in multiple grades, sizes, and specifications, our products include coils, sheets, pipes, structural sections, bars, channels, and foundation materials procured as per international standards.',
+    'We combine quality products, dependable sourcing, and 25+ years industry expertise to deliver steel solutions businesses can rely on with confidence.',
+    'From enquiry to delivery, we ensure a seamless procurement experience backed by responsive service and reliable supply with our comprehensive product range.',
   ],
 }
 

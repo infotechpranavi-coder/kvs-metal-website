@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import type { ReactNode } from 'react'
 import { useState } from 'react'
 import { FooterProductsColumn } from './FooterProductsColumn'
@@ -28,6 +29,18 @@ function FooterContactIcon({ children }: { children: ReactNode }) {
 
 export function FooterMainGrid() {
   const [hasProducts, setHasProducts] = useState(false)
+  const pathname = usePathname()
+
+  const handlePageLinkClick = (
+    event: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
+    const pathOnly = href.split('#')[0] || '/'
+    if (pathOnly === pathname) {
+      event.preventDefault()
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }
 
   return (
     <div
@@ -45,7 +58,9 @@ export function FooterMainGrid() {
         <ul>
           {pageLinks.map((item) => (
             <li key={item.label}>
-              <Link href={item.href}>{item.label}</Link>
+              <Link href={item.href} onClick={(event) => handlePageLinkClick(event, item.href)}>
+                {item.label}
+              </Link>
             </li>
           ))}
         </ul>

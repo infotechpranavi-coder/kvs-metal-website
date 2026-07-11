@@ -45,6 +45,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Category slug already exists' }, { status: 409 })
     }
 
+    const count = await CategoryModel.countDocuments()
+
     const category = await CategoryModel.create({
       slug,
       title: data.title,
@@ -54,7 +56,7 @@ export async function POST(request: Request) {
       headline: data.headline || '',
       paragraphs: data.paragraphs || [],
       productSlugs: data.productSlugs || [],
-      sortOrder: data.sortOrder ?? 0,
+      sortOrder: data.sortOrder ?? count + 1,
       showOnHomepage: data.showOnHomepage ?? false,
     })
 

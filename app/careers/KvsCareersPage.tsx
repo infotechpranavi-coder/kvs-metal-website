@@ -69,7 +69,6 @@ export default function KvsCareersPage() {
               height={720}
             />
           </div>
-          <div className="kvsCareersHeroOverlay" aria-hidden />
           <div className="kvsCareersHeroFade" aria-hidden />
 
           <div className="uniContainer productCatalogHeroContainer sectorDetailHeroContent">
