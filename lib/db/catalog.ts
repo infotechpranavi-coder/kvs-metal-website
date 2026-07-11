@@ -1,7 +1,43 @@
 import { connectDB } from '@/lib/mongodb'
 import { CategoryModel } from '@/models/Category'
+import { ProductModel } from '@/models/Product'
 import { serializeCategory, serializeMaterial, type CategoryDto, type MaterialDto } from '@/lib/serializers'
 import { MaterialModel } from '@/models/Material'
+
+export async function syncProductsForCategoryUpdate(
+  categoryId: string,
+  nextTitle: string,
+  previousTitle?: string,
+) {
+  await connectDB()
+
+  await ProductModel.updateMany({ categoryId }, { $set: { category: nextTitle } })
+
+  if (previousTitle && previousTitle !== nextTitle) {
+    await ProductModel.updateMany(
+      {
+        category: previousTitle,
+        $or: [{ categoryId: null }, { categoryId: { $exists: false } }],
+      },
+      { $set: { category: nextTitle, categoryId } },
+    )
+  }
+}
+
+/** Keep denormalized product.category labels aligned with linked category documents. */
+export async function repairStaleProductCategoryLabels() {
+  await connectDB()
+  const categories = await CategoryModel.find().lean()
+
+  await Promise.all(
+    categories.map((category) =>
+      ProductModel.updateMany(
+        { categoryId: category._id },
+        { $set: { category: category.title } },
+      ),
+    ),
+  )
+}
 
 export async function getMaterialsForApi(): Promise<MaterialDto[]> {
   try {

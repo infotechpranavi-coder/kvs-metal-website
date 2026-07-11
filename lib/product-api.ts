@@ -11,6 +11,7 @@ export function productDtoToProduct(dto: ProductDto): Product {
     img: dto.img,
     images: dto.images.length > 0 ? dto.images : [dto.img],
     category: dto.category,
+    categoryId: dto.categoryId,
     badge: dto.badge || undefined,
     shortDescription: dto.shortDescription,
     description: dto.description || dto.shortDescription,

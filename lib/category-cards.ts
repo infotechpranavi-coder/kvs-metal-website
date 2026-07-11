@@ -11,6 +11,7 @@ export function sortCategoriesByOrder<T extends { sortOrder?: number; title: str
 
 export function categoryDtoToHomepageCategory(category: CategoryDto): HomepageProductCategory {
   return {
+    id: category.id,
     slug: category.slug,
     title: category.title,
     img: category.img,

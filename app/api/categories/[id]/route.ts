@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { requireDashboardAuth } from '@/lib/api-auth'
-import { enrichCategoriesWithMaterial } from '@/lib/db/catalog'
+import { enrichCategoriesWithMaterial, syncProductsForCategoryUpdate } from '@/lib/db/catalog'
 import { findCategoryDocument, setCategoryMaterial, unlinkCategoryFromMaterials } from '@/lib/db/seed'
 import { CategoryModel } from '@/models/Category'
 import { getMaterialIdForCategory } from '@/lib/db/catalog'
@@ -48,6 +48,7 @@ export async function PATCH(request: Request, { params }: RouteContext) {
     }
 
     const data = parsed.data
+    const previousTitle = existing.title
     const slug = data.slug?.trim() || (data.title ? slugify(data.title) : undefined)
     if (slug && slug !== existing.slug) {
       const conflict = await CategoryModel.findOne({ slug })
@@ -75,6 +76,10 @@ export async function PATCH(request: Request, { params }: RouteContext) {
     }
 
     await existing.save()
+
+    if (data.title !== undefined && data.title !== previousTitle) {
+      await syncProductsForCategoryUpdate(existing._id.toString(), existing.title, previousTitle)
+    }
 
     if (data.materialId !== undefined) {
       const nextMaterialId = data.materialId?.trim() ? data.materialId.trim() : null

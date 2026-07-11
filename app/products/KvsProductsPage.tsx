@@ -6,6 +6,7 @@ import { categoryDtoToHomepageCategory, fetchProductsCatalog } from '@/lib/categ
 import { fetchProducts } from '@/lib/product-api'
 import type { MaterialSupply } from '@/lib/materials'
 import { filterProductsByQuery, getProductsPageHref, type HomepageProductCategory, type Product } from '@/lib/products'
+import { productBelongsToAnyCategory, productBelongsToCategory } from '@/lib/product-category'
 import { sortProductsBySku } from '@/lib/product-sku'
 import { ProductCatalogView } from '@/components/ProductCatalogView'
 
@@ -112,13 +113,12 @@ export default function KvsProductsPage() {
 
   const scopedCatalogProducts = useMemo(() => {
     if (!material) return catalogProducts
-    const allowed = new Set(sidebarCategories.map((item) => item.title))
-    return catalogProducts.filter((product) => allowed.has(product.category))
+    return catalogProducts.filter((product) => productBelongsToAnyCategory(product, sidebarCategories))
   }, [catalogProducts, material, sidebarCategories])
 
   const products = useMemo(() => {
     const scoped = category
-      ? scopedCatalogProducts.filter((product) => product.category === category.title)
+      ? scopedCatalogProducts.filter((product) => productBelongsToCategory(product, category))
       : scopedCatalogProducts
 
     return sortProductsBySku(filterProductsByQuery(scoped, searchQuery))

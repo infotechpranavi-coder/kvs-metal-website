@@ -7,6 +7,7 @@ export type Product = {
   img: string
   images: string[]
   category: string
+  categoryId?: string | null
   badge?: string
   compareAt?: string
   shortDescription: string
@@ -47,6 +48,7 @@ export type LimitedProduct = {
 }
 
 import { kvsProductCategories } from './kvs-catalog'
+import { productBelongsToCategory } from './product-category'
 import { sortProductsBySku } from './product-sku'
 
 const homepageProductSlugs = kvsProductCategories.flatMap((category) => category.productSlugs)
@@ -93,6 +95,7 @@ export function parsePrice(price: string): number {
 }
 
 export type HomepageProductCategory = {
+  id?: string
   slug: string
   title: string
   img: string
@@ -150,12 +153,18 @@ export function getProductDetailHref(
 }
 
 export function resolveProductCategorySlug(
-  product: Pick<Product, 'slug' | 'category'>,
+  product: Pick<Product, 'slug' | 'category' | 'categoryId'>,
+  categories: Array<Pick<HomepageProductCategory, 'id' | 'slug' | 'title'>> = homepageProductCategories,
 ): string | undefined {
+  if (product.categoryId) {
+    const byId = categories.find((item) => item.id === product.categoryId)
+    if (byId) return byId.slug
+  }
+
   const fromCatalog = getProductCategoryForProduct(product.slug)
   if (fromCatalog) return fromCatalog.slug
 
-  return homepageProductCategories.find((item) => item.title === product.category)?.slug
+  return categories.find((item) => item.title === product.category)?.slug
 }
 
 export function getProductDetailBackHref(options: {
@@ -186,14 +195,14 @@ export function getCategoryProducts(category: HomepageProductCategory): Product[
   )
 }
 
-/** Products for sidebar subnav — matches grid filtering by category title. */
+/** Products for sidebar subnav — matches grid filtering by category id/title. */
 export function getProductsForCategory(
   category: HomepageProductCategory,
   catalogProducts: Product[],
 ): Product[] {
-  const byTitle = catalogProducts.filter((product) => product.category === category.title)
-  if (byTitle.length > 0) {
-    return sortProductsBySku(byTitle)
+  const matched = catalogProducts.filter((product) => productBelongsToCategory(product, category))
+  if (matched.length > 0) {
+    return sortProductsBySku(matched)
   }
 
   return getCategoryProducts(category)

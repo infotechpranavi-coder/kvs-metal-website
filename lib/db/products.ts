@@ -1,10 +1,12 @@
 import { connectDB } from '@/lib/mongodb'
+import { repairStaleProductCategoryLabels } from '@/lib/db/catalog'
 import { sortProductsBySku } from '@/lib/product-sku'
 import { ProductModel } from '@/models/Product'
 import { serializeProduct, type ProductDto } from '@/lib/serializers'
 
 export async function getProductsForApi(): Promise<ProductDto[]> {
   await connectDB()
+  await repairStaleProductCategoryLabels()
   const rows = await ProductModel.find().lean()
   return sortProductsBySku(rows.map((row) => serializeProduct(row as never)))
 }

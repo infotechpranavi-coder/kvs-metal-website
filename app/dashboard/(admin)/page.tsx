@@ -326,7 +326,10 @@ export default function DashboardProductsPage() {
                   </td>
                   <td>{row.sku}</td>
                   <td>
-                    <span className="dashBadge dashBadge--sm dashBadge--on">{row.category}</span>
+                    <span className="dashBadge dashBadge--sm dashBadge--on">
+                      {categories.find((category) => category.id === row.categoryId)?.title ??
+                        row.category}
+                    </span>
                   </td>
                   <td>{row.showInFooter ? 'Yes' : '—'}</td>
                   <td>
