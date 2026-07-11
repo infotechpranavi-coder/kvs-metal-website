@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { UniNavbar } from '@/components/UniNavbar'
 import { UniFooter } from '@/components/UniFooter'
 import { UniWidgets } from '@/components/UniWidgets'
@@ -15,6 +15,10 @@ export default function KvsCareersPage() {
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState('')
   const [submitSuccess, setSubmitSuccess] = useState(false)
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+  }, [])
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -70,40 +74,25 @@ export default function KvsCareersPage() {
             />
           </div>
           <div className="kvsCareersHeroFade" aria-hidden />
-
-          <div className="uniContainer productCatalogHeroContainer sectorDetailHeroContent">
-            <header className="sectorDetailPageTitle">
-              <div className="sectorDetailAccent" aria-hidden>
-                <span className="sectorDetailAccentBadge" />
-                <span className="sectorDetailAccentRail">
-                  <span className="sectorDetailAccentRailLine sectorDetailAccentRailLine--black" />
-                  <span className="sectorDetailAccentRailLine sectorDetailAccentRailLine--orange" />
-                </span>
-                <span className="sectorDetailAccentFoot">
-                  <span className="sectorDetailAccentFootBar" />
-                  <span className="sectorDetailAccentFootCap" />
-                </span>
-              </div>
-              <div className="productCatalogHeroCopy">
-                <p className="kvsContactEyebrow">{careersPage.eyebrow}</p>
-                <h1>{careersPage.title}</h1>
-                <p className="productCatalogHeroLead">{careersPage.subheading}</p>
-              </div>
-            </header>
-          </div>
         </section>
 
         <section className="kvsContactBody">
           <div className="uniContainer">
-            <div className="kvsContactPanel kvsContactPanel--contentForm">
-              <div className="kvsContactPageHead kvsCareersIntro">
-                {careersPage.intro.map((paragraph) => (
-                  <p key={paragraph} className="kvsContactLead">
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
+            <header className="kvsContactPageHead kvsCareersPageHead">
+              <p className="kvsContactEyebrow">{careersPage.eyebrow}</p>
+              <h1>{careersPage.title}</h1>
+              <p className="kvsContactLead kvsContactLead--strong">{careersPage.subheading}</p>
+            </header>
 
+            <div className="kvsCareersIntro">
+              {careersPage.intro.map((paragraph) => (
+                <p key={paragraph} className="kvsContactLead">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+
+            <div className="kvsCareersFormWrap">
               <div className="kvsContactFormCard">
                 <div className="kvsContactFormCardHead">
                   <h2>{careersPage.formTitle}</h2>
