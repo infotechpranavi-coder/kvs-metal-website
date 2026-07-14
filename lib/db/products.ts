@@ -1,19 +1,33 @@
 import { connectDB } from '@/lib/mongodb'
-import { repairStaleProductCategoryLabels } from '@/lib/db/catalog'
 import { sortProductsBySku } from '@/lib/product-sku'
 import { ProductModel } from '@/models/Product'
-import { serializeProduct, type ProductDto } from '@/lib/serializers'
+import {
+  serializeProduct,
+  serializeProductCatalogCard,
+  type ProductCatalogCardDto,
+  type ProductDto,
+} from '@/lib/serializers'
+
+const catalogCardSelect =
+  'slug title sku category categoryId img badge shortDescription sortOrder showInFooter'
 
 export async function getProductsForApi(): Promise<ProductDto[]> {
   await connectDB()
-  await repairStaleProductCategoryLabels()
   const rows = await ProductModel.find().lean()
   return sortProductsBySku(rows.map((row) => serializeProduct(row as never)))
+}
+
+/** Lean payload for storefront product grids/sidebars — skips heavy detail fields. */
+export async function getProductsCatalogCardsForApi(): Promise<ProductCatalogCardDto[]> {
+  await connectDB()
+  const rows = await ProductModel.find().select(catalogCardSelect).lean()
+  return sortProductsBySku(rows.map((row) => serializeProductCatalogCard(row as never)))
 }
 
 export async function getFooterProductsForApi(): Promise<ProductDto[]> {
   await connectDB()
   const rows = await ProductModel.find({ showInFooter: true })
+    .select(catalogCardSelect)
     .sort({ sortOrder: 1, title: 1 })
     .lean()
   return rows.map((row) => serializeProduct(row as never))

@@ -91,6 +91,21 @@ export type ProductDto = {
   updatedAt: string
 }
 
+/** Minimal product shape used by products page / homepage listings. */
+export type ProductCatalogCardDto = {
+  id: string
+  slug: string
+  title: string
+  sku: string
+  category: string
+  categoryId: string | null
+  img: string
+  badge: string
+  shortDescription: string
+  showInFooter: boolean
+  sortOrder: number
+}
+
 type PopulatedCategoryRef = {
   _id: mongoose.Types.ObjectId
   slug: string
@@ -205,5 +220,35 @@ export function serializeProduct(product: ProductDocument): ProductDto {
     sortOrder: product.sortOrder ?? 0,
     createdAt: product.createdAt ? new Date(product.createdAt).toISOString() : new Date(0).toISOString(),
     updatedAt: product.updatedAt ? new Date(product.updatedAt).toISOString() : new Date(0).toISOString(),
+  }
+}
+
+export function serializeProductCatalogCard(
+  product: Pick<
+    ProductDocument,
+    | 'slug'
+    | 'title'
+    | 'sku'
+    | 'category'
+    | 'categoryId'
+    | 'img'
+    | 'badge'
+    | 'shortDescription'
+    | 'showInFooter'
+    | 'sortOrder'
+  > & { _id: ProductDocument['_id'] },
+): ProductCatalogCardDto {
+  return {
+    id: product._id.toString(),
+    slug: product.slug,
+    title: product.title,
+    sku: product.sku,
+    category: product.category,
+    categoryId: product.categoryId ? product.categoryId.toString() : null,
+    img: product.img,
+    badge: product.badge || '',
+    shortDescription: product.shortDescription || '',
+    showInFooter: product.showInFooter === true,
+    sortOrder: product.sortOrder ?? 0,
   }
 }

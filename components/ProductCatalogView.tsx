@@ -17,7 +17,7 @@ import {
   ProductCatalogHeroSkeleton,
   ProductCatalogSidebarSkeleton,
 } from '@/components/CatalogSkeletons'
-import { catalogCardImageUrl } from '@/lib/image-url'
+import { catalogCardImageSrcSet, catalogCardImageUrl } from '@/lib/image-url'
 
 type ProductCatalogViewProps = {
   loading?: boolean
@@ -249,7 +249,9 @@ export function ProductCatalogView({
                       >
                         <div className="productCatalogCardMedia">
                           <img
-                            src={catalogCardImageUrl(product.img)}
+                            src={catalogCardImageUrl(product.img, 360)}
+                            srcSet={catalogCardImageSrcSet(product.img)}
+                            sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 260px"
                             alt={product.title}
                             loading="lazy"
                             decoding="async"

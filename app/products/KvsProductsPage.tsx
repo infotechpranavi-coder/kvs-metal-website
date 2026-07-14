@@ -44,36 +44,22 @@ export default function KvsProductsPage() {
   useEffect(() => {
     let cancelled = false
 
-    fetchProductsCatalog()
-      .then(({ categories: nextCategories, materials: nextMaterials }) => {
+    Promise.all([fetchProductsCatalog(), fetchProducts()])
+      .then(([catalog, products]) => {
         if (cancelled) return
-        setCategories(nextCategories.map(categoryDtoToHomepageCategory))
-        setMaterials(nextMaterials.map(materialDtoToSupply))
+        setCategories(catalog.categories.map(categoryDtoToHomepageCategory))
+        setMaterials(catalog.materials.map(materialDtoToSupply))
+        setCatalogProducts(products)
       })
       .catch(() => {
         if (!cancelled) {
           setCategories([])
           setMaterials([])
+          setCatalogProducts([])
         }
       })
       .finally(() => {
         if (!cancelled) setCatalogReady(true)
-      })
-
-    return () => {
-      cancelled = true
-    }
-  }, [])
-
-  useEffect(() => {
-    let cancelled = false
-
-    fetchProducts()
-      .then((products) => {
-        if (!cancelled) setCatalogProducts(products)
-      })
-      .catch(() => {
-        if (!cancelled) setCatalogProducts([])
       })
 
     return () => {

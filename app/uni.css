@@ -6599,24 +6599,29 @@
 
 .uniFooterDropdownChevron {
   flex-shrink: 0;
-  width: 18px;
-  height: 18px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 999px;
-  border: 1px solid rgba(26, 54, 93, 0.22);
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 1;
+  width: 8px;
+  height: 8px;
+  display: inline-block;
+  margin-left: 4px;
+  border: 0;
+  border-radius: 0;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  background: transparent;
+  font-size: 0;
   color: inherit;
-  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+  transform: rotate(45deg) translateY(-1px);
+  transition: transform 0.2s ease;
+}
+
+.uniFooterDropdownToggle:hover .uniFooterDropdownChevron,
+.uniFooterDropdown--open .uniFooterDropdownChevron {
+  border-color: currentColor;
+  background: transparent;
 }
 
 .uniFooterDropdown--open .uniFooterDropdownChevron {
-  border-color: rgba(255, 107, 53, 0.45);
-  background: rgba(255, 107, 53, 0.1);
-  color: var(--uni-orange);
+  transform: rotate(-135deg) translateY(1px);
 }
 
 .uniFooterDropdownMenu {

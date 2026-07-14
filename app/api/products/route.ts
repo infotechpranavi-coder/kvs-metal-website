@@ -1,18 +1,38 @@
 import { NextResponse } from 'next/server'
 import { requireDashboardAuth } from '@/lib/api-auth'
-import { getNextProductSku, getProductsForApi } from '@/lib/db/products'
+import {
+  getNextProductSku,
+  getProductsCatalogCardsForApi,
+  getProductsForApi,
+} from '@/lib/db/products'
 import { connectDB, parseOptionalObjectId } from '@/lib/mongodb'
 import { ProductModel } from '@/models/Product'
 import { serializeProduct } from '@/lib/serializers'
 import { slugify } from '@/lib/slug'
 import { productInputSchema } from '@/lib/validation'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 30
 
-export async function GET() {
+function withCacheHeaders(body: unknown, init?: ResponseInit) {
+  return NextResponse.json(body, {
+    ...init,
+    headers: {
+      ...(init?.headers ?? {}),
+      'Cache-Control': 'public, s-maxage=30, stale-while-revalidate=120',
+    },
+  })
+}
+
+export async function GET(request: Request) {
   try {
+    const view = new URL(request.url).searchParams.get('view')
+    if (view === 'catalog') {
+      const products = await getProductsCatalogCardsForApi()
+      return withCacheHeaders({ products })
+    }
+
     const products = await getProductsForApi()
-    return NextResponse.json({ products })
+    return withCacheHeaders({ products })
   } catch {
     return NextResponse.json({ error: 'Failed to load products' }, { status: 500 })
   }

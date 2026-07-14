@@ -30,6 +30,10 @@ const ProductSchema = new Schema(
   { timestamps: true },
 )
 
+ProductSchema.index({ categoryId: 1 })
+ProductSchema.index({ showInFooter: 1, sortOrder: 1 })
+ProductSchema.index({ sortOrder: 1, title: 1 })
+
 export type ProductDocument = InferSchemaType<typeof ProductSchema> & {
   _id: mongoose.Types.ObjectId
   createdAt: Date

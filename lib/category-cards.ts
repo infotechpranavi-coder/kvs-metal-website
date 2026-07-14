@@ -33,8 +33,10 @@ export function categoryToProductCard(category: CategoryDto) {
 }
 
 export async function fetchHomepageCategories(): Promise<CategoryDto[]> {
-  const { categories } = await fetchProductsCatalog()
-  return sortCategoriesByOrder(categories.filter((category) => category.showOnHomepage))
+  const response = await fetch('/api/categories/homepage')
+  if (!response.ok) return []
+  const data = await response.json()
+  return sortCategoriesByOrder(Array.isArray(data.categories) ? data.categories : [])
 }
 
 export async function fetchProductsCatalog(): Promise<{

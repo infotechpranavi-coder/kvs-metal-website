@@ -1,15 +1,12 @@
 import { connectDB } from '@/lib/mongodb'
 import { CategoryModel } from '@/models/Category'
 import { MaterialModel } from '@/models/Material'
-import { ProductModel } from '@/models/Product'
-import { repairStaleProductCategoryLabels } from '@/lib/db/catalog'
 import { serializeCategory, serializeMaterial } from '@/lib/serializers'
 
 /** One DB connection, parallel queries — used by /api/catalog */
 export async function getProductsCatalogBundle() {
   try {
     await connectDB()
-    await repairStaleProductCategoryLabels()
 
     const [categoryRows, materialRows] = await Promise.all([
       CategoryModel.find().sort({ sortOrder: 1, title: 1 }).lean(),

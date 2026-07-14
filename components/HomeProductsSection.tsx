@@ -84,7 +84,7 @@ export function HomeProductsSection() {
                         <span className="uniSectorsDiamondFrame">
                           <span className="uniSectorsDiamondMedia">
                             <img
-                              src={catalogCardImageUrl(card.img)}
+                              src={catalogCardImageUrl(card.img, 420)}
                               alt={card.title}
                               loading="lazy"
                               decoding="async"

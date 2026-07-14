@@ -73,9 +73,7 @@ export function FooterMainGrid() {
               onClick={() => setIndustriesOpen((open) => !open)}
             >
               Industries We Serve
-              <span className="uniFooterDropdownChevron" aria-hidden>
-                {industriesOpen ? '−' : '+'}
-              </span>
+              <span className="uniFooterDropdownChevron" aria-hidden />
             </button>
             {industriesOpen ? (
               <ul className="uniFooterDropdownMenu">
