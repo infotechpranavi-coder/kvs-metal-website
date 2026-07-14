@@ -11,12 +11,12 @@ import {
   PHONE_DISPLAY,
   PHONE_E164,
 } from '@/lib/content'
+import { sectors } from '@/lib/sectors'
 import { KvsLogo } from './KvsLogo'
 
 const pageLinks = [
   { label: 'Home', href: '/' },
   { label: 'About Us', href: '/about' },
-  { label: 'Industries We Serve', href: '/#sectors' },
   { label: 'Products', href: '/products' },
   { label: 'Product Brochure', href: '/brochure' },
   { label: 'Careers', href: '/careers' },
@@ -29,6 +29,7 @@ function FooterContactIcon({ children }: { children: ReactNode }) {
 
 export function FooterMainGrid() {
   const [hasProducts, setHasProducts] = useState(false)
+  const [industriesOpen, setIndustriesOpen] = useState(false)
   const pathname = usePathname()
 
   const handlePageLinkClick = (
@@ -56,7 +57,48 @@ export function FooterMainGrid() {
       <div className="uniFooterCol">
         <h4>Links</h4>
         <ul>
-          {pageLinks.map((item) => (
+          {pageLinks.slice(0, 2).map((item) => (
+            <li key={item.label}>
+              <Link href={item.href} onClick={(event) => handlePageLinkClick(event, item.href)}>
+                {item.label}
+              </Link>
+            </li>
+          ))}
+
+          <li className={`uniFooterDropdown${industriesOpen ? ' uniFooterDropdown--open' : ''}`}>
+            <button
+              type="button"
+              className="uniFooterDropdownToggle"
+              aria-expanded={industriesOpen}
+              onClick={() => setIndustriesOpen((open) => !open)}
+            >
+              Industries We Serve
+              <span className="uniFooterDropdownChevron" aria-hidden>
+                {industriesOpen ? '−' : '+'}
+              </span>
+            </button>
+            {industriesOpen ? (
+              <ul className="uniFooterDropdownMenu">
+                {sectors.map((sector) => (
+                  <li key={sector.slug}>
+                    <Link
+                      href={`/sectors/${sector.slug}`}
+                      className={
+                        pathname === `/sectors/${sector.slug}`
+                          ? 'uniFooterDropdownLink--active'
+                          : undefined
+                      }
+                      onClick={() => setIndustriesOpen(false)}
+                    >
+                      {sector.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+          </li>
+
+          {pageLinks.slice(2).map((item) => (
             <li key={item.label}>
               <Link href={item.href} onClick={(event) => handlePageLinkClick(event, item.href)}>
                 {item.label}
