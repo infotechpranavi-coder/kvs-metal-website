@@ -5569,6 +5569,10 @@
   box-shadow: 0 14px 32px rgba(26, 54, 93, 0.18);
 }
 
+.productCatalogBulkCta--afterGrid {
+  display: none;
+}
+
 .productCatalogBulkCta h4 {
   margin: 0 0 4px;
   font-size: 14px;
@@ -9490,6 +9494,16 @@
     flex-direction: column;
     align-items: stretch;
     gap: 12px;
+  }
+
+  .productCatalogBulkCta--hero {
+    display: none;
+  }
+
+  .productCatalogBulkCta--afterGrid {
+    display: block;
+    width: 100%;
+    margin: 20px 0 0;
   }
 
   .productCatalogBulkCta {

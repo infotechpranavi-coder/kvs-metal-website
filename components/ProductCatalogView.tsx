@@ -105,7 +105,7 @@ export function ProductCatalogView({
                         <p className="productCatalogHeroLead">{heroDescription}</p>
                       ) : null}
                     </div>
-                    <div className="productCatalogBulkCta">
+                    <div className="productCatalogBulkCta productCatalogBulkCta--hero">
                       <h4>Bulk pricing</h4>
                       <p>Need pricing or bulk supply for your project?</p>
                       <Link href="/contact" className="productCatalogSidebarBtn">
@@ -276,6 +276,16 @@ export function ProductCatalogView({
                     ))
                   )}
                 </div>
+
+                {!loading ? (
+                  <div className="productCatalogBulkCta productCatalogBulkCta--afterGrid">
+                    <h4>Bulk pricing</h4>
+                    <p>Need pricing or bulk supply for your project?</p>
+                    <Link href="/contact" className="productCatalogSidebarBtn">
+                      Get a Quote
+                    </Link>
+                  </div>
+                ) : null}
               </section>
             </div>
           </div>
