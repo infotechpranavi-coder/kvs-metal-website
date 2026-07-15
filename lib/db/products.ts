@@ -9,7 +9,7 @@ import {
 } from '@/lib/serializers'
 
 const catalogCardSelect =
-  'slug title sku category categoryId img badge shortDescription sortOrder showInFooter'
+  'slug title sku category categoryId materialId img badge shortDescription sortOrder showInFooter'
 
 export async function getProductsForApi(): Promise<ProductDto[]> {
   await connectDB()

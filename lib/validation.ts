@@ -63,6 +63,7 @@ export const productInputSchema = z.object({
   sku: z.string().max(40).optional(),
   category: z.string().min(1).max(200),
   categoryId: z.string().optional().nullable(),
+  materialId: z.string().optional().nullable(),
   img: z.string().min(1),
   images: z.array(z.string()).optional(),
   shortDescription: z.string().optional(),

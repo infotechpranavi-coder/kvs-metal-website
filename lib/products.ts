@@ -8,6 +8,7 @@ export type Product = {
   images: string[]
   category: string
   categoryId?: string | null
+  materialId?: string | null
   badge?: string
   compareAt?: string
   shortDescription: string

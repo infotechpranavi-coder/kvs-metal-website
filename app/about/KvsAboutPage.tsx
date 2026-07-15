@@ -84,6 +84,18 @@ export default function KvsAboutPage() {
           </div>
         </ScrollReveal>
 
+        <ScrollReveal as="div">
+          <HomeCtaSection
+            title={`${aboutPage.ctaTitle} ${aboutPage.ctaText}`}
+            ctaLabel={aboutPage.ctaLabel}
+            ctaHref={aboutPage.ctaHref}
+            phoneLabel={aboutPage.ctaPhoneLabel}
+            showPhone
+            hideImage
+            midPage
+          />
+        </ScrollReveal>
+
         <ScrollReveal as="section" className="kvsAboutValues">
           <div className="uniContainer">
             <div className="kvsAboutValuesHead">
@@ -146,17 +158,6 @@ export default function KvsAboutPage() {
               </div>
             </div>
           </div>
-        </ScrollReveal>
-
-        <ScrollReveal as="div">
-          <HomeCtaSection
-            title={`${aboutPage.ctaTitle} ${aboutPage.ctaText}`}
-            ctaLabel={aboutPage.ctaLabel}
-            ctaHref={aboutPage.ctaHref}
-            phoneLabel={aboutPage.ctaPhoneLabel}
-            showPhone
-            hideImage
-          />
         </ScrollReveal>
       </main>
       <UniFooter />

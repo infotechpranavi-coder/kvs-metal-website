@@ -72,6 +72,7 @@ export async function POST(request: Request) {
       sku,
       category: data.category,
       categoryId: parseOptionalObjectId(data.categoryId),
+      materialId: parseOptionalObjectId(data.materialId),
       img: data.img,
       images,
       shortDescription: data.shortDescription || '',

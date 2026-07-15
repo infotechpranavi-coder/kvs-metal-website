@@ -43,6 +43,7 @@ export async function PUT(request: Request, context: RouteContext) {
     existing.title = data.title
     existing.category = data.category
     existing.categoryId = parseOptionalObjectId(data.categoryId)
+    existing.materialId = parseOptionalObjectId(data.materialId)
     existing.img = data.img
     existing.images = images
     existing.shortDescription = data.shortDescription || ''

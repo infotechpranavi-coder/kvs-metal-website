@@ -200,7 +200,7 @@ export const aboutPage = {
     'Transparent Dealings',
   ],
   ctaTitle: 'Ready to discuss your steel requirements?',
-  ctaText: 'Share requirements — we will respond with a tailored quote.',
+  ctaText: 'We will respond with a tailored quote.',
   ctaLabel: 'Request A Call',
   ctaHref: PHONE_TEL_HREF,
   ctaPhoneLabel: 'Call Us',

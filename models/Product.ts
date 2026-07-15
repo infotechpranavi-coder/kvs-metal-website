@@ -7,6 +7,7 @@ const ProductSchema = new Schema(
     sku: { type: String, required: true, trim: true },
     category: { type: String, required: true, trim: true },
     categoryId: { type: Schema.Types.ObjectId, ref: 'Category', default: null },
+    materialId: { type: Schema.Types.ObjectId, ref: 'Material', default: null },
     img: { type: String, required: true },
     images: { type: [String], default: [] },
     shortDescription: { type: String, default: '' },
@@ -31,6 +32,7 @@ const ProductSchema = new Schema(
 )
 
 ProductSchema.index({ categoryId: 1 })
+ProductSchema.index({ materialId: 1 })
 ProductSchema.index({ showInFooter: 1, sortOrder: 1 })
 ProductSchema.index({ sortOrder: 1, title: 1 })
 

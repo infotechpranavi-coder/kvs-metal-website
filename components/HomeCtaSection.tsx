@@ -11,6 +11,7 @@ type HomeCtaSectionProps = {
   phoneLabel?: string
   showPhone?: boolean
   hideImage?: boolean
+  midPage?: boolean
 }
 
 export function HomeCtaSection({
@@ -23,11 +24,12 @@ export function HomeCtaSection({
   phoneLabel = 'Call Us',
   showPhone = false,
   hideImage = false,
+  midPage = false,
 }: HomeCtaSectionProps) {
   const ctaIsPhoneLink = ctaHref.startsWith('tel:')
 
   return (
-    <section className="uniHomeCta">
+    <section className={`uniHomeCta${midPage ? ' uniHomeCta--midPage' : ''}`}>
       <div className="uniContainer">
         <div className={`uniHomeCtaInner${hideImage ? ' uniHomeCtaInner--noMedia' : ''}`}>
           <div className="uniHomeCtaContent">

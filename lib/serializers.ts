@@ -68,6 +68,7 @@ export type ProductDto = {
   sku: string
   category: string
   categoryId: string | null
+  materialId: string | null
   img: string
   images: string[]
   shortDescription: string
@@ -99,6 +100,7 @@ export type ProductCatalogCardDto = {
   sku: string
   category: string
   categoryId: string | null
+  materialId: string | null
   img: string
   badge: string
   shortDescription: string
@@ -199,6 +201,7 @@ export function serializeProduct(product: ProductDocument): ProductDto {
     sku: product.sku,
     category: product.category,
     categoryId: product.categoryId ? product.categoryId.toString() : null,
+    materialId: product.materialId ? product.materialId.toString() : null,
     img: product.img,
     images: product.images || [],
     shortDescription: product.shortDescription || '',
@@ -231,6 +234,7 @@ export function serializeProductCatalogCard(
     | 'sku'
     | 'category'
     | 'categoryId'
+    | 'materialId'
     | 'img'
     | 'badge'
     | 'shortDescription'
@@ -245,6 +249,7 @@ export function serializeProductCatalogCard(
     sku: product.sku,
     category: product.category,
     categoryId: product.categoryId ? product.categoryId.toString() : null,
+    materialId: product.materialId ? product.materialId.toString() : null,
     img: product.img,
     badge: product.badge || '',
     shortDescription: product.shortDescription || '',

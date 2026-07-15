@@ -16,6 +16,7 @@ export function productDtoToProduct(dto: ProductDto | ProductCatalogCardDto): Pr
     images,
     category: dto.category,
     categoryId: dto.categoryId,
+    materialId: dto.materialId ?? undefined,
     badge: dto.badge || undefined,
     shortDescription: dto.shortDescription || '',
     description: 'description' in dto ? dto.description || dto.shortDescription : dto.shortDescription || '',

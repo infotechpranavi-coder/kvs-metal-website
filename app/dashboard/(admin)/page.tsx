@@ -6,12 +6,16 @@ import { DashboardImageGalleryField } from '@/components/DashboardImageGalleryFi
 import { BulkImportPanel } from '@/components/superadmin/BulkImportPanel'
 import { readDashboardStore, writeDashboardStore } from '@/lib/dashboard-store'
 import { sortProductsBySku } from '@/lib/product-sku'
-import type { CategoryDto, ProductDto } from '@/lib/serializers'
+import type { CategoryDto, MaterialDto, ProductDto } from '@/lib/serializers'
+
+type CategoryRow = CategoryDto & { materialId?: string | null; materialTitle?: string | null }
 
 const emptyProductForm = {
   title: '',
   sku: '',
   categoryId: '',
+  materialId: '',
+  overrideMaterial: false,
   shortDescription: '',
   description: '',
   typeGrade: '',
@@ -104,7 +108,8 @@ async function migrateLocalProductsIfNeeded(): Promise<boolean> {
 
 export default function DashboardProductsPage() {
   const [rows, setRows] = useState<ProductDto[]>([])
-  const [categories, setCategories] = useState<CategoryDto[]>([])
+  const [categories, setCategories] = useState<CategoryRow[]>([])
+  const [materials, setMaterials] = useState<MaterialDto[]>([])
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [editingId, setEditingId] = useState<string | null>(null)
   const [form, setForm] = useState(emptyProductForm)
@@ -132,36 +137,65 @@ export default function DashboardProductsPage() {
   }, [loadProducts])
 
   useEffect(() => {
-    fetch('/api/categories')
-      .then((response) => response.json())
-      .then((data) => {
-        const nextCategories = data.categories || []
+    Promise.all([fetch('/api/categories'), fetch('/api/materials')])
+      .then(async ([categoriesRes, materialsRes]) => {
+        const categoriesData = await categoriesRes.json()
+        const materialsData = await materialsRes.json()
+        const nextCategories = categoriesData.categories || []
         setCategories(nextCategories)
+        setMaterials(materialsData.materials || [])
         setForm((current) => ({
           ...current,
           categoryId: current.categoryId || nextCategories[0]?.id || '',
+          materialId: current.materialId || nextCategories[0]?.materialId || '',
         }))
       })
       .catch(() => undefined)
   }, [])
 
+  const getCategoryMaterialId = (categoryId: string) =>
+    categories.find((item) => item.id === categoryId)?.materialId ?? ''
+
+  const getMaterialTitle = (materialId: string) =>
+    materials.find((item) => item.id === materialId)?.title ?? ''
+
+  const getProductMaterialLabel = (row: ProductDto) => {
+    if (row.materialId) {
+      return getMaterialTitle(row.materialId) || '—'
+    }
+    const fromCategory = row.categoryId ? getCategoryMaterialId(row.categoryId) : ''
+    return fromCategory ? getMaterialTitle(fromCategory) || '—' : '—'
+  }
+
   const openAddDrawer = () => {
+    const firstCategory = categories[0]
     setEditingId(null)
     setForm({
       ...emptyProductForm,
-      categoryId: categories[0]?.id ?? '',
+      categoryId: firstCategory?.id ?? '',
+      materialId: firstCategory?.materialId ?? '',
+      overrideMaterial: false,
       sku: String(rows.length + 1),
     })
     setDrawerOpen(true)
   }
 
   const openEditDrawer = (row: ProductDto) => {
-    const category = categories.find((item) => item.title === row.category)
+    const category =
+      categories.find((item) => item.id === row.categoryId) ??
+      categories.find((item) => item.title === row.category)
+    const categoryDefaultMaterial = category?.materialId ?? ''
+    const productMaterial = row.materialId ?? ''
+    const hasOverride =
+      Boolean(productMaterial) &&
+      productMaterial !== categoryDefaultMaterial
     setEditingId(row.id)
     setForm({
       title: row.title,
       sku: row.sku,
-      categoryId: category?.id ?? categories[0]?.id ?? '',
+      categoryId: row.categoryId ?? category?.id ?? categories[0]?.id ?? '',
+      materialId: hasOverride ? productMaterial : categoryDefaultMaterial,
+      overrideMaterial: hasOverride,
       shortDescription: row.shortDescription,
       description: row.description,
       typeGrade: row.material ?? '',
@@ -187,6 +221,8 @@ export default function DashboardProductsPage() {
     setForm({
       ...emptyProductForm,
       categoryId: categories[0]?.id ?? '',
+      materialId: categories[0]?.materialId ?? '',
+      overrideMaterial: false,
     })
   }
 
@@ -229,6 +265,9 @@ export default function DashboardProductsPage() {
       sku: form.sku,
       category: category.title,
       categoryId: category.id,
+      materialId: form.overrideMaterial
+        ? form.materialId.trim() || null
+        : category.materialId || null,
       price: '',
       rating: '4.8',
       img: images[0],
@@ -291,6 +330,7 @@ export default function DashboardProductsPage() {
               <th>Product</th>
               <th>SKU</th>
               <th>Category</th>
+              <th>Material</th>
               <th>Footer</th>
               <th />
             </tr>
@@ -298,7 +338,7 @@ export default function DashboardProductsPage() {
           <tbody>
             {rows.length === 0 ? (
               <tr>
-                <td colSpan={6}>No products yet.</td>
+                <td colSpan={7}>No products yet.</td>
               </tr>
             ) : (
               rows.map((row) => (
@@ -330,6 +370,15 @@ export default function DashboardProductsPage() {
                       {categories.find((category) => category.id === row.categoryId)?.title ??
                         row.category}
                     </span>
+                  </td>
+                  <td>
+                    {getProductMaterialLabel(row) !== '—' ? (
+                      <span className="dashBadge dashBadge--sm dashBadge--off">
+                        {getProductMaterialLabel(row)}
+                      </span>
+                    ) : (
+                      '—'
+                    )}
                   </td>
                   <td>{row.showInFooter ? 'Yes' : '—'}</td>
                   <td>
@@ -392,9 +441,17 @@ export default function DashboardProductsPage() {
             <select
               id="product-category"
               value={form.categoryId}
-              onChange={(event) =>
-                setForm((current) => ({ ...current, categoryId: event.target.value }))
-              }
+              onChange={(event) => {
+                const categoryId = event.target.value
+                const categoryMaterialId = getCategoryMaterialId(categoryId)
+                setForm((current) => ({
+                  ...current,
+                  categoryId,
+                  materialId: current.overrideMaterial
+                    ? current.materialId
+                    : categoryMaterialId,
+                }))
+              }}
               required
             >
               <option value="" disabled>
@@ -406,6 +463,79 @@ export default function DashboardProductsPage() {
                 </option>
               ))}
             </select>
+          </div>
+
+          <div className="dashField">
+            <label htmlFor="product-material">Material</label>
+            {!form.overrideMaterial ? (
+              <>
+                <input
+                  id="product-material"
+                  value={
+                    getCategoryMaterialId(form.categoryId)
+                      ? getMaterialTitle(getCategoryMaterialId(form.categoryId))
+                      : 'None — category has no material assigned'
+                  }
+                  readOnly
+                  className="dashInputReadonly"
+                />
+                <p className="dashHint">
+                  Taken from the selected category. Only change if this product needs a different
+                  material.
+                </p>
+                <button
+                  type="button"
+                  className="dashBtn dashBtn--ghost dashBtn--small"
+                  onClick={() =>
+                    setForm((current) => ({
+                      ...current,
+                      overrideMaterial: true,
+                      materialId: getCategoryMaterialId(current.categoryId),
+                    }))
+                  }
+                >
+                  Change material
+                </button>
+              </>
+            ) : (
+              <>
+                <select
+                  id="product-material"
+                  value={form.materialId}
+                  onChange={(event) =>
+                    setForm((current) => ({ ...current, materialId: event.target.value }))
+                  }
+                >
+                  <option value="">None</option>
+                  {materials.map((material) => (
+                    <option key={material.id} value={material.id}>
+                      {material.title}
+                    </option>
+                  ))}
+                </select>
+                <p className="dashHint">
+                  Override for this product only. Category default:{' '}
+                  <strong>
+                    {getCategoryMaterialId(form.categoryId)
+                      ? getMaterialTitle(getCategoryMaterialId(form.categoryId))
+                      : 'None'}
+                  </strong>
+                </p>
+                <button
+                  type="button"
+                  className="dashBtn dashBtn--ghost dashBtn--small"
+                  onClick={() =>
+                    setForm((current) => ({
+                      ...current,
+                      overrideMaterial: false,
+                      materialId: getCategoryMaterialId(current.categoryId),
+                    }))
+                  }
+                >
+                  Use category material
+                </button>
+              </>
+            )}
           </div>
 
           <DashboardImageGalleryField

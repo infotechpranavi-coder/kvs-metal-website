@@ -211,6 +211,16 @@ export function ProductCatalogView({
               </div>
             </aside>
 
+            {!loading ? (
+              <div className="productCatalogBulkCta productCatalogBulkCta--mid">
+                <h4>Bulk pricing</h4>
+                <p>Need pricing or bulk supply for your project?</p>
+                <Link href="/contact" className="productCatalogSidebarBtn">
+                  Get a Quote
+                </Link>
+              </div>
+            ) : null}
+
             <div className="productCatalogMain">
               <section
                 id="productCatalogProducts"
@@ -233,6 +243,38 @@ export function ProductCatalogView({
                   )}
                 </div>
 
+                {!loading && products.length === 0 ? (
+                  <div className="productCatalogEmpty" role="status">
+                    <span className="productCatalogEmptyIcon" aria-hidden>
+                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                        <path
+                          d="M21 21L16.65 16.65M19 11a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z"
+                          stroke="currentColor"
+                          strokeWidth="1.8"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </span>
+                    <h4>
+                      {searchQuery.trim()
+                        ? 'No matching products found'
+                        : 'No products available yet'}
+                    </h4>
+                    <p>
+                      {searchQuery.trim()
+                        ? `We couldn't find any products matching “${searchQuery.trim()}”. Try a different search term or browse our categories.`
+                        : category
+                          ? `Products for ${category.title} are being updated. Please check back soon, or contact us for availability and supply options.`
+                          : material
+                            ? `Products for ${material.title} are being updated. Please check back soon, or contact us for availability and supply options.`
+                            : 'Our product listings are being updated. Please check back soon, or contact us for availability and supply options.'}
+                    </p>
+                    <Link href="/contact" className="productCatalogSidebarBtn">
+                      Contact Us
+                    </Link>
+                  </div>
+                ) : (
                 <div className="productCatalogGrid">
                   {loading ? (
                     <ProductCatalogCardSkeleton count={6} />
@@ -276,16 +318,7 @@ export function ProductCatalogView({
                     ))
                   )}
                 </div>
-
-                {!loading ? (
-                  <div className="productCatalogBulkCta productCatalogBulkCta--afterGrid">
-                    <h4>Bulk pricing</h4>
-                    <p>Need pricing or bulk supply for your project?</p>
-                    <Link href="/contact" className="productCatalogSidebarBtn">
-                      Get a Quote
-                    </Link>
-                  </div>
-                ) : null}
+                )}
               </section>
             </div>
           </div>
