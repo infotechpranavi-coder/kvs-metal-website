@@ -8,6 +8,7 @@
     "start": "next start",
     "dev:clean": "node -e \"require('fs').rmSync('.next',{recursive:true,force:true})\" && npm run dev",
     "db:seed": "npx tsx scripts/seed.ts",
+    "db:sync-materials": "npx tsx scripts/sync-home-materials.ts",
     "db:clear": "npx tsx scripts/clear-demo-data.ts"
   },
   "dependencies": {

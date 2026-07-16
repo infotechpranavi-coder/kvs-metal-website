@@ -128,7 +128,15 @@ export default function KvsContactPage() {
                     </span>
                     <div>
                       <span className="kvsContactMethodLabel">Location</span>
-                      <address>{footerContent.address}</address>
+                      <address>
+                        <a
+                          href={footerContent.addressHref}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {footerContent.address}
+                        </a>
+                      </address>
                     </div>
                   </li>
                 </ul>

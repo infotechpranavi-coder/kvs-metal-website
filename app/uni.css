@@ -192,7 +192,7 @@
 .uniFeature h3,
 .uniCourseBody h3,
 .uniAboutCard h3,
-.uniMaterialSuppliesCardFooter h3,
+.uniMaterialSuppliesCardTitle,
 .kvsAboutValueCard h3,
 .uniFooterCol h4,
 .uniFooterStandardsBand h4 {
@@ -4282,8 +4282,10 @@
 .uniMaterialSuppliesGrid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(18px, 2.2vw, 28px);
+  gap: clamp(24px, 3.5vw, 48px);
   width: 100%;
+  max-width: 1160px;
+  margin-inline: auto;
 }
 
 .uniMaterialSuppliesCardWrap {
@@ -4291,97 +4293,50 @@
 }
 
 .uniMaterialSuppliesCard {
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100%;
-  padding: clamp(22px, 2.8vw, 30px) clamp(12px, 1.4vw, 16px) clamp(20px, 2.6vw, 26px);
-  border-radius: 22px;
-  background: linear-gradient(180deg, #ffffff 0%, #faf9f7 100%);
-  border: 1px solid rgba(26, 54, 93, 0.09);
-  box-shadow:
-    0 14px 36px rgba(26, 26, 26, 0.06),
-    0 1px 0 rgba(255, 255, 255, 0.95) inset;
-  overflow: visible;
+  gap: 18px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
   color: inherit;
   text-decoration: none;
-  transition:
-    transform 0.38s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.38s ease,
-    border-color 0.38s ease;
-}
-
-.uniMaterialSuppliesCard::before {
-  content: '';
-  position: absolute;
-  inset: 10px;
-  border-radius: 18px;
-  background: linear-gradient(180deg, rgba(255, 107, 53, 0.05) 0%, rgba(255, 107, 53, 0) 48%);
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.35s ease;
-}
-
-.uniMaterialSuppliesCard:hover {
-  transform: translateY(-10px);
-  border-color: rgba(255, 107, 53, 0.22);
-  box-shadow:
-    0 24px 50px rgba(26, 26, 26, 0.1),
-    0 10px 28px rgba(255, 107, 53, 0.12);
-}
-
-.uniMaterialSuppliesCard:hover::before {
-  opacity: 1;
 }
 
 .uniMaterialSuppliesCardVisual {
-  --material-circle-size: clamp(176px, 19.5vw, 236px);
+  --material-circle-size: clamp(172px, 18vw, 228px);
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  margin-bottom: clamp(16px, 2vw, 22px);
-}
-
-.uniMaterialSuppliesCardHalo {
-  position: absolute;
-  width: calc(var(--material-circle-size) + 22px);
-  height: calc(var(--material-circle-size) + 22px);
-  border-radius: 50%;
-  border: 1px dashed rgba(255, 107, 53, 0.22);
-  transform: rotate(-8deg);
-  opacity: 0.75;
-  transition: transform 0.45s ease, opacity 0.35s ease;
-}
-
-.uniMaterialSuppliesCard:hover .uniMaterialSuppliesCardHalo {
-  transform: rotate(12deg) scale(1.04);
-  opacity: 0.9;
+  width: var(--material-circle-size);
+  height: var(--material-circle-size);
 }
 
 .uniMaterialSuppliesCardRing {
   position: relative;
-  z-index: 1;
-  width: var(--material-circle-size);
-  height: var(--material-circle-size);
-  padding: 3px;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
-  background: linear-gradient(145deg, #ff8f5a 0%, var(--uni-orange) 48%, #e85a28 100%);
-  box-shadow:
-    0 16px 38px rgba(255, 107, 53, 0.26),
-    0 0 0 4px rgba(255, 255, 255, 0.95);
+  padding: 0;
+  background: transparent;
+  border: 2px solid rgba(26, 54, 93, 0.14);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
   transition:
-    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.35s ease,
     box-shadow 0.4s ease;
 }
 
 .uniMaterialSuppliesCard:hover .uniMaterialSuppliesCardRing {
-  transform: scale(1.03);
+  transform: translateY(-8px) scale(1.05);
+  border-color: rgba(0, 0, 0, 0.55);
   box-shadow:
-    0 20px 44px rgba(255, 107, 53, 0.34),
-    0 0 0 5px rgba(255, 255, 255, 0.98);
+    0 18px 36px rgba(0, 0, 0, 0.22),
+    0 8px 16px rgba(0, 0, 0, 0.14);
 }
 
 .uniMaterialSuppliesCardMedia {
@@ -4390,7 +4345,6 @@
   overflow: hidden;
   border-radius: 50%;
   background: #ece8e1;
-  border: 2px solid #fff;
 }
 
 .uniMaterialSuppliesCardMedia img {
@@ -4398,103 +4352,46 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
-  transform: scale(1.14);
-  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.uniMaterialSuppliesCard:hover .uniMaterialSuppliesCardMedia img {
-  transform: scale(1.22);
-}
-
-.uniMaterialSuppliesCardFooter {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-  text-align: center;
-}
-
-.uniMaterialSuppliesCardDivider {
   display: block;
-  width: 42px;
-  height: 3px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, transparent, var(--uni-orange), transparent);
-  opacity: 0.55;
-  transition: width 0.35s ease, opacity 0.35s ease;
 }
 
-.uniMaterialSuppliesCard:hover .uniMaterialSuppliesCardDivider {
-  width: 64px;
-  opacity: 1;
-}
-
-.uniMaterialSuppliesCardFooter h3 {
+.uniMaterialSuppliesCardTitle {
   margin: 0;
-  font-size: clamp(0.94rem, 1.15vw, 1.06rem);
-  font-weight: 800;
-  letter-spacing: 0.08em;
+  max-width: 14em;
+  font-size: clamp(0.92rem, 1.15vw, 1.05rem);
+  font-weight: 700;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   line-height: 1.35;
+  text-align: center;
   color: var(--uni-heading-color);
-  transition: color 0.25s ease;
+  transition: color 0.3s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.uniMaterialSuppliesCard:hover .uniMaterialSuppliesCardFooter h3 {
-  color: var(--uni-orange);
-}
-
-.uniMaterialSuppliesCardAction {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  min-height: 36px;
-  padding: 8px 18px;
-  border-radius: 999px;
-  border: 1.5px solid rgba(26, 54, 93, 0.12);
-  background: rgba(255, 255, 255, 0.88);
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+.uniMaterialSuppliesCard:hover .uniMaterialSuppliesCardTitle {
   color: var(--uni-navy);
-  transition:
-    gap 0.22s ease,
-    color 0.22s ease,
-    border-color 0.22s ease,
-    background 0.22s ease,
-    box-shadow 0.22s ease;
 }
 
-.uniMaterialSuppliesCard:hover .uniMaterialSuppliesCardAction {
-  gap: 12px;
-  color: #fff;
-  border-color: transparent;
-  background: linear-gradient(135deg, #ff6b35 0%, #ff7f4f 100%);
-  box-shadow: 0 10px 22px rgba(255, 107, 53, 0.28);
-}
-
-@media (max-width: 1024px) {
+@media (max-width: 900px) {
   .uniMaterialSuppliesGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(20px, 3vw, 32px);
   }
 
   .uniMaterialSuppliesCardVisual {
-    --material-circle-size: clamp(168px, 24vw, 220px);
+    --material-circle-size: clamp(148px, 24vw, 188px);
   }
 }
 
 @media (max-width: 560px) {
   .uniMaterialSuppliesGrid {
     grid-template-columns: 1fr;
-    max-width: 360px;
-    margin-inline: auto;
+    max-width: 280px;
+    gap: 28px;
   }
 
   .uniMaterialSuppliesCardVisual {
-    --material-circle-size: clamp(196px, 58vw, 248px);
+    --material-circle-size: clamp(188px, 54vw, 220px);
   }
 }
 

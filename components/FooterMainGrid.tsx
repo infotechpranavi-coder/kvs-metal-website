@@ -141,7 +141,12 @@ export function FooterMainGrid() {
             <span className="uniFooterContactLabel">Email</span>
             <span className="uniFooterContactValue">{EMAIL}</span>
           </a>
-          <div className="uniFooterContactCard uniFooterContactCard--static">
+          <a
+            href={footerContent.addressHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="uniFooterContactCard"
+          >
             <FooterContactIcon>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
@@ -150,7 +155,7 @@ export function FooterMainGrid() {
             </FooterContactIcon>
             <span className="uniFooterContactLabel">Location</span>
             <span className="uniFooterContactValue">{footerContent.address}</span>
-          </div>
+          </a>
         </div>
       </div>
     </div>

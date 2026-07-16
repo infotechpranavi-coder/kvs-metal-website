@@ -7,6 +7,8 @@ const WHATSAPP_PREFILL =
   'Hello, I would like to inquire about your steel products and services. Please share more details.'
 export const WHATSAPP_URL = `https://wa.me/971503646193?text=${encodeURIComponent(WHATSAPP_PREFILL)}`
 export const EMAIL = 'gsamyani@kvsmetals.com'
+export const LOCATION_LABEL = 'Al Ziber, Dubai, UAE'
+export const LOCATION_MAPS_URL = 'https://maps.apple/p/hTP5VB~-WL~Yce'
 
 export const heroContent = {
   eyebrow: '25+ Years of Excellence in Steel Trading',
@@ -110,6 +112,33 @@ export const materialsSection = {
     'Procure, stock, and supply structural and industrial metals across grades, sizes, and specifications for projects across the UAE.',
 }
 
+function materialPublicImage(filename: string) {
+  return `/materials/${encodeURIComponent(filename)}`
+}
+
+export const homeMaterialCards = [
+  {
+    slug: 'mild-steel',
+    title: 'MILD STEEL PRODUCTS',
+    img: materialPublicImage('mild steel.jpg'),
+  },
+  {
+    slug: 'galvanized-steel',
+    title: 'GALVANIZED & PPGI PRODUCTS',
+    img: materialPublicImage('galvansised steel.jpg'),
+  },
+  {
+    slug: 'aluminum',
+    title: 'ALUMINIUM PRODUCTS',
+    img: materialPublicImage('aluminum.png'),
+  },
+  {
+    slug: 'precast-materials',
+    title: 'PRECAST PRODUCTS',
+    img: materialPublicImage('preee.png'),
+  },
+] as const
+
 export const testimonialsSection = {
   eyebrow: 'Client feedback',
   title: 'What Customers Say About KVS',
@@ -129,12 +158,13 @@ export const footerContent = {
     'IS Standards',
     'Custom Requirements on Request',
   ],
-  address: 'Dubai, United Arab Emirates',
+  address: LOCATION_LABEL,
+  addressHref: LOCATION_MAPS_URL,
   materials: [
-    { label: 'Mild Steel', href: '/products?material=mild-steel' },
-    { label: 'Stainless Steel', href: '/products?material=stainless-steel' },
-    { label: 'Aluminum', href: '/products?material=aluminum' },
-    { label: 'Galvanized Iron', href: '/products?material=galvanized-iron' },
+    { label: 'Mild Steel Products', href: '/products?material=mild-steel' },
+    { label: 'Galvanized & PPGI Products', href: '/products?material=galvanized-steel' },
+    { label: 'Aluminium Products', href: '/products?material=aluminum' },
+    { label: 'Precast Products', href: '/products?material=precast-materials' },
   ],
 }
 
