@@ -48,6 +48,52 @@ const heroSlides = [{ video: HERO_VIDEO }]
 const heroStats = heroContent.stats
 
 const SLIDE_MS = 6500
+/** Playback level when the user turns sound on (0–1). */
+const HERO_VIDEO_VOLUME = 0.25
+
+type HeroVideoAudioGraph = {
+  ctx: AudioContext
+  gain: GainNode
+}
+
+const heroVideoAudioGraphs = new WeakMap<HTMLVideoElement, HeroVideoAudioGraph>()
+
+function getHeroVideoAudioGraph(video: HTMLVideoElement): HeroVideoAudioGraph | null {
+  const existing = heroVideoAudioGraphs.get(video)
+  if (existing) return existing
+
+  try {
+    const ctx = new AudioContext()
+    const source = ctx.createMediaElementSource(video)
+    const gain = ctx.createGain()
+    gain.gain.value = HERO_VIDEO_VOLUME
+    source.connect(gain)
+    gain.connect(ctx.destination)
+    const graph = { ctx, gain }
+    heroVideoAudioGraphs.set(video, graph)
+    return graph
+  } catch {
+    return null
+  }
+}
+
+function setHeroVideoMuted(video: HTMLVideoElement, muted: boolean) {
+  const graph = getHeroVideoAudioGraph(video)
+
+  if (graph) {
+    graph.gain.gain.value = HERO_VIDEO_VOLUME
+    if (!muted) void graph.ctx.resume()
+  } else {
+    video.volume = HERO_VIDEO_VOLUME
+  }
+
+  video.muted = muted
+  if (muted) {
+    video.setAttribute('muted', '')
+  } else {
+    video.removeAttribute('muted')
+  }
+}
 
 function HeroVolumeOffIcon() {
   return (
@@ -94,35 +140,28 @@ function HeroSection() {
 
     video.defaultPlaybackRate = 1
     video.playbackRate = 1
+    getHeroVideoAudioGraph(video)
+    setHeroVideoMuted(video, true)
 
     const tryPlay = () => {
       void video.play().catch(() => {})
     }
 
-    video.addEventListener('loadeddata', tryPlay, { once: true })
     video.addEventListener('canplay', tryPlay, { once: true })
-
-    if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) tryPlay()
+    if (video.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) tryPlay()
 
     return () => {
-      video.removeEventListener('loadeddata', tryPlay)
       video.removeEventListener('canplay', tryPlay)
     }
-  }, [activeSlide])
-
-  useEffect(() => {
-    const video = videoRef.current
-    if (video) video.muted = isMuted
-  }, [isMuted])
+  }, [])
 
   const toggleMute = () => {
     const video = videoRef.current
     if (!video) return
 
     const nextMuted = !isMuted
-    video.muted = nextMuted
+    setHeroVideoMuted(video, nextMuted)
     if (!nextMuted) {
-      video.volume = 1
       void video.play().catch(() => {})
     }
     setIsMuted(nextMuted)
@@ -165,7 +204,6 @@ function HeroSection() {
                   ref={videoRef}
                   className="uniHeroSlideVideo"
                   autoPlay
-                  muted={isMuted}
                   loop
                   playsInline
                   preload="auto"
