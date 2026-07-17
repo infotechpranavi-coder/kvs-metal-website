@@ -134,7 +134,7 @@ export default function KvsContactPage() {
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          {footerContent.address}
+                          {footerContent.addressFull}
                         </a>
                       </address>
                     </div>

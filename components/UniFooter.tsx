@@ -36,7 +36,6 @@ export function UniFooter() {
 
         <div className="uniFooterBottom">
           <div className="uniFooterBottomRow">
-            <p>&copy; {new Date().getFullYear()} KVS Metals. All Rights Reserved.</p>
             <div className="uniFooterLegal">
               <Link href="/privacy-policy">Privacy Policy</Link>
               <Link href="/terms-and-conditions">Terms & Conditions</Link>
@@ -44,7 +43,7 @@ export function UniFooter() {
           </div>
           <div className="uniFooterCredits">
             <p className="uniFooterCredit">
-              {footerContent.creditLeft.prefix}{' '}
+              &copy; {footerContent.creditLeft.prefix}{' '}
               <a
                 href={footerContent.creditLeft.href}
                 target="_blank"
@@ -52,6 +51,9 @@ export function UniFooter() {
               >
                 {footerContent.creditLeft.label}
               </a>
+            </p>
+            <p className="uniFooterBrandLine">
+              {new Date().getFullYear()} KVS Metals. All Rights Reserved.
             </p>
             <p className="uniFooterCredit uniFooterCredit--right">
               {footerContent.creditRight.prefix}{' '}

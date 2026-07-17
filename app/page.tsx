@@ -43,11 +43,7 @@ const features = aboutUsHome.features.map((item, index) => {
 
 const HERO_VIDEO = '/hero/Precise-Quality-1080p.mp4'
 
-const heroSlides = [{ video: HERO_VIDEO }]
-
 const heroStats = heroContent.stats
-
-const SLIDE_MS = 6500
 /** Playback level when the user turns sound on (0–1). */
 const HERO_VIDEO_VOLUME = 0.25
 
@@ -129,9 +125,7 @@ function HeroVolumeOnIcon() {
 }
 
 function HeroSection() {
-  const progressRef = useRef<HTMLSpanElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
-  const [activeSlide, setActiveSlide] = useState(0)
   const [isMuted, setIsMuted] = useState(true)
 
   useEffect(() => {
@@ -166,32 +160,6 @@ function HeroSection() {
     }
     setIsMuted(nextMuted)
   }
-
-  useEffect(() => {
-    if (heroSlides.length <= 1) return
-
-    const progressEl = progressRef.current
-    if (progressEl) progressEl.style.width = '0%'
-
-    const started = performance.now()
-    let rafId = 0
-
-    const tick = (now: number) => {
-      const elapsed = now - started
-      const progress = Math.min(100, (elapsed / SLIDE_MS) * 100)
-      if (progressEl) progressEl.style.width = `${progress}%`
-
-      if (elapsed >= SLIDE_MS) {
-        setActiveSlide((current) => (current + 1) % heroSlides.length)
-        return
-      }
-
-      rafId = requestAnimationFrame(tick)
-    }
-
-    rafId = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(rafId)
-  }, [activeSlide])
 
   return (
     <div className="uniHeroShell">
@@ -293,29 +261,7 @@ function HeroSection() {
                   </div>
 
                   <div className="uniHeroSliderUi">
-                    <div className="uniHeroSliderMeta">
-                      <span className="uniHeroSliderLabel">Featured</span>
-                      <span className="uniHeroSliderCount">
-                        {String(activeSlide + 1).padStart(2, '0')}
-                        <span className="uniHeroSliderSep">/</span>
-                        {String(heroSlides.length).padStart(2, '0')}
-                      </span>
-                    </div>
-                    <div className="uniHeroSliderTrack">
-                      <div className="uniHeroSliderDots" aria-hidden>
-                        {heroSlides.map((_, index) => (
-                          <span
-                            key={index}
-                            className={`uniHeroSliderDot${
-                              index === activeSlide ? ' uniHeroSliderDot--active' : ''
-                            }`}
-                          />
-                        ))}
-                      </div>
-                      <div className="uniHeroSliderProgress" aria-hidden>
-                        <span ref={progressRef} className="uniHeroSliderProgressFill" />
-                      </div>
-                    </div>
+                    <span className="uniHeroSliderAccent" aria-hidden />
                   </div>
                 </div>
               </div>

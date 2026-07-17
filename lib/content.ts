@@ -7,8 +7,10 @@ const WHATSAPP_PREFILL =
   'Hello, I would like to inquire about your steel products and services. Please share more details.'
 export const WHATSAPP_URL = `https://wa.me/971503646193?text=${encodeURIComponent(WHATSAPP_PREFILL)}`
 export const EMAIL = 'gsamyani@kvsmetals.com'
-export const LOCATION_LABEL = 'Al Ziber, Dubai, UAE'
-export const LOCATION_MAPS_URL = 'https://maps.apple/p/hTP5VB~-WL~Yce'
+export const LOCATION_LABEL = 'Etihad W&E, Al Sajaa, Dubai, Sajja Sharjah U.A.E'
+export const LOCATION_FULL =
+  "Etihad Water & Electricity (FEWA SAJA'A), Al Sajaa, Dubai, Sajja Sharjah U.A.E"
+export const LOCATION_MAPS_URL = 'https://maps.app.goo.gl/vdG4HDKaUnPnU1BN7?g_st=iwb'
 
 export const heroContent = {
   eyebrow: '25+ Years of Excellence in Steel Trading',
@@ -159,6 +161,7 @@ export const footerContent = {
     'Custom Requirements on Request',
   ],
   address: LOCATION_LABEL,
+  addressFull: LOCATION_FULL,
   addressHref: LOCATION_MAPS_URL,
   materials: [
     { label: 'Mild Steel Products', href: '/products?material=mild-steel' },
