@@ -166,6 +166,16 @@ export const footerContent = {
     { label: 'Aluminium Products', href: '/products?material=aluminum' },
     { label: 'Precast Products', href: '/products?material=precast-materials' },
   ],
+  creditLeft: {
+    prefix: 'Content & Copywriting Done by',
+    label: 'RankOneContent',
+    href: 'https://www.rankonecontent.com/',
+  },
+  creditRight: {
+    prefix: 'Powered by',
+    label: 'Pranavi Infotech',
+    href: 'https://www.pranaviinfotech.com/',
+  },
 }
 
 export const aboutPage = {
